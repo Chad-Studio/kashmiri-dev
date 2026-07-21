@@ -7,6 +7,7 @@ const paths = [
   { path: "/", priority: "1.0", changefreq: "weekly" as const },
   { path: "/history", priority: "0.9", changefreq: "monthly" as const },
   { path: "/language", priority: "0.9", changefreq: "monthly" as const },
+  { path: "/language/numbers", priority: "0.8", changefreq: "monthly" as const },
   { path: "/people", priority: "0.8", changefreq: "monthly" as const },
   { path: "/civic-guide", priority: "0.8", changefreq: "monthly" as const },
   { path: "/learn-ai", priority: "0.8", changefreq: "monthly" as const },

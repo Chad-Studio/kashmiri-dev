@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { scripts, vocabulary, phrases } from "@/data/language";
@@ -187,6 +187,29 @@ function LanguagePage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 py-6">
+        <Link
+          to="/language/numbers"
+          className="block rounded-xl border border-border bg-card p-5 hover:shadow-md hover:-translate-y-0.5 transition-all"
+        >
+          <div
+            aria-hidden
+            className="h-1 w-10 rounded-full mb-3"
+            style={{ background: "linear-gradient(90deg, var(--saffron), var(--chinar))" }}
+          />
+          <h2 className="font-serif text-2xl text-foreground">
+            Kashmiri counting: 1 to 50
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+            Learn Koshur numbers from one to fifty, grouped by tens for easy
+            reading.
+          </p>
+          <span className="mt-3 inline-block text-sm font-medium text-primary">
+            Open the counting guide →
+          </span>
+        </Link>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 pb-16">

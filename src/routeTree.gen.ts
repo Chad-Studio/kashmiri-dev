@@ -18,6 +18,7 @@ import { Route as HistoryRouteImport } from './routes/history'
 import { Route as CivicGuideRouteImport } from './routes/civic-guide'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LanguageNumbersRouteImport } from './routes/language.numbers'
 
 const WatchListenRoute = WatchListenRouteImport.update({
   id: '/watch-listen',
@@ -64,28 +65,35 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguageNumbersRoute = LanguageNumbersRouteImport.update({
+  id: '/numbers',
+  path: '/numbers',
+  getParentRoute: () => LanguageRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
-  '/language': typeof LanguageRoute
+  '/language': typeof LanguageRouteWithChildren
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
+  '/language/numbers': typeof LanguageNumbersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
-  '/language': typeof LanguageRoute
+  '/language': typeof LanguageRouteWithChildren
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
+  '/language/numbers': typeof LanguageNumbersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,11 +101,12 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
-  '/language': typeof LanguageRoute
+  '/language': typeof LanguageRouteWithChildren
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
+  '/language/numbers': typeof LanguageNumbersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/people'
     | '/sitemap.xml'
     | '/watch-listen'
+    | '/language/numbers'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/people'
     | '/sitemap.xml'
     | '/watch-listen'
+    | '/language/numbers'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/people'
     | '/sitemap.xml'
     | '/watch-listen'
+    | '/language/numbers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,7 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CivicGuideRoute: typeof CivicGuideRoute
   HistoryRoute: typeof HistoryRoute
-  LanguageRoute: typeof LanguageRoute
+  LanguageRoute: typeof LanguageRouteWithChildren
   LearnAiRoute: typeof LearnAiRoute
   PeopleRoute: typeof PeopleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -212,15 +224,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/language/numbers': {
+      id: '/language/numbers'
+      path: '/numbers'
+      fullPath: '/language/numbers'
+      preLoaderRoute: typeof LanguageNumbersRouteImport
+      parentRoute: typeof LanguageRoute
+    }
   }
 }
+
+interface LanguageRouteChildren {
+  LanguageNumbersRoute: typeof LanguageNumbersRoute
+}
+
+const LanguageRouteChildren: LanguageRouteChildren = {
+  LanguageNumbersRoute: LanguageNumbersRoute,
+}
+
+const LanguageRouteWithChildren = LanguageRoute._addFileChildren(
+  LanguageRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CivicGuideRoute: CivicGuideRoute,
   HistoryRoute: HistoryRoute,
-  LanguageRoute: LanguageRoute,
+  LanguageRoute: LanguageRouteWithChildren,
   LearnAiRoute: LearnAiRoute,
   PeopleRoute: PeopleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
