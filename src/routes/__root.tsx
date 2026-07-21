@@ -81,16 +81,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "A calm, education-only site about Kashmir — history, the Kashmiri language, and learning with AI. Made for readers in the valley.",
+          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
       },
-      { property: "og:title", content: "Kashmiri.dev" },
+      { property: "og:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
       {
         property: "og:description",
         content:
-          "Trustworthy, simple education about Kashmir — history, language, and learning with AI.",
+          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
+      { name: "twitter:description", content: "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/97110bad-8f50-49fb-aeba-b2a49cef7c19" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/97110bad-8f50-49fb-aeba-b2a49cef7c19" },
     ],
     links: [
       {
