@@ -126,7 +126,7 @@ function HistoryPage() {
       </section>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
           {active && (
             <>
               <DialogHeader>
@@ -138,9 +138,44 @@ function HistoryPage() {
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 text-sm">
-                <p className="text-foreground leading-relaxed">
-                  {active.description}
+                <p className="text-foreground font-medium leading-relaxed">
+                  {active.summary}
                 </p>
+                <div className="space-y-3">
+                  {active.paragraphs.map((p, i) => (
+                    <p key={i} className="text-foreground leading-relaxed">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+                {active.developments.length > 0 && (
+                  <div>
+                    <h3 className="font-serif text-base text-foreground mb-1">
+                      In this age
+                    </h3>
+                    <ul className="list-disc pl-5 text-muted-foreground space-y-0.5">
+                      {active.developments.map((d) => (
+                        <li key={d}>{d}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {active.spotlight && (
+                  <div
+                    className="rounded-xl border border-primary/20 p-4"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, color-mix(in oklab, var(--saffron) 14%, transparent), color-mix(in oklab, var(--chinar) 8%, transparent))",
+                    }}
+                  >
+                    <h3 className="font-serif text-base text-foreground mb-1">
+                      {active.spotlight.title}
+                    </h3>
+                    <p className="text-foreground/90 leading-relaxed">
+                      {active.spotlight.body}
+                    </p>
+                  </div>
+                )}
                 {active.people.length > 0 && (
                   <div>
                     <h3 className="font-serif text-base text-foreground mb-1">
@@ -148,7 +183,13 @@ function HistoryPage() {
                     </h3>
                     <ul className="list-disc pl-5 text-muted-foreground space-y-0.5">
                       {active.people.map((p) => (
-                        <li key={p}>{p}</li>
+                        <li key={p.name}>
+                          <span className="font-medium text-foreground">
+                            {p.name}
+                          </span>
+                          {" — "}
+                          {p.note}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -168,6 +209,7 @@ function HistoryPage() {
           )}
         </DialogContent>
       </Dialog>
+
     </SiteLayout>
   );
 }
