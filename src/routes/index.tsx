@@ -33,9 +33,24 @@ const cards = [
     desc: "Learn about scripts, everyday words, and simple phrases in Kashmiri.",
   },
   {
+    to: "/people" as const,
+    title: "People & Crafts",
+    desc: "Poets, mystics, and traditional crafts of the valley.",
+  },
+  {
+    to: "/civic-guide" as const,
+    title: "Civic Guide",
+    desc: "Simple explainers of RTI, consumer rights, cybercrime, and fake news.",
+  },
+  {
     to: "/learn-ai" as const,
     title: "Learn with AI",
     desc: "Prompts, free tools, and how to stay safe from fake AI content.",
+  },
+  {
+    to: "/watch-listen" as const,
+    title: "Watch & Listen",
+    desc: "Curated podcasts, channels, and audio about Kashmir.",
   },
 ];
 
@@ -56,7 +71,7 @@ function Home() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 pb-16">
-        <div className="grid gap-5 sm:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((c) => (
             <Link
               key={c.to}
