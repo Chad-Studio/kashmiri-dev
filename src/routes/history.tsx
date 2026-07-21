@@ -25,6 +25,23 @@ export const Route = createFileRoute("/history")({
         content:
           "From the Nilamata Purana to Dogra rule — a clear timeline of Kashmir's past.",
       },
+      { property: "og:url", content: "https://kashmiri.dev/history" },
+    ],
+    links: [{ rel: "canonical", href: "https://kashmiri.dev/history" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LearningResource",
+          name: "History of Kashmir",
+          description:
+            "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
+          inLanguage: "en",
+          learningResourceType: "Timeline",
+          url: "https://kashmiri.dev/history",
+        }),
+      },
     ],
   }),
   component: HistoryPage,
