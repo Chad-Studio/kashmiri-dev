@@ -10,16 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WatchListenRouteImport } from './routes/watch-listen'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PeopleRouteImport } from './routes/people'
 import { Route as LearnAiRouteImport } from './routes/learn-ai'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as CivicGuideRouteImport } from './routes/civic-guide'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WatchListenRoute = WatchListenRouteImport.update({
   id: '/watch-listen',
   path: '/watch-listen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PeopleRoute = PeopleRouteImport.update({
@@ -47,6 +54,11 @@ const CivicGuideRoute = CivicGuideRouteImport.update({
   path: '/civic-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,69 +67,83 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/civic-guide'
     | '/history'
     | '/language'
     | '/learn-ai'
     | '/people'
+    | '/sitemap.xml'
     | '/watch-listen'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/civic-guide'
     | '/history'
     | '/language'
     | '/learn-ai'
     | '/people'
+    | '/sitemap.xml'
     | '/watch-listen'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/civic-guide'
     | '/history'
     | '/language'
     | '/learn-ai'
     | '/people'
+    | '/sitemap.xml'
     | '/watch-listen'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CivicGuideRoute: typeof CivicGuideRoute
   HistoryRoute: typeof HistoryRoute
   LanguageRoute: typeof LanguageRoute
   LearnAiRoute: typeof LearnAiRoute
   PeopleRoute: typeof PeopleRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WatchListenRoute: typeof WatchListenRoute
 }
 
@@ -128,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/watch-listen'
       fullPath: '/watch-listen'
       preLoaderRoute: typeof WatchListenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/people': {
@@ -165,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CivicGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,11 +217,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CivicGuideRoute: CivicGuideRoute,
   HistoryRoute: HistoryRoute,
   LanguageRoute: LanguageRoute,
   LearnAiRoute: LearnAiRoute,
   PeopleRoute: PeopleRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   WatchListenRoute: WatchListenRoute,
 }
 export const routeTree = rootRouteImport

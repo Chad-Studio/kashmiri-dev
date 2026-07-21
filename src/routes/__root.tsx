@@ -107,6 +107,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Kashmiri.dev",
+          url: "https://kashmiri.dev",
+          description:
+            "A simple, calm place to learn about Kashmir: history, language, people, and how to learn with AI.",
+          inLanguage: "en",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          name: "Kashmiri.dev",
+          url: "https://kashmiri.dev",
+          description:
+            "Free educational website about Kashmir — history, language, and learning with AI.",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
