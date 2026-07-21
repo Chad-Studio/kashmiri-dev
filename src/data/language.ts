@@ -4,12 +4,16 @@ export interface VocabWord {
   koshur: string;
   english: string;
   lang: Lang;
+  isLoanword?: boolean;
+  note?: string;
 }
 
 export interface Phrase {
   koshur: string;
   english: string;
   lang: Lang;
+  isLoanword?: boolean;
+  note?: string;
 }
 
 export interface ScriptInfo {
@@ -55,38 +59,37 @@ export const vocabulary: VocabWord[] = [
   { koshur: "beni", english: "sister", lang: "en" },
   { koshur: "kur", english: "daughter", lang: "en" },
   { koshur: "nechuv", english: "son", lang: "en" },
-  { koshur: "aab", english: "water", lang: "en" },
+  { koshur: "aab", english: "water", lang: "en", isLoanword: true, note: "Persian loanword; native word is 'pōny'." },
   { koshur: "batte", english: "rice / food", lang: "en" },
-  { koshur: "chai", english: "tea", lang: "en" },
+  { koshur: "chai", english: "tea", lang: "en", isLoanword: true, note: "Loanword." },
   { koshur: "tsot", english: "bread", lang: "en" },
   { koshur: "gaam", english: "village", lang: "en" },
-  { koshur: "shahar", english: "city", lang: "en" },
+  { koshur: "shahar", english: "city", lang: "en", isLoanword: true, note: "Persian/Urdu loanword." },
   { koshur: "gar", english: "house", lang: "en" },
   { koshur: "wan", english: "shop", lang: "en" },
-  { koshur: "kitab", english: "book", lang: "en" },
-  { koshur: "madrasah", english: "school", lang: "en" },
-  { koshur: "ustad", english: "teacher", lang: "en" },
+  { koshur: "kitab", english: "book", lang: "en", isLoanword: true, note: "Arabic loanword." },
+  { koshur: "skuul", english: "school", lang: "en", note: "'Madrasa' usually means a religious school." },
+  { koshur: "ustad", english: "teacher", lang: "en", isLoanword: true, note: "Persian loanword." },
   { koshur: "shongun", english: "to sleep", lang: "en" },
   { koshur: "khyon", english: "to eat", lang: "en" },
   { koshur: "chyon", english: "to drink", lang: "en" },
   { koshur: "gatshun", english: "to go", lang: "en" },
   { koshur: "yun", english: "to come", lang: "en" },
   { koshur: "wuchhun", english: "to see", lang: "en" },
-  { koshur: "khosh", english: "happy", lang: "en" },
-  { koshur: "shrup", english: "cold", lang: "en" },
-  { koshur: "garam", english: "warm", lang: "en" },
+  { koshur: "khosh", english: "happy", lang: "en", isLoanword: true, note: "Persian loanword." },
+  { koshur: "tur", english: "cold", lang: "en", note: "Native Kashmiri; 'sheen' means snow, 'shohul' means cool." },
+  { koshur: "garam", english: "warm", lang: "en", isLoanword: true, note: "Persian/Urdu loanword." },
   { koshur: "rang", english: "colour", lang: "en" },
 ];
 
 export const phrases: Phrase[] = [
-  { koshur: "Assalamu alaikum", english: "Peace be upon you (greeting)", lang: "en" },
-  { koshur: "Kya haal chhuy?", english: "How are you?", lang: "en" },
-  { koshur: "Bi chhus theek", english: "I am fine", lang: "en" },
-  { koshur: "Shukriya", english: "Thank you", lang: "en" },
-  { koshur: "Meherbani", english: "Please / kindness", lang: "en" },
-  { koshur: "Tohi naav kya chhu?", english: "What is your name?", lang: "en" },
-  { koshur: "Myon naav chhu ...", english: "My name is ...", lang: "en" },
-  { koshur: "Kot chhukh gatshan?", english: "Where are you going?", lang: "en" },
-  { koshur: "Yeti aaw", english: "Come here", lang: "en" },
-  { koshur: "Khuda hafiz", english: "Goodbye", lang: "en" },
+  { koshur: "Assalamu alaikum", english: "Peace be upon you (greeting)", lang: "en", isLoanword: true, note: "Arabic; common Muslim greeting." },
+  { koshur: "Vaaray chivā?", english: "How are you?", lang: "en", note: "The native Kashmiri greeting." },
+  { koshur: "Bi chhus vaaray", english: "I am fine", lang: "en" },
+  { koshur: "Meharbāni", english: "Please / thank you (literally: your kindness)", lang: "en", note: "The native way to say thanks. 'Shukriya' from Urdu is also widely used." },
+  { koshur: "Tohi kya chhu nāv?", english: "What is your name?", lang: "en", note: "Kashmiri usually puts the verb second." },
+  { koshur: "Myon nāv chhu ...", english: "My name is ...", lang: "en" },
+  { koshur: "Kot chhukh gatshān?", english: "Where are you going?", lang: "en" },
+  { koshur: "Yeti walo", english: "Come here", lang: "en", note: "'Walo' is the command form." },
+  { koshur: "Khuda hafiz", english: "Goodbye", lang: "en", isLoanword: true, note: "Persian; commonly used." },
 ];
