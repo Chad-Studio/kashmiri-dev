@@ -37,6 +37,21 @@ export const Route = createFileRoute("/learn-ai")({
           url: "https://kashmiri.dev/learn-ai",
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: awareness.map((a) => ({
+            "@type": "Question",
+            name: a.title,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${a.body} Tips: ${a.tips.join(" ")}`,
+            },
+          })),
+        }),
+      },
     ],
   }),
   component: LearnAI,

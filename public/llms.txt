@@ -1,0 +1,16 @@
+# Kashmiri.dev
+
+> A calm, ad-free, education-only website about Kashmir — its history, the Kashmiri (Koshur) language, and how to learn with AI. Written in simple English for readers in the Kashmir valley. No politics, no news, no accounts, no tracking.
+
+Kashmiri.dev is a free educational resource. Content is drafted with AI help and reviewed by humans. Historical content covers ancient times up to 1947. At least two sources are cited for factual and historical entries. Civic content is general education, not legal advice.
+
+## Pages
+
+- [Home](/): Overview and entry points to History, Language, People, Civic Guide, Learn with AI, and Watch & Listen.
+- [History](/history): Timeline of Kashmir from ancient times to 1947, with sourced entries.
+- [Language (Koshur)](/language): Scripts, ~30 starter words, and 10 everyday phrases in Kashmiri with loanword notes.
+- [People](/people): Notable Kashmiri poets, mystics, and traditional crafts (Pashmina, papier-mâché, walnut wood, copperware).
+- [Civic Guide](/civic-guide): Plain-language explainers of RTI, consumer rights, cybercrime reporting, and fact-checking.
+- [Learn with AI](/learn-ai): Copyable prompt recipes, free AI tools, and awareness of hallucinations, deepfakes, and fake news.
+- [Watch & Listen](/watch-listen): Curated podcasts, channels, and audio resources about Kashmir.
+- [About & Methodology](/about): Mission, how content is written and sourced, and how to send corrections.
