@@ -86,9 +86,16 @@ function HistoryPage() {
                   <h2 className="font-serif text-xl text-foreground">
                     {entry.era}
                   </h2>
-                  <span className="text-xs font-medium text-primary bg-primary/10 rounded-full px-2 py-0.5">
-                    {entry.years}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {entry.legendary && (
+                      <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground bg-muted rounded-full px-2 py-0.5">
+                        Legend
+                      </span>
+                    )}
+                    <span className="text-xs font-medium text-primary bg-primary/10 rounded-full px-2 py-0.5">
+                      {entry.years}
+                    </span>
+                  </div>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                   {entry.fact}
@@ -97,6 +104,7 @@ function HistoryPage() {
                   Read more →
                 </span>
               </button>
+
             </li>
           ))}
           <li className="ps-6 relative">
