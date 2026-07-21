@@ -19,10 +19,35 @@ export const Route = createFileRoute("/language")({
         content:
           "A gentle intro to the Kashmiri language — scripts, starter vocabulary, and common phrases.",
       },
+      { property: "og:url", content: "https://kashmiri.dev/language" },
+    ],
+    links: [{ rel: "canonical", href: "https://kashmiri.dev/language" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LearningResource",
+          name: "Kashmiri Language (Koshur)",
+          description:
+            "Scripts, starter vocabulary, and everyday phrases in Kashmiri, for beginners.",
+          inLanguage: "en",
+          learningResourceType: "Language guide",
+          url: "https://kashmiri.dev/language",
+        }),
+      },
     ],
   }),
   component: LanguagePage,
 });
+
+function LoanwordBadge() {
+  return (
+    <span className="text-[10px] uppercase tracking-wider font-medium text-primary/80 bg-primary/10 rounded px-1.5 py-0.5">
+      loanword
+    </span>
+  );
+}
 
 function LanguagePage() {
   const [query, setQuery] = useState("");
@@ -89,17 +114,32 @@ function LanguagePage() {
             aria-label="Search vocabulary"
           />
         </div>
+        <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 mb-4 text-sm text-foreground/85 leading-relaxed">
+          Kashmiri has no fully standard Roman spelling, so these are a learning
+          aid. Native script and audio are coming soon. Spellings and forms are
+          being reviewed by native speakers.
+        </div>
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           <ul className="divide-y divide-border">
             {filtered.map((w) => (
               <li
                 key={w.koshur}
-                className="flex items-center justify-between gap-4 px-4 py-3"
+                className="flex items-start justify-between gap-4 px-4 py-3"
               >
-                <span className="font-serif text-lg text-foreground">
-                  {w.koshur}
-                </span>
-                <span className="text-sm text-muted-foreground text-right">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span lang="ks" className="font-serif text-lg text-foreground">
+                      {w.koshur}
+                    </span>
+                    {w.isLoanword && <LoanwordBadge />}
+                  </div>
+                  {w.note && (
+                    <p className="mt-1 text-xs text-muted-foreground leading-snug">
+                      {w.note}
+                    </p>
+                  )}
+                </div>
+                <span className="text-sm text-muted-foreground text-right shrink-0">
                   {w.english}
                 </span>
               </li>
@@ -131,12 +171,32 @@ function LanguagePage() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="flex-1">
-                <p className="font-serif text-lg text-foreground">{p.koshur}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p lang="ks" className="font-serif text-lg text-foreground">
+                    {p.koshur}
+                  </p>
+                  {p.isLoanword && <LoanwordBadge />}
+                </div>
                 <p className="text-sm text-muted-foreground">{p.english}</p>
+                {p.note && (
+                  <p className="mt-1 text-xs text-muted-foreground leading-snug">
+                    {p.note}
+                  </p>
+                )}
               </div>
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 pb-16">
+        <div className="rounded-xl border border-border bg-card p-5">
+          <h2 className="font-serif text-lg text-foreground mb-2">Sources</h2>
+          <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+            <li>Braj B. Kachru, An Introduction to Spoken Kashmiri (University of Illinois, 1973)</li>
+            <li>Wiktionary: Kashmiri word list</li>
+          </ul>
+        </div>
       </section>
     </SiteLayout>
   );

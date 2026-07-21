@@ -25,6 +25,32 @@ export const Route = createFileRoute("/people")({
         content:
           "Lal Ded, Nund Rishi, Habba Khatoon, and the crafts that shaped Kashmir.",
       },
+      { property: "og:url", content: "https://kashmiri.dev/people" },
+    ],
+    links: [{ rel: "canonical", href: "https://kashmiri.dev/people" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LearningResource",
+          name: "People & Crafts of Kashmir",
+          description:
+            "Notable Kashmiri poets, mystics, and traditional crafts.",
+          inLanguage: "en",
+          learningResourceType: "Guide",
+          url: "https://kashmiri.dev/people",
+        }),
+      },
+      ...people.map((p) => ({
+        type: "application/ld+json" as const,
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: p.name,
+          description: `${p.tagline} ${p.bio}`,
+        }),
+      })),
     ],
   }),
   component: PeoplePage,

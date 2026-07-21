@@ -107,7 +107,12 @@ function SiteFooter() {
     <footer className="border-t border-border/60 mt-16">
       <div className="mx-auto max-w-5xl px-4 py-8 text-sm text-muted-foreground flex flex-col sm:flex-row gap-2 justify-between">
         <p>© {new Date().getFullYear()} Kashmiri.dev — Education for the valley.</p>
-        <p>Made with care. No accounts. No trackers.</p>
+        <div className="flex items-center gap-4">
+          <Link to="/about" className="hover:text-primary transition-colors">
+            About
+          </Link>
+          <p>Made with care. No accounts. No trackers.</p>
+        </div>
       </div>
     </footer>
   );
