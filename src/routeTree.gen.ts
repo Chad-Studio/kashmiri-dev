@@ -9,11 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WatchListenRouteImport } from './routes/watch-listen'
+import { Route as PeopleRouteImport } from './routes/people'
 import { Route as LearnAiRouteImport } from './routes/learn-ai'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as HistoryRouteImport } from './routes/history'
+import { Route as CivicGuideRouteImport } from './routes/civic-guide'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WatchListenRoute = WatchListenRouteImport.update({
+  id: '/watch-listen',
+  path: '/watch-listen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeopleRoute = PeopleRouteImport.update({
+  id: '/people',
+  path: '/people',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnAiRoute = LearnAiRouteImport.update({
   id: '/learn-ai',
   path: '/learn-ai',
@@ -29,6 +42,11 @@ const HistoryRoute = HistoryRouteImport.update({
   path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CivicGuideRoute = CivicGuideRouteImport.update({
+  id: '/civic-guide',
+  path: '/civic-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,40 +55,88 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
+  '/people': typeof PeopleRoute
+  '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
+  '/people': typeof PeopleRoute
+  '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
   '/language': typeof LanguageRoute
   '/learn-ai': typeof LearnAiRoute
+  '/people': typeof PeopleRoute
+  '/watch-listen': typeof WatchListenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/history' | '/language' | '/learn-ai'
+  fullPaths:
+    | '/'
+    | '/civic-guide'
+    | '/history'
+    | '/language'
+    | '/learn-ai'
+    | '/people'
+    | '/watch-listen'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/history' | '/language' | '/learn-ai'
-  id: '__root__' | '/' | '/history' | '/language' | '/learn-ai'
+  to:
+    | '/'
+    | '/civic-guide'
+    | '/history'
+    | '/language'
+    | '/learn-ai'
+    | '/people'
+    | '/watch-listen'
+  id:
+    | '__root__'
+    | '/'
+    | '/civic-guide'
+    | '/history'
+    | '/language'
+    | '/learn-ai'
+    | '/people'
+    | '/watch-listen'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CivicGuideRoute: typeof CivicGuideRoute
   HistoryRoute: typeof HistoryRoute
   LanguageRoute: typeof LanguageRoute
   LearnAiRoute: typeof LearnAiRoute
+  PeopleRoute: typeof PeopleRoute
+  WatchListenRoute: typeof WatchListenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/watch-listen': {
+      id: '/watch-listen'
+      path: '/watch-listen'
+      fullPath: '/watch-listen'
+      preLoaderRoute: typeof WatchListenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/people': {
+      id: '/people'
+      path: '/people'
+      fullPath: '/people'
+      preLoaderRoute: typeof PeopleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn-ai': {
       id: '/learn-ai'
       path: '/learn-ai'
@@ -92,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/civic-guide': {
+      id: '/civic-guide'
+      path: '/civic-guide'
+      fullPath: '/civic-guide'
+      preLoaderRoute: typeof CivicGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,20 +177,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CivicGuideRoute: CivicGuideRoute,
   HistoryRoute: HistoryRoute,
   LanguageRoute: LanguageRoute,
   LearnAiRoute: LearnAiRoute,
+  PeopleRoute: PeopleRoute,
+  WatchListenRoute: WatchListenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
