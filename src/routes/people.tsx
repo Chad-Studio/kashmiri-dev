@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Accent } from "@/components/Accent";
 import { people, crafts, type Person } from "@/data/people";
+import { seo, absoluteUrl } from "@/lib/seo";
 import {
   Dialog,
   DialogContent,
@@ -13,21 +14,13 @@ import {
 
 export const Route = createFileRoute("/people")({
   head: () => ({
-    meta: [
-      { title: "People & Crafts of Kashmir — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "Notable Kashmiri poets, mystics, and traditional crafts — shared heritage of the valley, told in simple English.",
-      },
-      { property: "og:title", content: "People & Crafts of Kashmir — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "Lal Ded, Nund Rishi, Habba Khatoon, and the crafts that shaped Kashmir.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/people" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/people" }],
+    ...seo({
+      title: "People & Crafts of Kashmir",
+      description:
+        "Notable Kashmiri poets, mystics, and traditional crafts — shared heritage of the valley, told in simple English.",
+      ogDescription: "Lal Ded, Nund Rishi, Habba Khatoon, and the crafts that shaped Kashmir.",
+      path: "/people",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -38,7 +31,7 @@ export const Route = createFileRoute("/people")({
           description: "Notable Kashmiri poets, mystics, and traditional crafts.",
           inLanguage: "en",
           learningResourceType: "Guide",
-          url: "https://kashmiri.dev/people",
+          url: absoluteUrl("/people"),
         }),
       },
       ...people.map((p) => ({

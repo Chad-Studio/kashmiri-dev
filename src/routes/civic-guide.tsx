@@ -2,24 +2,17 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Accent } from "@/components/Accent";
 import { civicExplainers } from "@/data/civic";
+import { seo, absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/civic-guide")({
   head: () => ({
-    meta: [
-      { title: "Civic Guide — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "Plain-language guides to RTI, consumer rights, cybercrime reporting, and spotting fake news. Educational, not legal advice.",
-      },
-      { property: "og:title", content: "Civic Guide — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "Simple explainers of long-standing civic rights and services in India.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/civic-guide" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/civic-guide" }],
+    ...seo({
+      title: "Civic Guide",
+      description:
+        "Plain-language guides to RTI, consumer rights, cybercrime reporting, and spotting fake news. Educational, not legal advice.",
+      ogDescription: "Simple explainers of long-standing civic rights and services in India.",
+      path: "/civic-guide",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -30,7 +23,7 @@ export const Route = createFileRoute("/civic-guide")({
           description: "Plain-language guides to civic rights and services in India.",
           inLanguage: "en",
           learningResourceType: "Guide",
-          url: "https://kashmiri.dev/civic-guide",
+          url: absoluteUrl("/civic-guide"),
         }),
       },
     ],

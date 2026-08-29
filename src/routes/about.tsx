@@ -1,24 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
-    meta: [
-      { title: "About & Methodology — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "How Kashmiri.dev is written, how we source content, and how to send corrections. Education only.",
-      },
-      { property: "og:title", content: "About & Methodology — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content:
-          "A free, education-only site about Kashmir. How we write, our sources, and how to reach us.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/about" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/about" }],
+    ...seo({
+      title: "About & Methodology",
+      description:
+        "How Kashmiri.dev is written, how we source content, and how to send corrections. Education only.",
+      ogDescription:
+        "A free, education-only site about Kashmir. How we write, our sources, and how to reach us.",
+      path: "/about",
+    }),
   }),
   component: AboutPage,
 });

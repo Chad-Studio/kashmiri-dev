@@ -3,26 +3,19 @@ import { useMemo, useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Accent } from "@/components/Accent";
 import { scripts, vocabulary, phrases } from "@/data/language";
+import { seo, absoluteUrl } from "@/lib/seo";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/language")({
   head: () => ({
-    meta: [
-      { title: "Kashmiri Language (Koshur) — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "Learn about Kashmiri (Koshur): its scripts, common words, and everyday phrases. Made for beginners.",
-      },
-      { property: "og:title", content: "Kashmiri Language (Koshur) — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content:
-          "A gentle intro to the Kashmiri language — scripts, starter vocabulary, and common phrases.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/language" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/language" }],
+    ...seo({
+      title: "Kashmiri Language (Koshur)",
+      description:
+        "Learn about Kashmiri (Koshur): its scripts, common words, and everyday phrases. Made for beginners.",
+      ogDescription:
+        "A gentle intro to the Kashmiri language — scripts, starter vocabulary, and common phrases.",
+      path: "/language",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -34,7 +27,7 @@ export const Route = createFileRoute("/language")({
             "Scripts, starter vocabulary, and everyday phrases in Kashmiri, for beginners.",
           inLanguage: "en",
           learningResourceType: "Language guide",
-          url: "https://kashmiri.dev/language",
+          url: absoluteUrl("/language"),
         }),
       },
     ],

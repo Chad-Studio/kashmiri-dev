@@ -1,24 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { media } from "@/data/media";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/watch-listen")({
   head: () => ({
-    meta: [
-      { title: "Watch & Listen — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "A curated list of educational podcasts, channels, and audio resources about Kashmiri history, culture, and language.",
-      },
-      { property: "og:title", content: "Watch & Listen — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "Podcasts, YouTube channels, and audio archives to learn about Kashmir.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/watch-listen" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/watch-listen" }],
+    ...seo({
+      title: "Watch & Listen",
+      description:
+        "A curated list of educational podcasts, channels, and audio resources about Kashmiri history, culture, and language.",
+      ogDescription: "Podcasts, YouTube channels, and audio archives to learn about Kashmir.",
+      path: "/watch-listen",
+    }),
   }),
   component: WatchListenPage,
 });

@@ -1,24 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
 import { numbers } from "@/data/numbers";
+import { seo, absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/language/numbers")({
   head: () => ({
-    meta: [
-      { title: "Kashmiri Counting 1 to 50 (Koshur Numbers) — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "Learn Kashmiri counting from 1 to 50 in simple Roman transliteration. Koshur numbers for beginners, with notes on pronunciation and sources.",
-      },
-      { property: "og:title", content: "Kashmiri Counting 1 to 50 — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "Kashmiri (Koshur) numbers 1 to 50 with easy Roman spellings for beginners.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/language/numbers" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/language/numbers" }],
+    ...seo({
+      title: "Kashmiri Counting 1 to 50 (Koshur Numbers)",
+      description:
+        "Learn Kashmiri counting from 1 to 50 in simple Roman transliteration. Koshur numbers for beginners, with notes on pronunciation and sources.",
+      ogDescription: "Kashmiri (Koshur) numbers 1 to 50 with easy Roman spellings for beginners.",
+      path: "/language/numbers",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -30,11 +23,11 @@ export const Route = createFileRoute("/language/numbers")({
             "Kashmiri (Koshur) numbers from 1 to 50 in Roman transliteration, for beginners.",
           inLanguage: "en",
           learningResourceType: "Language guide",
-          url: "https://kashmiri.dev/language/numbers",
+          url: absoluteUrl("/language/numbers"),
           isPartOf: {
             "@type": "LearningResource",
             name: "Kashmiri Language (Koshur)",
-            url: "https://kashmiri.dev/language",
+            url: absoluteUrl("/language"),
           },
         }),
       },

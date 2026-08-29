@@ -3,26 +3,20 @@ import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Accent } from "@/components/Accent";
 import { prompts, tools, awareness } from "@/data/ai";
+import { seo, absoluteUrl } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 
 export const Route = createFileRoute("/learn-ai")({
   head: () => ({
-    meta: [
-      { title: "Learn with AI — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "Ready-to-use AI prompts for study, English, coding, and CVs. Plus free tools and AI safety tips.",
-      },
-      { property: "og:title", content: "Learn with AI — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "Use AI safely to learn faster — prompts, tools, and how to spot fake AI content.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/learn-ai" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/learn-ai" }],
+    ...seo({
+      title: "Learn with AI",
+      description:
+        "Ready-to-use AI prompts for study, English, coding, and CVs. Plus free tools and AI safety tips.",
+      ogDescription:
+        "Use AI safely to learn faster — prompts, tools, and how to spot fake AI content.",
+      path: "/learn-ai",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -33,7 +27,7 @@ export const Route = createFileRoute("/learn-ai")({
           description: "AI prompts, free tools, and safety tips for learning with AI.",
           inLanguage: "en",
           learningResourceType: "Guide",
-          url: "https://kashmiri.dev/learn-ai",
+          url: absoluteUrl("/learn-ai"),
         }),
       },
       {

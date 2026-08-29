@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { timeline, type TimelineEntry } from "@/data/history";
+import { seo, absoluteUrl } from "@/lib/seo";
 import {
   Dialog,
   DialogContent,
@@ -12,21 +13,13 @@ import {
 
 export const Route = createFileRoute("/history")({
   head: () => ({
-    meta: [
-      { title: "History of Kashmir — Kashmiri.dev" },
-      {
-        name: "description",
-        content:
-          "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
-      },
-      { property: "og:title", content: "History of Kashmir — Kashmiri.dev" },
-      {
-        property: "og:description",
-        content: "From the Nilamata Purana to Dogra rule — a clear timeline of Kashmir's past.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/history" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/history" }],
+    ...seo({
+      title: "History of Kashmir",
+      description:
+        "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
+      ogDescription: "From the Nilamata Purana to Dogra rule — a clear timeline of Kashmir's past.",
+      path: "/history",
+    }),
     scripts: [
       {
         type: "application/ld+json",
@@ -38,7 +31,7 @@ export const Route = createFileRoute("/history")({
             "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
           inLanguage: "en",
           learningResourceType: "Timeline",
-          url: "https://kashmiri.dev/history",
+          url: absoluteUrl("/history"),
         }),
       },
     ],

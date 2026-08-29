@@ -1,26 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { seo } from "@/lib/seo";
 import { Accent } from "@/components/Accent";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
-      {
-        name: "description",
-        content:
-          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
-      },
-      { property: "og:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
-      {
-        property: "og:description",
-        content:
-          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
-      },
-      { property: "og:url", content: "https://kashmiri.dev/" },
-    ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/" }],
-  }),
+  head: () =>
+    seo({
+      title: "Kashmiri.dev — Learn Kashmir's history, language, and AI",
+      exactTitle: true,
+      description:
+        "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
+      path: "/",
+    }),
   component: Home,
 });
 
