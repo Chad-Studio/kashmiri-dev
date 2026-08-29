@@ -37,7 +37,8 @@ export const media: MediaResource[] = [
     type: "audio",
     topic: "Traditional Kashmiri music",
     url: "https://sangeetnatak.gov.in/",
-    oneLiner: "India's national academy for music and dance, with recordings of Sufiana and folk music from Kashmir.",
+    oneLiner:
+      "India's national academy for music and dance, with recordings of Sufiana and folk music from Kashmir.",
     lang: "en",
   },
 ];

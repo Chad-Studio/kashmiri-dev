@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { Accent } from "@/components/Accent";
 import { civicExplainers } from "@/data/civic";
 
 export const Route = createFileRoute("/civic-guide")({
@@ -14,8 +15,7 @@ export const Route = createFileRoute("/civic-guide")({
       { property: "og:title", content: "Civic Guide — Kashmiri.dev" },
       {
         property: "og:description",
-        content:
-          "Simple explainers of long-standing civic rights and services in India.",
+        content: "Simple explainers of long-standing civic rights and services in India.",
       },
       { property: "og:url", content: "https://kashmiri.dev/civic-guide" },
     ],
@@ -27,8 +27,7 @@ export const Route = createFileRoute("/civic-guide")({
           "@context": "https://schema.org",
           "@type": "LearningResource",
           name: "Civic Guide",
-          description:
-            "Plain-language guides to civic rights and services in India.",
+          description: "Plain-language guides to civic rights and services in India.",
           inLanguage: "en",
           learningResourceType: "Guide",
           url: "https://kashmiri.dev/civic-guide",
@@ -53,37 +52,26 @@ function CivicGuidePage() {
   return (
     <SiteLayout>
       <section className="mx-auto max-w-3xl px-4 pt-12 pb-6">
-        <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
-          Civic Guide
-        </p>
-        <h1 className="mt-3 font-serif text-4xl text-foreground">
-          Know your rights, simply
-        </h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">Civic Guide</p>
+        <h1 className="mt-3 font-serif text-4xl text-foreground">Know your rights, simply</h1>
         <p className="mt-4 text-muted-foreground leading-relaxed">
-          This page explains general rights and services in simple English. It is
-          educational information, not legal advice.
+          This page explains general rights and services in simple English. It is educational
+          information, not legal advice.
         </p>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 pb-16 space-y-6">
         {civicExplainers.map((e) => (
-          <article
-            key={e.id}
-            className="rounded-xl border border-border bg-card p-6"
-          >
-            <div
-              aria-hidden
-              className="h-1 w-10 rounded-full mb-3"
-              style={{ background: "linear-gradient(90deg, var(--saffron), var(--chinar))" }}
-            />
+          <article key={e.id} className="rounded-xl border border-border bg-card p-6">
+            <Accent className="w-10" />
             <h2 className="font-serif text-2xl text-foreground">{e.title}</h2>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              {e.summary}
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{e.summary}</p>
 
             <ol className="mt-4 list-decimal pl-5 text-sm text-foreground/90 space-y-1.5">
               {e.steps.map((s) => (
-                <li key={s} className="leading-relaxed">{s}</li>
+                <li key={s} className="leading-relaxed">
+                  {s}
+                </li>
               ))}
             </ol>
 

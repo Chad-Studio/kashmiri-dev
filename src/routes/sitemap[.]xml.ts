@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type {} from "@tanstack/react-start";
 
 const BASE_URL = "https://kashmiri.dev";
+const LAST_MODIFIED = "2026-08-29";
 
 const paths = [
   { path: "/", priority: "1.0", changefreq: "weekly" as const },
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const urls = paths
           .map(
             (e) =>
-              `  <url>\n    <loc>${BASE_URL}${e.path}</loc>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
+              `  <url>\n    <loc>${BASE_URL}${e.path}</loc>\n    <lastmod>${LAST_MODIFIED}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
           )
           .join("\n");
         const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;

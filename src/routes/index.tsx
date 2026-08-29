@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/SiteLayout";
+import { Accent } from "@/components/Accent";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -53,7 +54,8 @@ function Home() {
           <span className="text-primary">its past, its words, its future.</span>
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          A calm, ad-free place made for Kashmiri readers. Simple English. No accounts. Just learning.
+          A calm, ad-free place made for Kashmiri readers. Simple English. No accounts. Just
+          learning.
         </p>
       </section>
 
@@ -65,11 +67,7 @@ function Home() {
               to={c.to}
               className="group rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
-              <div
-                aria-hidden
-                className="h-1.5 w-10 rounded-full mb-4"
-                style={{ background: "linear-gradient(90deg, var(--saffron), var(--chinar))" }}
-              />
+              <Accent className="mb-4 h-1.5 w-10" />
               <h2 className="font-serif text-2xl text-foreground group-hover:text-primary transition-colors">
                 {c.title}
               </h2>
@@ -84,7 +82,8 @@ function Home() {
 
       <section className="mx-auto max-w-3xl px-4 pb-16 text-center text-sm text-muted-foreground">
         <p>
-          Kashmiri.dev is for <strong className="text-foreground">education only</strong>. No politics. No news. Only learning.
+          Kashmiri.dev is for <strong className="text-foreground">education only</strong>. No
+          politics. No news. Only learning.
         </p>
       </section>
     </SiteLayout>

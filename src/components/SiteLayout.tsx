@@ -1,14 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { Menu, Moon, Sun, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { useTheme } from "@/hooks/use-theme";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const navItems = [
   { to: "/history", label: "History" },
@@ -31,13 +27,14 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 
 function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-  const linkCls =
-    "text-sm font-medium text-foreground/80 hover:text-primary transition-colors";
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  const linkCls = "text-sm font-medium text-foreground/80 hover:text-primary transition-colors";
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
-  }, []);
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -47,14 +44,6 @@ function SiteHeader() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
-
-  const toggleTheme = () => {
-    const nextIsDark = !document.documentElement.classList.contains("dark");
-    document.documentElement.classList.toggle("dark", nextIsDark);
-    document.documentElement.style.colorScheme = nextIsDark ? "dark" : "light";
-    localStorage.setItem("theme", nextIsDark ? "dark" : "light");
-    setIsDark(nextIsDark);
-  };
 
   return (
     <header className="border-b border-border/60 backdrop-blur bg-background/80 sticky top-0 z-40">
@@ -99,9 +88,7 @@ function SiteHeader() {
                   {isDark ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="bottom">
-                {isDark ? "Light mode" : "Dark mode"}
-              </TooltipContent>
+              <TooltipContent side="bottom">{isDark ? "Light mode" : "Dark mode"}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
 
@@ -121,10 +108,7 @@ function SiteHeader() {
       </div>
 
       {open && (
-        <nav
-          id="mobile-nav"
-          className="lg:hidden border-t border-border/60 bg-background"
-        >
+        <nav id="mobile-nav" className="lg:hidden border-t border-border/60 bg-background">
           <ul className="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-1">
             {navItems.map((item) => (
               <li key={item.to}>

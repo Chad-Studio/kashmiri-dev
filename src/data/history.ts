@@ -57,7 +57,8 @@ export const timeline: TimelineEntry[] = [
     id: "prehistoric",
     era: "Prehistoric & Ancient Kashmir",
     years: "Before 625 CE",
-    summary: "The valley's oldest past — Stone Age villages, Emperor Ashoka, and a great Buddhist age.",
+    summary:
+      "The valley's oldest past — Stone Age villages, Emperor Ashoka, and a great Buddhist age.",
     fact: "People lived in Kashmir over 4,000 years ago. Later it became a famous centre of Buddhist learning.",
     paragraphs: [
       "The oldest signs of people in Kashmir come from Burzahom, near Srinagar. From about 3000 BCE, people there lived in deep pits dug into the ground to stay warm. They used stone and bone tools and made grey pottery. Some were even buried with their dogs.",
@@ -243,7 +244,7 @@ export const timeline: TimelineEntry[] = [
   },
   {
     id: "budshah",
-    era: "Sultan Zain-ul-Abidin \"Budshah\"",
+    era: 'Sultan Zain-ul-Abidin "Budshah"',
     years: "1420–1470 CE",
     summary: "A golden age of tolerance, learning, and the arts under a beloved king.",
     fact: "Budshah brought back Hindus, ended extra taxes, and supported art and learning.",
@@ -324,10 +325,7 @@ export const timeline: TimelineEntry[] = [
       { name: "Shah Jahan", note: "continued the great garden building" },
       { name: "Nur Jahan", note: "empress who built the Pathar Masjid" },
     ],
-    sources: [
-      "Abul Fazl, Ain-i-Akbari",
-      "UNESCO: Mughal Gardens in Kashmir (tentative list)",
-    ],
+    sources: ["Abul Fazl, Ain-i-Akbari", "UNESCO: Mughal Gardens in Kashmir (tentative list)"],
     lang: "en",
   },
   {
@@ -405,7 +403,10 @@ export const timeline: TimelineEntry[] = [
     people: [
       { name: "Gulab Singh", note: "first Dogra Maharaja of Jammu and Kashmir" },
       { name: "Hari Singh", note: "the last Maharaja" },
-      { name: "Walter Lawrence", note: "British officer who recorded life and taxes in the valley" },
+      {
+        name: "Walter Lawrence",
+        note: "British officer who recorded life and taxes in the valley",
+      },
     ],
     spotlight: {
       title: "The pashmina shawl and the 1865 weavers' protest",

@@ -90,11 +90,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Kashmiri.dev" },
+      { property: "og:locale", content: "en_US" },
+      { name: "theme-color", content: "#fdf9f0", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#292825", media: "(prefers-color-scheme: dark)" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
-      { name: "twitter:description", content: "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley." },
-      { property: "og:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png" },
-      { name: "twitter:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png" },
+      {
+        name: "twitter:title",
+        content: "Kashmiri.dev — Learn Kashmir's history, language, and AI",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png",
+      },
     ],
     links: [
       {

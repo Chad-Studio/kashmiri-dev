@@ -58,30 +58,58 @@ export const prompts: PromptRecipe[] = [
 ];
 
 export const tools: AITool[] = [
-  { name: "ChatGPT", url: "https://chat.openai.com", goodAt: "General questions, writing help, and study support.", lang: "en" },
-  { name: "Google Gemini", url: "https://gemini.google.com", goodAt: "Answers with web search and long documents.", lang: "en" },
-  { name: "Claude", url: "https://claude.ai", goodAt: "Longer writing, careful explanations, and reading big texts.", lang: "en" },
-  { name: "Perplexity", url: "https://www.perplexity.ai", goodAt: "Research questions with sources you can check.", lang: "en" },
-  { name: "Khan Academy (Khanmigo)", url: "https://www.khanacademy.org", goodAt: "Free lessons in maths, science, and more.", lang: "en" },
-  { name: "Google Translate", url: "https://translate.google.com", goodAt: "Quick translation between many languages.", lang: "en" },
+  {
+    name: "ChatGPT",
+    url: "https://chat.openai.com",
+    goodAt: "General questions, writing help, and study support.",
+    lang: "en",
+  },
+  {
+    name: "Google Gemini",
+    url: "https://gemini.google.com",
+    goodAt: "Answers with web search and long documents.",
+    lang: "en",
+  },
+  {
+    name: "Claude",
+    url: "https://claude.ai",
+    goodAt: "Longer writing, careful explanations, and reading big texts.",
+    lang: "en",
+  },
+  {
+    name: "Perplexity",
+    url: "https://www.perplexity.ai",
+    goodAt: "Research questions with sources you can check.",
+    lang: "en",
+  },
+  {
+    name: "Khan Academy (Khanmigo)",
+    url: "https://www.khanacademy.org",
+    goodAt: "Free lessons in maths, science, and more.",
+    lang: "en",
+  },
+  {
+    name: "Google Translate",
+    url: "https://translate.google.com",
+    goodAt: "Quick translation between many languages.",
+    lang: "en",
+  },
 ];
 
 export const awareness: AwarenessTopic[] = [
   {
     title: "AI hallucinations",
-    body:
-      "AI tools sometimes give answers that sound correct but are actually wrong. This is called a \"hallucination\". The AI is not lying on purpose — it just guesses the next words based on patterns.",
+    body: 'AI tools sometimes give answers that sound correct but are actually wrong. This is called a "hallucination". The AI is not lying on purpose — it just guesses the next words based on patterns.',
     tips: [
       "Always check important facts with a trusted source (book, teacher, official website).",
-      "Ask the AI: \"Give me your sources.\" Then open those sources yourself.",
+      'Ask the AI: "Give me your sources." Then open those sources yourself.',
       "Be extra careful with names, dates, numbers, and medical or legal advice.",
     ],
     lang: "en",
   },
   {
     title: "Deepfakes",
-    body:
-      "A deepfake is a fake video, image, or voice made by AI. It can show a real person saying or doing something they never said or did. Deepfakes are getting harder to notice with the eye alone.",
+    body: "A deepfake is a fake video, image, or voice made by AI. It can show a real person saying or doing something they never said or did. Deepfakes are getting harder to notice with the eye alone.",
     tips: [
       "Do not trust a shocking video just because it looks real.",
       "Look for the original source: which news site or official account posted it first?",
@@ -91,13 +119,12 @@ export const awareness: AwarenessTopic[] = [
   },
   {
     title: "Spotting AI-made fake news & rumours",
-    body:
-      "Fake news often spreads fast on WhatsApp and social media. AI now makes it easier to create fake photos, quotes, and articles. A calm mind and a few small checks can protect you and your family.",
+    body: "Fake news often spreads fast on WhatsApp and social media. AI now makes it easier to create fake photos, quotes, and articles. A calm mind and a few small checks can protect you and your family.",
     tips: [
       "Pause before you share. If it makes you very angry or scared, check it first.",
       "Search a few words from the message online to see if any trusted news site reports it.",
       "Look at the account or website: is it new, anonymous, or full of only shocking posts?",
-      "Ask: \"Who benefits if I believe and share this?\"",
+      'Ask: "Who benefits if I believe and share this?"',
     ],
     lang: "en",
   },
