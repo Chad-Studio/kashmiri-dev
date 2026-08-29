@@ -63,27 +63,27 @@
 
 .dark {
   /* Warm walnut night — the light theme's paper turned to ink */
-  --background: oklch(0.19 0.016 48);
-  --foreground: oklch(0.93 0.014 82);
-  --card: oklch(0.235 0.018 48);
-  --card-foreground: oklch(0.93 0.014 82);
-  --popover: oklch(0.235 0.018 48);
-  --popover-foreground: oklch(0.93 0.014 82);
-  --primary: oklch(0.76 0.11 68);
-  --primary-foreground: oklch(0.22 0.03 60);
-  --secondary: oklch(0.28 0.018 48);
-  --secondary-foreground: oklch(0.93 0.014 82);
-  --muted: oklch(0.26 0.016 48);
-  --muted-foreground: oklch(0.74 0.02 76);
-  --accent: oklch(0.31 0.026 44);
-  --accent-foreground: oklch(0.93 0.014 82);
-  --destructive: oklch(0.63 0.13 28);
+  --background: oklch(0.17 0.014 46);
+  --foreground: oklch(0.95 0.016 84);
+  --card: oklch(0.225 0.02 46);
+  --card-foreground: oklch(0.95 0.016 84);
+  --popover: oklch(0.225 0.02 46);
+  --popover-foreground: oklch(0.95 0.016 84);
+  --primary: oklch(0.8 0.17 72);
+  --primary-foreground: oklch(0.2 0.035 58);
+  --secondary: oklch(0.27 0.022 46);
+  --secondary-foreground: oklch(0.95 0.016 84);
+  --muted: oklch(0.25 0.018 46);
+  --muted-foreground: oklch(0.76 0.026 78);
+  --accent: oklch(0.31 0.032 44);
+  --accent-foreground: oklch(0.95 0.016 84);
+  --destructive: oklch(0.64 0.17 28);
   --destructive-foreground: oklch(0.98 0.01 82);
-  --border: oklch(0.4 0.018 52 / 60%);
-  --input: oklch(0.4 0.018 52 / 70%);
-  --ring: oklch(0.76 0.11 68);
-  --saffron: oklch(0.82 0.13 74);
-  --chinar: oklch(0.76 0.11 68);
+  --border: oklch(0.42 0.024 52 / 60%);
+  --input: oklch(0.42 0.024 52 / 70%);
+  --ring: oklch(0.8 0.17 72);
+  --saffron: oklch(0.84 0.18 76);
+  --chinar: oklch(0.8 0.17 72);
 }
 
 @layer base {
