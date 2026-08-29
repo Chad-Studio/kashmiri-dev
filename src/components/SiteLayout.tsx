@@ -39,13 +39,11 @@ function SiteHeader() {
     <header className="border-b border-border/60 backdrop-blur bg-background/80 sticky top-0 z-40">
       <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
-          <span
-            aria-hidden
-            className="inline-block h-7 w-7 rounded-full"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 30%, var(--saffron), var(--chinar))",
-            }}
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_24_31%20PM-bTgsZ7JmiX96gXgpYjW4AAuMB3qw1B.png"
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-10 object-contain"
           />
           <span className="font-serif text-xl tracking-tight text-foreground">
             Kashmiri<span className="text-primary">.dev</span>

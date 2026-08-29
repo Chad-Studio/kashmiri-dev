@@ -93,15 +93,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
       { name: "twitter:description", content: "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/97110bad-8f50-49fb-aeba-b2a49cef7c19" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/97110bad-8f50-49fb-aeba-b2a49cef7c19" },
+      { property: "og:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_24_31%20PM-bTgsZ7JmiX96gXgpYjW4AAuMB3qw1B.png" },
+      { name: "twitter:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_24_31%20PM-bTgsZ7JmiX96gXgpYjW4AAuMB3qw1B.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      {
+        rel: "icon",
+        href: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_24_31%20PM-bTgsZ7JmiX96gXgpYjW4AAuMB3qw1B.png",
+        type: "image/png",
+      },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap",
