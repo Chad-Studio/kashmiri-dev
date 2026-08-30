@@ -15,7 +15,7 @@ const navItems = [
   { to: "/language", label: "Language" },
   { to: "/people", label: "People" },
   { to: "/civic-guide", label: "Civic Guide" },
-  { to: "/learn-ai", label: "Learn with AI" },
+  { to: "/learn-ai", label: "Learn AI" },
   { to: "/watch-listen", label: "Watch & Listen" },
 ] as const;
 

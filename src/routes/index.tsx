@@ -36,8 +36,8 @@ const cards = [
   },
   {
     to: "/learn-ai" as const,
-    title: "Learn with AI",
-    desc: "Prompts, free tools, and how to stay safe from fake AI content.",
+    title: "Learn AI",
+    desc: "Start from zero: understand AI, check its answers, stay safe, and choose a practical path.",
   },
 ];
 
