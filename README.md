@@ -10,7 +10,7 @@ PAGES (v1):
 
 3. Language (Koshur) — sections: (a) short intro "About the Kashmiri language"; (b) "Scripts" — brief cards explaining the Perso-Arabic script (official), Devanagari, and the historical Sharada script; (c) "Starter vocabulary" — a searchable list of ~30 common Kashmiri words (Roman transliteration + English meaning); (d) "Common phrases" — 10 everyday phrases with transliteration and meaning.
 
-4. Learn with AI — three sections: (a) "Learn anything with AI" — ready-to-copy prompt recipes (each in a card with a copy button) for exam preparation, English practice, learning to code, and writing a CV; (b) "Free AI tools worth trying" — a short vetted list with one line on what each is good at; (c) "AI awareness" — simple explanations of AI hallucinations, deepfakes, and how to spot AI-generated fake news and rumors.
+4. Learn AI — a six-lesson beginner AI literacy course with browser-local progress, short practice tasks and knowledge checks; optional everyday, study/work, and builder paths; prompts that keep the learner participating; and a task-based tool guide.
 
 DESIGN: clean, modern, culturally warm — inspired by Kashmir: deep chinar-autumn red/orange accents, saffron highlights, warm paper-like neutrals. Mobile-first, fast, and lightweight: minimal images, no heavy animations, tasteful not kitschy.
 
