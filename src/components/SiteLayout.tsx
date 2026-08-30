@@ -154,7 +154,7 @@ function SiteFooter() {
           <Link to="/about" className="hover:text-primary transition-colors">
             About
           </Link>
-          <p>Made with care. No accounts. No trackers.</p>
+          <p>Free to read, with no sign-up or tracking.</p>
         </div>
       </div>
     </footer>

@@ -14,8 +14,7 @@ export const Route = createFileRoute("/watch-listen")({
       { property: "og:title", content: "Watch & Listen — Kashmiri.dev" },
       {
         property: "og:description",
-        content:
-          "Podcasts, YouTube channels, and audio archives to learn about Kashmir.",
+        content: "Podcasts, YouTube channels, and audio archives to learn about Kashmir.",
       },
       { property: "og:url", content: "https://kashmiri.dev/watch-listen" },
     ],
@@ -41,11 +40,11 @@ function WatchListenPage() {
           Learn by watching and listening
         </h1>
         <p className="mt-4 text-muted-foreground leading-relaxed">
-          A short, careful list of educational resources about Kashmiri history,
+          A growing selection of podcasts, videos, and audio archives about Kashmiri history,
           culture, and language.
         </p>
         <p className="mt-3 text-sm text-muted-foreground italic">
-          This list is curated and will grow. Suggest additions coming soon.
+          We are still adding to this list and plan to open suggestions soon.
         </p>
       </section>
 
@@ -66,9 +65,7 @@ function WatchListenPage() {
                   {typeLabel[m.type] ?? m.type}
                 </span>
               </div>
-              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                {m.oneLiner}
-              </p>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{m.oneLiner}</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 <span className="font-medium text-foreground/80">Topic:</span> {m.topic}
               </p>

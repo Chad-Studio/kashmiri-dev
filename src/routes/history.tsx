@@ -1,29 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { timeline, type TimelineEntry } from "@/data/history";
+import {
+  evidenceLabels,
+  historyMyths,
+  timeline,
+  type EvidenceStatus,
+  type TimelineEntry,
+} from "@/data/history";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "History of Kashmir — Kashmiri.dev" },
+      { title: "History of Kashmir: Evidence & Traditions — Kashmiri.dev" },
       {
         name: "description",
         content:
-          "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
+          "An evidence-aware timeline of Kashmir's history, separating archaeology, scholarly debate, and tradition, with common myths checked.",
       },
-      { property: "og:title", content: "History of Kashmir — Kashmiri.dev" },
+      { property: "og:title", content: "History of Kashmir: Evidence & Traditions — Kashmiri.dev" },
       {
         property: "og:description",
         content:
-          "From the Nilamata Purana to Dogra rule — a clear timeline of Kashmir's past.",
+          "Explore Kashmir's past through archaeology, texts, traditions, and carefully sourced corrections.",
       },
       { property: "og:url", content: "https://kashmiri.dev/history" },
     ],
@@ -34,9 +40,9 @@ export const Route = createFileRoute("/history")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "LearningResource",
-          name: "History of Kashmir",
+          name: "History of Kashmir: Evidence and Traditions",
           description:
-            "A simple timeline of Kashmir's history from ancient times to 1947, with sources for every entry.",
+            "A sourced timeline distinguishing established evidence, scholarly debate, and tradition.",
           inLanguage: "en",
           learningResourceType: "Timeline",
           url: "https://kashmiri.dev/history",
@@ -47,160 +53,199 @@ export const Route = createFileRoute("/history")({
   component: HistoryPage,
 });
 
+const statusStyles: Record<EvidenceStatus, string> = {
+  established: "border-primary/30 bg-primary/10 text-primary",
+  debated: "border-border bg-muted text-foreground",
+  tradition: "border-border bg-card text-muted-foreground",
+};
+
+function EvidenceBadge({ status }: { status: EvidenceStatus }) {
+  return (
+    <span
+      className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${statusStyles[status]}`}
+    >
+      {evidenceLabels[status]}
+    </span>
+  );
+}
+
 function HistoryPage() {
   const [active, setActive] = useState<TimelineEntry | null>(null);
 
   return (
     <SiteLayout>
-      <section className="mx-auto max-w-3xl px-4 pt-12 pb-6">
-        <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
-          History
-        </p>
-        <h1 className="mt-3 font-serif text-4xl text-foreground">
-          A short history of Kashmir
-        </h1>
-        <p className="mt-4 text-muted-foreground leading-relaxed">
-          From the old story of a drained lake to the end of Dogra rule in 1947 — a
-          calm walk through the eras of Kashmir. Tap any entry to read more.
-        </p>
-      </section>
+      <main>
+        <section className="mx-auto max-w-3xl px-4 pt-12 pb-8">
+          <p className="font-semibold text-sm uppercase tracking-[0.2em] text-primary">History</p>
+          <h1 className="mt-3 text-balance font-serif text-4xl text-foreground">
+            Kashmir&apos;s past, with the evidence in view
+          </h1>
+          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
+            This timeline follows the valley from its earliest settlements to 1947. Labels show
+            where an account rests on archaeology, where scholars disagree, and where it comes from
+            inherited tradition.
+          </p>
+        </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-16">
-        <ol className="relative border-s-2 border-primary/30 ms-4 space-y-8">
-          {timeline.map((entry) => (
-            <li key={entry.id} className="ps-6 relative">
-              <span
-                aria-hidden
-                className="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-2 border-background"
-                style={{
-                  background:
-                    "linear-gradient(135deg, var(--saffron), var(--chinar))",
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => setActive(entry)}
-                className="w-full text-left rounded-xl border border-border bg-card p-5 hover:border-primary/60 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h2 className="font-serif text-xl text-foreground">
-                    {entry.era}
-                  </h2>
-                  <div className="flex items-center gap-2">
-                    {entry.legendary && (
-                      <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground bg-muted rounded-full px-2 py-0.5">
-                        Legend
-                      </span>
-                    )}
-                    <span className="text-xs font-medium text-primary bg-primary/10 rounded-full px-2 py-0.5">
+        <section aria-labelledby="evidence-key" className="mx-auto max-w-3xl px-4 pb-8">
+          <div className="rounded-xl border border-border bg-muted/40 p-5">
+            <h2 id="evidence-key" className="font-serif text-xl text-foreground">
+              How to read the evidence
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Archaeology can test dates, settlements, and objects. Literary works preserve memory,
+              belief, and argument, but are not simple transcripts of events. The Nilamata Purana
+              and the Rajatarangini are essential sources whose genre and date must remain visible.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2" aria-label="Evidence status key">
+              {(["established", "debated", "tradition"] as const).map((status) => (
+                <EvidenceBadge key={status} status={status} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Historical timeline" className="mx-auto max-w-3xl px-4 pb-16">
+          <ol className="relative ms-4 flex flex-col gap-8 border-s-2 border-primary/30">
+            {timeline.map((entry) => (
+              <li key={entry.id} className="relative ps-6">
+                <span
+                  aria-hidden
+                  className="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-2 border-background bg-primary"
+                />
+                <button
+                  type="button"
+                  onClick={() => setActive(entry)}
+                  className="w-full rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-primary/60 hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <h2 className="font-serif text-xl text-foreground">{entry.era}</h2>
+                    <span className="rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
                       {entry.years}
                     </span>
                   </div>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {entry.fact}
+                  {entry.status && (
+                    <div className="mt-3">
+                      <EvidenceBadge status={entry.status} />
+                    </div>
+                  )}
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{entry.fact}</p>
+                  <span className="mt-3 inline-block text-xs font-medium text-primary">
+                    Read more →
+                  </span>
+                </button>
+              </li>
+            ))}
+            <li className="relative ps-6">
+              <span
+                aria-hidden
+                className="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-2 border-background bg-muted-foreground/40"
+              />
+              <div className="rounded-xl border border-dashed border-border bg-muted/40 p-5">
+                <h2 className="font-serif text-lg text-foreground">Modern history (after 1947)</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  This timeline currently ends in 1947. We hope to cover later history in a future
+                  update.
                 </p>
-                <span className="mt-3 inline-block text-xs font-medium text-primary">
-                  Read more →
-                </span>
-              </button>
-
+              </div>
             </li>
-          ))}
-          <li className="ps-6 relative">
-            <span
-              aria-hidden
-              className="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-2 border-background bg-muted-foreground/40"
-            />
-            <div className="rounded-xl border border-dashed border-border bg-muted/40 p-5">
-              <h2 className="font-serif text-lg text-foreground">
-                Modern history (after 1947)
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Modern Kashmir history is beyond the scope of this site for now. We
-                focus on education, not politics or news.
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
+          </ol>
+        </section>
 
-      <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+        <section aria-labelledby="myths-heading" className="border-y border-border bg-muted/30">
+          <div className="mx-auto max-w-5xl px-4 py-16">
+            <p className="font-semibold text-sm uppercase tracking-[0.2em] text-primary">
+              Fact check
+            </p>
+            <h2
+              id="myths-heading"
+              className="mt-3 text-balance font-serif text-3xl text-foreground"
+            >
+              Common myths, checked
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Some familiar stories come from tradition rather than firm historical evidence. Here
+              is what the available research can—and cannot—tell us about them.
+            </p>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {historyMyths.map((item) => (
+                <article key={item.myth} className="rounded-xl border border-border bg-card p-5">
+                  <EvidenceBadge status={item.status} />
+                  <h3 className="mt-4 font-serif text-lg text-foreground">Myth: {item.myth}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    <span className="font-semibold text-foreground">What the evidence says: </span>
+                    {item.correction}
+                  </p>
+                  <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
+                    <span className="font-semibold text-foreground">Source: </span>
+                    {item.source}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Dialog open={!!active} onOpenChange={(open) => !open && setActive(null)}>
+        <DialogContent className="max-h-[85vh] max-w-lg overflow-y-auto">
           {active && (
             <>
               <DialogHeader>
-                <DialogTitle className="font-serif text-2xl">
-                  {active.era}
-                </DialogTitle>
-                <DialogDescription className="text-primary font-medium">
-                  {active.years}
-                </DialogDescription>
+                <div className="flex flex-wrap items-center gap-2">
+                  {active.status && <EvidenceBadge status={active.status} />}
+                  <DialogDescription className="font-medium text-primary">
+                    {active.years}
+                  </DialogDescription>
+                </div>
+                <DialogTitle className="font-serif text-2xl">{active.era}</DialogTitle>
               </DialogHeader>
-              <div className="space-y-4 text-sm">
-                <p className="text-foreground font-medium leading-relaxed">
-                  {active.summary}
-                </p>
-                <div className="space-y-3">
-                  {active.paragraphs.map((p, i) => (
-                    <p key={i} className="text-foreground leading-relaxed">
-                      {p}
+              <div className="flex flex-col gap-4 text-sm">
+                <p className="font-medium leading-relaxed text-foreground">{active.summary}</p>
+                <div className="flex flex-col gap-3">
+                  {active.paragraphs.map((paragraph) => (
+                    <p key={paragraph} className="leading-relaxed text-foreground">
+                      {paragraph}
                     </p>
                   ))}
                 </div>
                 {active.developments.length > 0 && (
                   <div>
-                    <h3 className="font-serif text-base text-foreground mb-1">
-                      In this age
-                    </h3>
-                    <ul className="list-disc pl-5 text-muted-foreground space-y-0.5">
-                      {active.developments.map((d) => (
-                        <li key={d}>{d}</li>
+                    <h3 className="mb-1 font-serif text-base text-foreground">In this age</h3>
+                    <ul className="flex list-disc flex-col gap-1 pl-5 text-muted-foreground">
+                      {active.developments.map((development) => (
+                        <li key={development}>{development}</li>
                       ))}
                     </ul>
                   </div>
                 )}
                 {active.spotlight && (
-                  <div
-                    className="rounded-xl border border-primary/20 p-4"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, color-mix(in oklab, var(--saffron) 14%, transparent), color-mix(in oklab, var(--chinar) 8%, transparent))",
-                    }}
-                  >
-                    <h3 className="font-serif text-base text-foreground mb-1">
+                  <div className="rounded-xl border border-primary/20 bg-primary/10 p-4">
+                    <h3 className="mb-1 font-serif text-base text-foreground">
                       {active.spotlight.title}
                     </h3>
-                    <p className="text-foreground/90 leading-relaxed">
-                      {active.spotlight.body}
-                    </p>
+                    <p className="leading-relaxed text-foreground/90">{active.spotlight.body}</p>
                   </div>
                 )}
                 {active.people.length > 0 && (
                   <div>
-                    <h3 className="font-serif text-base text-foreground mb-1">
-                      Notable people
-                    </h3>
-                    <ul className="list-disc pl-5 text-muted-foreground space-y-0.5">
-                      {active.people.map((p) => (
-                        <li key={p.name}>
-                          <span className="font-medium text-foreground">
-                            {p.name}
-                          </span>
+                    <h3 className="mb-1 font-serif text-base text-foreground">Notable people</h3>
+                    <ul className="flex list-disc flex-col gap-1 pl-5 text-muted-foreground">
+                      {active.people.map((person) => (
+                        <li key={person.name}>
+                          <span className="font-medium text-foreground">{person.name}</span>
                           {" — "}
-                          {p.note}
+                          {person.note}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
                 <div>
-                  <h3 className="font-serif text-base text-foreground mb-1">
-                    Sources
-                  </h3>
-                  <ul className="list-disc pl-5 text-muted-foreground space-y-0.5">
-                    {active.sources.map((s) => (
-                      <li key={s}>{s}</li>
+                  <h3 className="mb-1 font-serif text-base text-foreground">Sources</h3>
+                  <ul className="flex list-disc flex-col gap-1 break-words pl-5 text-muted-foreground">
+                    {active.sources.map((source) => (
+                      <li key={source}>{source}</li>
                     ))}
                   </ul>
                 </div>
@@ -209,7 +254,6 @@ function HistoryPage() {
           )}
         </DialogContent>
       </Dialog>
-
     </SiteLayout>
   );
 }
