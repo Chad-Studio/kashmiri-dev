@@ -1,4 +1,5 @@
 export type Lang = "en";
+export type EvidenceStatus = "established" | "debated" | "tradition";
 
 export interface TimelinePerson {
   name: string;
@@ -20,69 +21,176 @@ export interface TimelineEntry {
   developments: string[];
   people: TimelinePerson[];
   spotlight?: Spotlight;
-  legendary?: boolean;
+  status?: EvidenceStatus;
   sources: string[];
   lang: Lang;
 }
 
+export interface HistoryMyth {
+  myth: string;
+  correction: string;
+  status: EvidenceStatus;
+  source: string;
+}
+
+export const evidenceLabels: Record<EvidenceStatus, string> = {
+  established: "Established evidence",
+  debated: "Scholarly debate",
+  tradition: "Legend / tradition",
+};
+
+export const historyMyths: HistoryMyth[] = [
+  {
+    myth: "Ashoka founded Srinagari, the first Srinagar.",
+    correction:
+      "Kalhana links Ashoka to Srinagari, but archaeology has not confirmed the foundation story.",
+    status: "tradition",
+    source: "Kalhana, Rajatarangini; M. A. Stein (trans., 1900)",
+  },
+  {
+    myth: "Madhyantika brought both Buddhism and saffron to Kashmir.",
+    correction:
+      "His mission and the saffron story belong to Buddhist sacred biography. Early Buddhism in the region is plausible, but those details are not documented events.",
+    status: "tradition",
+    source: "Frauwallner, The Earliest Vinaya (1956); Lamotte, History of Indian Buddhism",
+  },
+  {
+    myth: "Copper plates from Kanishka's Fourth Council lie buried at Harwan.",
+    correction:
+      "No such plates have been found. Even the council's historicity is contested, though Kushan-era scholarship in Kashmir is well supported.",
+    status: "debated",
+    source: "Lamotte; Willemen, Dessein & Cox, Sarvastivada Buddhist Scholasticism (1998)",
+  },
+  {
+    myth: "Burzahom's two-sun slab is the world's oldest star chart.",
+    correction:
+      "That supernova reading is an imaginative single-case hypothesis; the carving's meaning remains open.",
+    status: "debated",
+    source: "Hamacher, Journal of Astronomical History and Heritage 17.2 (2014)",
+  },
+  {
+    myth: "Kashmir's Neolithic culture came directly from Yangshao China.",
+    correction:
+      "Material parallels exist across a broad Inner Asian sphere, but direct descent has not been demonstrated.",
+    status: "debated",
+    source: "Kashmir Prehistory Project; B. R. Mani, Pragdhara 18 (2008)",
+  },
+  {
+    myth: "The earliest Gonanda kings have firm dates.",
+    correction:
+      "The earliest books of the Rajatarangini combine myth, memory, and poetry; precise regnal lists cannot be treated as verified chronology.",
+    status: "tradition",
+    source: "Slaje (2008); Kaul, History and Theory (2014)",
+  },
+  {
+    myth: "Kashmir has one provable 'original religion.'",
+    correction:
+      "The evidence shows layered traditions and long periods of coexistence—not a single timeless identity.",
+    status: "established",
+    source: "Chitralekha Zutshi, Kashmir's Contested Pasts (2014)",
+  },
+];
+
 export const timeline: TimelineEntry[] = [
   {
-    id: "origin-legend",
-    era: "The Origin Legend (Nilamata Purana)",
-    years: "Ancient legend",
-    summary: "The old story of how the valley was born from a lake.",
-    fact: "An old text says Kashmir was once a great lake, drained by the sage Kashyapa.",
+    id: "neolithic",
+    era: "Neolithic Kashmir",
+    years: "Late 4th millennium–c. 1000 BCE",
+    summary:
+      "Archaeology reveals early farming communities, distinctive tools, and unusual burial customs.",
+    fact: "Burzahom, Gufkral, and Kanispora preserve the valley's oldest well-attested settled life.",
+    status: "established",
     paragraphs: [
-      "The Nilamata Purana is an old Sanskrit text, written around the 6th to 8th century CE. It tells the origin story of Kashmir.",
-      "In the story, the valley was once a huge lake called Satisar. A water demon lived there and troubled the Naga (serpent) gods. The sage Kashyapa, with the help of the gods, drained the lake so people could live in the valley. Many people believe the name 'Kashmir' comes from Kashyapa.",
-      "The text also lists the festivals, rivers, and holy places of early Kashmir. It mixed local Naga nature-worship with wider Hindu beliefs. Kalhana later used it as one of his sources.",
+      "At Burzahom and Gufkral, people used ground-stone axes, finely worked bone tools, and grey or black pottery. Deep, plastered pits may have served as dwellings or, in some cases, storage spaces. Burials sometimes placed people with dogs—an unusual practice in the subcontinent.",
+      "Wheat, barley, and lentils connect the valley to wider networks of introduced agriculture. Pottery, beads, and a few copper objects also show contact with the Swat region and lands farther south and north, but they do not prove a single migration route.",
+      "The dates remain broad: Burzahom's full excavation report was never published, some charcoal dates may suffer from the 'old wood' effect, and newer grain dates do not always agree with them. Century-level precision would therefore be misleading.",
     ],
     developments: [
-      "Explains the name 'Kashmir' (from the sage Kashyapa)",
-      "Shows early Naga (serpent) nature-worship in the valley",
-      "Lists the old festivals and holy places of Kashmir",
+      "Pit structures and early farming at Burzahom and Gufkral",
+      "A rich bone-tool industry and ground-stone axes",
+      "Human-and-dog burials and a reported trepanned skull",
+      "Exchange links with Swat, pre-Harappan sites, and Inner Asia",
     ],
     people: [
-      { name: "Kashyapa", note: "the sage who, in legend, drained the lake" },
-      { name: "Nila", note: "king of the Naga serpent gods" },
+      { name: "T. N. Khazanchi", note: "led the main Burzahom excavations, 1960–1971" },
+      { name: "Mumtaz Yatoo and Alison Betts", note: "lead recent survey and dating work" },
     ],
-    legendary: true,
+    spotlight: {
+      title: "The famous carved slab",
+      body: "A Burzahom hunting scene includes two discs in the sky. One study interpreted them as a supernova and called the slab an ancient sky chart. Peer review found that interpretation speculative and based on loose assumptions; the image's meaning is unknown.",
+    },
     sources: [
-      "Ved Kumari Ghai, The Nilamata Purana",
-      "M. A. Stein, Kalhana's Rajatarangini: Introduction (1900)",
+      "Kashmir Prehistory Project (Yatoo, Betts & Spate)",
+      "Indian Archaeology – A Review: Burzahom excavation summaries",
+      "Hamacher, 'Are Supernovae Recorded in Indigenous Astronomical Traditions?' (2014)",
     ],
     lang: "en",
   },
   {
-    id: "prehistoric",
-    era: "Prehistoric & Ancient Kashmir",
-    years: "Before 625 CE",
-    summary: "The valley's oldest past — Stone Age villages, Emperor Ashoka, and a great Buddhist age.",
-    fact: "People lived in Kashmir over 4,000 years ago. Later it became a famous centre of Buddhist learning.",
+    id: "buddhist-kashmir",
+    era: "Buddhist Kashmir",
+    years: "c. 3rd century BCE–12th century CE",
+    summary: "Kashmir became a major centre of Buddhist philosophy and transmission across Asia.",
+    fact: "Its role in Sarvastivada-Vaibhasika scholarship is well established; its founding stories are not.",
+    status: "established",
     paragraphs: [
-      "The oldest signs of people in Kashmir come from Burzahom, near Srinagar. From about 3000 BCE, people there lived in deep pits dug into the ground to stay warm. They used stone and bone tools and made grey pottery. Some were even buried with their dogs.",
-      "Around 250 BCE, the Indian emperor Ashoka is said to have founded the old city of Srinagari, near today's Srinagar, and built Buddhist shrines. Buddhism grew strong in the valley in these years.",
-      "Under the Kushan king Kanishka, about the 1st to 2nd century CE, Kashmir hosted the Fourth Buddhist Council. From Kashmir, Buddhism spread to Tibet and Central Asia.",
-      "Kalhana's chronicle names very old kings before this time, but their stories mix history with legend. Kashmir's history becomes clear and reliable only from about 625 CE.",
+      "Buddhist traditions say that Madhyantika converted Kashmir after Ashoka's Third Council. Kalhana also links Ashoka with Srinagari and Buddhist building. These are important traditions, not independently confirmed events.",
+      "What is firmly known is Kashmir's importance to Sarvastivada-Vaibhasika learning. The Mahavibhasa became the school's central commentary. Vasubandhu summarized and criticized this system in the Abhidharmakosa, and the Kashmir-born Samghabhadra answered him in defence of Vaibhasika thought.",
+      "Kumarajiva studied in Kashmir before becoming one of China's greatest translators. Xuanzang, visiting around 631–633, described roughly one hundred monasteries and more than five thousand monks. Later Kashmiri teachers, translators, and artists shaped western Tibetan Buddhism, especially during the second diffusion from the late 10th century onward.",
+      "Buddhism declined gradually rather than in one sudden event, coexisting for centuries with Shaiva and Vaishnava traditions.",
     ],
     developments: [
-      "Burzahom: pit dwellings, stone and bone tools, and early farming (about 3000–1000 BCE)",
-      "Emperor Ashoka linked to the founding of Srinagari and early Buddhist shrines",
-      "The Fourth Buddhist Council makes Kashmir a world centre of Buddhist learning",
-      "Buddhism carried from Kashmir to Tibet and Central Asia",
+      "Sarvastivada-Vaibhasika scholarship and the Mahavibhasa",
+      "Monastic centres at Harwan, Ushkur, Parihaspora, and Kanispora",
+      "Kumarajiva's studies and Xuanzang's two-year stay",
+      "Later transmission to Tibet through translators, teachers, and artists",
     ],
     people: [
-      { name: "Ashoka", note: "Mauryan emperor linked to the founding of Srinagari" },
-      { name: "Kanishka", note: "Kushan king; the Fourth Buddhist Council was held in his time" },
-      { name: "Vasumitra", note: "scholar who led the Fourth Buddhist Council" },
+      { name: "Vasubandhu", note: "summarized and challenged Vaibhasika doctrine" },
+      { name: "Samghabhadra", note: "Kashmiri defender of Vaibhasika thought" },
+      { name: "Kumarajiva", note: "translator who studied in Kashmir as a child" },
+      { name: "Rinchen Zangpo", note: "Tibetan translator who studied with Kashmiri masters" },
     ],
     spotlight: {
-      title: "The Fourth Buddhist Council",
-      body: "Under King Kanishka, around the 1st to 2nd century CE, Buddhist scholars met in Kashmir for the Fourth Buddhist Council. Led by the scholar Vasumitra, they organised the teachings of one Buddhist school and produced a large commentary. This helped Kashmir become a famous place of Buddhist study, and monks carried the religion from here to Tibet and Central Asia.",
+      title: "Kanishka's Fourth Council",
+      body: "Tradition places a council of 500 monks under Vasumitra in Kashmir during Kanishka's reign. Scholars dispute whether the gathering occurred as described, and the Mahavibhasa does not name Kanishka. The broader flowering of Abhidharma scholarship in Kushan-era Kashmir is much better supported.",
     },
     sources: [
-      "Encyclopaedia Britannica: Burzahom",
-      "M. A. Stein, Kalhana's Rajatarangini: Introduction (1900)",
+      "Willemen, Dessein & Cox, Sarvastivada Buddhist Scholasticism (1998)",
+      "K. L. Dhammajoti, Sarvastivada Abhidharma",
+      "Xuanzang, Da Tang Xiyu Ji, Book III (trans. Samuel Beal)",
+      "Stanford Encyclopedia of Philosophy: 'Vasubandhu'",
+    ],
+    lang: "en",
+  },
+  {
+    id: "nilamata",
+    era: "The Nilamata Purana & Naga traditions",
+    years: "Text composed c. 6th–8th century CE",
+    summary:
+      "A Sanskrit work maps Kashmir's sacred landscape and preserves its lake, Naga, and festival traditions.",
+    fact: "The text is evidence for early-medieval belief—not a literal record of Kashmir's geological or ethnic origins.",
+    status: "tradition",
+    paragraphs: [
+      "The Nilamata tells how Kashmir was once the lake Satisaras, drained through the Baramulla gorge so Nagas and humans could share the valley. Nila leads hundreds of Nagas associated with springs and lakes. The story powerfully joins water, place, and sacred memory.",
+      "Scholars disagree on what lies behind these traditions. Some read them as the absorption of local cults or populations into a Puranic framework. Others see no archaeological basis for a distinct historical 'Naga people.' A further, contested theory connects them with Dardic, Nuristani, and Central Asian traditions.",
+      "The text also directs people to celebrate the Buddha's birth, wash Buddha images, decorate monasteries and stupas, and honour monks with robes, food, and books. This shows religious synthesis: Buddhism had reached Kashmir centuries before the Nilamata itself was composed.",
+    ],
+    developments: [
+      "The Satisaras lake-drainage story and Nila's Naga sacred geography",
+      "Rituals tied to Kashmir's rivers, springs, seasons, and festivals",
+      "Buddha-birthday observances within a wider Vaishnava framework",
+      "Competing scholarly readings of the Naga substrate",
+    ],
+    people: [
+      { name: "Kashyapa", note: "sage who drains the lake in the tradition" },
+      { name: "Nila", note: "Naga leader and ritual teacher in the text" },
+      { name: "Ved Kumari Ghai", note: "editor and translator of the Nilamata Purana" },
+    ],
+    sources: [
+      "Nilamata Purana, vv. 709–715, trans. Ved Kumari Ghai",
+      "Ved Kumari Ghai, The Nilamata Purana: A Cultural and Literary Study",
+      "Haroon Rashid, 'Between myth, memory, and history: Revisiting Naga tradition in early Kashmir'",
     ],
     lang: "en",
   },
@@ -90,26 +198,29 @@ export const timeline: TimelineEntry[] = [
     id: "kalhana",
     era: "Kalhana & the Rajatarangini",
     years: "c. 1148–1150 CE",
-    summary: "Kashmir's own great history book — one of the oldest in India.",
-    fact: "Kalhana wrote the Rajatarangini, one of the earliest true histories written in India.",
+    summary:
+      "A foundational Sanskrit poem about Kashmir's kings, shaped by both research and literary purpose.",
+    fact: "The Rajatarangini is indispensable, but it is a work of kavya—not a modern archive or neutral transcript.",
+    status: "debated",
     paragraphs: [
-      "Kalhana was a Kashmiri Brahmin scholar. Around 1148 to 1150 CE he wrote the Rajatarangini, which means 'River of Kings'. It tells the story of Kashmir's rulers from very old times to his own day.",
-      "The book is written in Sanskrit verse and is divided into eight parts. Kalhana used old records, land grants, coins, and inscriptions. He said a good historian should write without love or hatred.",
-      "Scholars say the early parts mix legend with history, but the book becomes reliable from the Karkota kings onward. Later writers like Jonaraja and Srivara continued the story into the Sultan period. Sir Aurel Stein translated it into English in 1900.",
+      "Kalhana's eight-book 'River of Kings' narrates Kashmir's rulers from a mythical past to his own time. He consulted earlier chronicles, inscriptions, land grants, coins, and traditions, and praised impartial judgment.",
+      "Its evidentiary value changes across the work. The earliest books contain legendary dynasties and cannot support exact regnal dates; later books, especially from the Karkota period onward, stand closer to events and can often be checked against other evidence.",
+      "Modern scholarship also asks readers to take its poetry seriously. Kalhana selected and shaped the past for literary, ethical, and spiritual ends. Jonaraja and Srivara later continued Kashmir's chronicle tradition, while Aurel Stein produced the standard annotated English translation in 1900.",
     ],
     developments: [
-      "One of the earliest works of true history in India",
-      "A key source for almost everything we know about early Kashmir",
-      "Continued by later writers (Jonaraja, Srivara) into the 1400s",
+      "An unusually sustained regional account written in Sanskrit verse",
+      "Early books preserve tradition; later books offer stronger historical evidence",
+      "Continued by Jonaraja and Srivara into the Sultanate period",
     ],
     people: [
-      { name: "Kalhana", note: "author of the Rajatarangini" },
-      { name: "Aurel Stein", note: "scholar who translated and edited it in 1900" },
+      { name: "Kalhana", note: "poet-historian and author of the Rajatarangini" },
+      { name: "Aurel Stein", note: "editor and translator of the 1900 edition" },
       { name: "Jonaraja", note: "later writer who continued the chronicle" },
     ],
     sources: [
-      "Encyclopaedia Britannica: Rajatarangini",
-      "M. A. Stein, Kalhana's Rajatarangini (1900)",
+      "Kalhana, Rajatarangini, trans. M. A. Stein (1900)",
+      "Walter Slaje, 'In the Guise of Poetry—Kalhana Reconsidered' (2008)",
+      "Shonaleeka Kaul, 'Seeing the Past' (History and Theory, 2014)",
     ],
     lang: "en",
   },
@@ -243,7 +354,7 @@ export const timeline: TimelineEntry[] = [
   },
   {
     id: "budshah",
-    era: "Sultan Zain-ul-Abidin \"Budshah\"",
+    era: 'Sultan Zain-ul-Abidin "Budshah"',
     years: "1420–1470 CE",
     summary: "A golden age of tolerance, learning, and the arts under a beloved king.",
     fact: "Budshah brought back Hindus, ended extra taxes, and supported art and learning.",
@@ -324,10 +435,7 @@ export const timeline: TimelineEntry[] = [
       { name: "Shah Jahan", note: "continued the great garden building" },
       { name: "Nur Jahan", note: "empress who built the Pathar Masjid" },
     ],
-    sources: [
-      "Abul Fazl, Ain-i-Akbari",
-      "UNESCO: Mughal Gardens in Kashmir (tentative list)",
-    ],
+    sources: ["Abul Fazl, Ain-i-Akbari", "UNESCO: Mughal Gardens in Kashmir (tentative list)"],
     lang: "en",
   },
   {
@@ -405,7 +513,10 @@ export const timeline: TimelineEntry[] = [
     people: [
       { name: "Gulab Singh", note: "first Dogra Maharaja of Jammu and Kashmir" },
       { name: "Hari Singh", note: "the last Maharaja" },
-      { name: "Walter Lawrence", note: "British officer who recorded life and taxes in the valley" },
+      {
+        name: "Walter Lawrence",
+        note: "British officer who recorded life and taxes in the valley",
+      },
     ],
     spotlight: {
       title: "The pashmina shawl and the 1865 weavers' protest",
