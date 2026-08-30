@@ -81,9 +81,9 @@ function HistoryPage() {
             Kashmir&apos;s past, with the evidence in view
           </h1>
           <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            A timeline from the valley&apos;s earliest settlements to 1947. Archaeology, scholarly
-            interpretation, and inherited tradition are marked separately so you can see not only
-            what is told, but how we know it.
+            This timeline follows the valley from its earliest settlements to 1947. Labels show
+            where an account rests on archaeology, where scholars disagree, and where it comes from
+            inherited tradition.
           </p>
         </section>
 
@@ -144,7 +144,8 @@ function HistoryPage() {
               <div className="rounded-xl border border-dashed border-border bg-muted/40 p-5">
                 <h2 className="font-serif text-lg text-foreground">Modern history (after 1947)</h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  This timeline currently ends in 1947. We hope to cover later history in a future update.
+                  This timeline currently ends in 1947. We hope to cover later history in a future
+                  update.
                 </p>
               </div>
             </li>
@@ -163,8 +164,8 @@ function HistoryPage() {
               Common myths, checked
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              A tradition can matter without being a verified event. These corrections keep valued
-              stories visible while avoiding claims the evidence cannot carry.
+              Some familiar stories come from tradition rather than firm historical evidence. Here
+              is what the available research can—and cannot—tell us about them.
             </p>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {historyMyths.map((item) => (
