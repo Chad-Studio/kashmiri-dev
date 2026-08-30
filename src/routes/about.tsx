@@ -34,10 +34,11 @@ function AboutPage() {
           About Kashmiri.dev
         </h1>
         <p className="mt-4 text-muted-foreground leading-relaxed">
-          Kashmiri.dev is a free, education-only website about Kashmir — its
-          history, language, people, and practical learning. It is made for
-          Kashmiri readers, especially in the valley. There is no politics, no
-          news, no ads, and no tracking.
+          Kashmiri.dev is a free educational website about Kashmir, including
+          its history, language, people, and practical learning. It is made for
+          Kashmiri readers, especially in the valley. The site focuses on
+          learning rather than daily news or political commentary, and it does
+          not use ads or tracking.
         </p>
       </section>
 

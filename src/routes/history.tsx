@@ -144,7 +144,7 @@ function HistoryPage() {
               <div className="rounded-xl border border-dashed border-border bg-muted/40 p-5">
                 <h2 className="font-serif text-lg text-foreground">Modern history (after 1947)</h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Modern Kashmir history is beyond the scope of this site for now.
+                  This timeline currently ends in 1947. We hope to cover later history in a future update.
                 </p>
               </div>
             </li>

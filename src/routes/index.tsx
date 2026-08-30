@@ -53,7 +53,7 @@ function Home() {
           <span className="text-primary">its past, its words, its future.</span>
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          A calm, ad-free place made for Kashmiri readers. Simple English. No accounts. Just learning.
+          A calm, ad-free place for Kashmiri readers, with clear English and no sign-up required.
         </p>
       </section>
 
@@ -84,7 +84,7 @@ function Home() {
 
       <section className="mx-auto max-w-3xl px-4 pb-16 text-center text-sm text-muted-foreground">
         <p>
-          Kashmiri.dev is for <strong className="text-foreground">education only</strong>. No politics. No news. Only learning.
+          Kashmiri.dev focuses on <strong className="text-foreground">history, language, and useful learning resources</strong> rather than daily news or political commentary.
         </p>
       </section>
     </SiteLayout>
