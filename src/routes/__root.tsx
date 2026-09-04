@@ -91,10 +91,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
-      { name: "twitter:description", content: "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley." },
-      { property: "og:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png" },
-      { name: "twitter:image", content: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png" },
+      {
+        name: "twitter:title",
+        content: "Kashmiri.dev — Learn Kashmir's history, language, and AI",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png",
+      },
     ],
     links: [
       {
@@ -157,7 +172,7 @@ const themeInitScript = `
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="bg-background" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />

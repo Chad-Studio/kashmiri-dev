@@ -36,55 +36,51 @@
 
 :root {
   --radius: 0.625rem;
-  /* Warm paper neutrals */
-  --background: oklch(0.985 0.012 80);
-  --foreground: oklch(0.22 0.03 40);
-  --card: oklch(0.995 0.008 85);
-  --card-foreground: oklch(0.22 0.03 40);
-  --popover: oklch(0.995 0.008 85);
-  --popover-foreground: oklch(0.22 0.03 40);
-  /* Chinar autumn red as primary */
-  --primary: oklch(0.52 0.17 32);
-  --primary-foreground: oklch(0.985 0.012 80);
-  --secondary: oklch(0.94 0.03 75);
-  --secondary-foreground: oklch(0.3 0.05 40);
-  --muted: oklch(0.94 0.02 75);
-  --muted-foreground: oklch(0.48 0.04 50);
-  --accent: oklch(0.92 0.08 75);
-  --accent-foreground: oklch(0.3 0.08 40);
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.985 0.012 80);
-  --border: oklch(0.88 0.02 70);
-  --input: oklch(0.9 0.02 70);
-  --ring: oklch(0.52 0.17 32);
-  --saffron: oklch(0.78 0.16 70);
-  --chinar: oklch(0.52 0.17 32);
+  --background: oklch(0.98 0.008 225);
+  --foreground: oklch(0.22 0.025 240);
+  --card: oklch(0.995 0.003 225);
+  --card-foreground: oklch(0.22 0.025 240);
+  --popover: oklch(0.995 0.003 225);
+  --popover-foreground: oklch(0.22 0.025 240);
+  --primary: oklch(0.48 0.15 28);
+  --primary-foreground: oklch(0.985 0.006 225);
+  --secondary: oklch(0.94 0.014 225);
+  --secondary-foreground: oklch(0.28 0.028 240);
+  --muted: oklch(0.95 0.011 225);
+  --muted-foreground: oklch(0.46 0.025 235);
+  --accent: oklch(0.92 0.048 82);
+  --accent-foreground: oklch(0.3 0.05 42);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.985 0.006 225);
+  --border: oklch(0.87 0.018 225);
+  --input: oklch(0.89 0.018 225);
+  --ring: oklch(0.48 0.15 28);
+  --saffron: oklch(0.74 0.14 76);
+  --chinar: oklch(0.48 0.15 28);
 }
 
 .dark {
-  /* Soft warm slate — a dimmed echo of the light paper, not near-black */
-  --background: oklch(0.27 0.008 80);
-  --foreground: oklch(0.96 0.01 80);
-  --card: oklch(0.32 0.009 80);
-  --card-foreground: oklch(0.96 0.01 80);
-  --popover: oklch(0.32 0.009 80);
-  --popover-foreground: oklch(0.96 0.01 80);
-  /* Chinar red carried over from light mode, brightened to sit on the dim ground */
-  --primary: oklch(0.7 0.15 34);
-  --primary-foreground: oklch(0.2 0.02 60);
-  --secondary: oklch(0.37 0.012 78);
-  --secondary-foreground: oklch(0.96 0.01 80);
-  --muted: oklch(0.35 0.01 78);
-  --muted-foreground: oklch(0.78 0.014 80);
-  --accent: oklch(0.4 0.02 70);
-  --accent-foreground: oklch(0.96 0.01 80);
+  --background: oklch(0.19 0.02 235);
+  --foreground: oklch(0.95 0.008 220);
+  --card: oklch(0.24 0.02 235);
+  --card-foreground: oklch(0.95 0.008 220);
+  --popover: oklch(0.24 0.02 235);
+  --popover-foreground: oklch(0.95 0.008 220);
+  --primary: oklch(0.7 0.15 30);
+  --primary-foreground: oklch(0.16 0.024 235);
+  --secondary: oklch(0.3 0.021 235);
+  --secondary-foreground: oklch(0.95 0.008 220);
+  --muted: oklch(0.29 0.018 235);
+  --muted-foreground: oklch(0.74 0.018 225);
+  --accent: oklch(0.31 0.024 228);
+  --accent-foreground: oklch(0.95 0.008 220);
   --destructive: oklch(0.64 0.19 28);
-  --destructive-foreground: oklch(0.98 0.008 80);
-  --border: oklch(0.52 0.012 78 / 55%);
-  --input: oklch(0.52 0.012 78 / 65%);
-  --ring: oklch(0.7 0.15 34);
-  --saffron: oklch(0.82 0.15 74);
-  --chinar: oklch(0.7 0.15 34);
+  --destructive-foreground: oklch(0.98 0.006 220);
+  --border: oklch(0.42 0.022 232 / 70%);
+  --input: oklch(0.44 0.022 232 / 75%);
+  --ring: oklch(0.7 0.15 30);
+  --saffron: oklch(0.8 0.13 77);
+  --chinar: oklch(0.7 0.15 30);
 }
 
 @layer base {
@@ -101,16 +97,6 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    /* Subtle paper texture via layered gradients */
-    background-image:
-      radial-gradient(at 20% 10%, oklch(0.95 0.05 70 / 0.35) 0, transparent 40%),
-      radial-gradient(at 85% 90%, oklch(0.9 0.08 30 / 0.18) 0, transparent 45%);
-    background-attachment: fixed;
-  }
-  .dark body {
-    background-image:
-      radial-gradient(at 22% 8%, oklch(0.62 0.14 82 / 0.09) 0, transparent 48%),
-      radial-gradient(at 88% 92%, oklch(0.55 0.12 30 / 0.07) 0, transparent 52%);
   }
   h1, h2, h3, h4 {
     font-family: var(--font-serif);
