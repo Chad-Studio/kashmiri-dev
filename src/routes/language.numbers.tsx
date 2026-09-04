@@ -1,17 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+
+import { PageIntro } from "@/components/PageIntro";
 import { SiteLayout } from "@/components/SiteLayout";
 import { numbers } from "@/data/numbers";
 
 export const Route = createFileRoute("/language/numbers")({
   head: () => ({
     meta: [
-      { title: "Kashmiri Counting 1 to 50 (Koshur Numbers) — Kashmiri.dev" },
+      { title: "Kashmiri Counting 1 to 50 (Koshur Numbers) | Kashmiri.dev" },
       {
         name: "description",
         content:
           "Learn Kashmiri counting from 1 to 50 in simple Roman transliteration. Koshur numbers for beginners, with notes on pronunciation and sources.",
       },
-      { property: "og:title", content: "Kashmiri Counting 1 to 50 — Kashmiri.dev" },
+      { property: "og:title", content: "Kashmiri Counting 1 to 50 | Kashmiri.dev" },
       {
         property: "og:description",
         content: "Kashmiri (Koshur) numbers 1 to 50 with easy Roman spellings for beginners.",
@@ -43,48 +46,56 @@ export const Route = createFileRoute("/language/numbers")({
   component: NumbersPage,
 });
 
+const numberGroups = [
+  { label: "1 to 10", from: 1, to: 10 },
+  { label: "11 to 20", from: 11, to: 20 },
+  { label: "21 to 30", from: 21, to: 30 },
+  { label: "31 to 40", from: 31, to: 40 },
+  { label: "41 to 50", from: 41, to: 50 },
+];
+
 function NumbersPage() {
   return (
     <SiteLayout>
-      <section className="mx-auto max-w-3xl px-4 pt-12 pb-6">
-        <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
-          Language · Numbers
-        </p>
-        <h1 className="mt-3 font-serif text-4xl text-foreground">Kashmiri counting: 1 to 50</h1>
-        <p className="mt-4 text-muted-foreground leading-relaxed">
-          A simple list of Kashmiri (<em>Koshur</em>) numbers from one to fifty, written in Roman
-          letters so beginners can read them easily. Numbers are grouped by tens to make them easier
-          to remember.
-        </p>
-        <div className="mt-4 rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/85 leading-relaxed">
+      <PageIntro
+        label="Language / Numbers"
+        title="Kashmiri counting: 1 to 50"
+        description={
+          <p>
+            A simple list of Kashmiri (<em>Koshur</em>) numbers from one to fifty, written in Roman
+            letters so beginners can read them easily. Numbers are grouped by tens to make them
+            easier to remember.
+          </p>
+        }
+      >
+        <p className="max-w-2xl border-s-2 border-border ps-4 text-sm leading-relaxed text-muted-foreground">
           Roman spellings can differ between books and regions, so you may see these numbers written
           in other ways. We are reviewing the forms with native speakers and plan to add
           Perso-Arabic script and audio.
-        </div>
-      </section>
+        </p>
+      </PageIntro>
 
-      <section className="mx-auto max-w-3xl px-4 py-8 space-y-8">
-        {[
-          { label: "1 – 10", from: 1, to: 10 },
-          { label: "11 – 20", from: 11, to: 20 },
-          { label: "21 – 30", from: 21, to: 30 },
-          { label: "31 – 40", from: 31, to: 40 },
-          { label: "41 – 50", from: 41, to: 50 },
-        ].map((group) => (
+      <section className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-8">
+        {numberGroups.map((group) => (
           <div key={group.label}>
-            <h2 className="font-serif text-2xl text-foreground mb-3">{group.label}</h2>
-            <div className="rounded-xl border border-border bg-card overflow-hidden">
+            <h2 className="mb-3 font-serif text-2xl text-foreground">{group.label}</h2>
+            <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
               <ul className="divide-y divide-border">
                 {numbers
-                  .filter((n) => n.digit >= group.from && n.digit <= group.to)
-                  .map((n) => (
-                    <li key={n.digit} className="flex items-center justify-between gap-4 px-4 py-3">
-                      <span className="font-mono text-sm text-primary w-8 shrink-0">{n.digit}</span>
-                      <span lang="ks" className="font-serif text-lg text-foreground flex-1">
-                        {n.koshur}
+                  .filter((number) => number.digit >= group.from && number.digit <= group.to)
+                  .map((number) => (
+                    <li
+                      key={number.digit}
+                      className="grid grid-cols-[2.5rem_minmax(0,1fr)_minmax(5rem,auto)] items-center gap-3 px-4 py-3"
+                    >
+                      <span className="tabular-nums font-mono text-sm font-semibold text-primary">
+                        {number.digit}
                       </span>
-                      <span className="text-sm text-muted-foreground text-right shrink-0">
-                        {toEnglishWord(n.digit)}
+                      <span lang="ks" className="font-serif text-lg text-foreground">
+                        {number.koshur}
+                      </span>
+                      <span className="text-right text-sm text-muted-foreground">
+                        {toEnglishWord(number.digit)}
                       </span>
                     </li>
                   ))}
@@ -94,35 +105,37 @@ function NumbersPage() {
         ))}
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8">
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h2 className="font-serif text-lg text-foreground mb-2">A small tip</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Once you know the tens — <em lang="ks">dah</em> (10), <em lang="ks">wuh</em> (20),{" "}
-            <em lang="ks">trih</em> (30), <em lang="ks">tsatji</em> (40), <em lang="ks">pantsah</em>{" "}
-            (50) — the numbers in between become easier. Many follow patterns built from the ones
-            and the tens.
+      <section className="mx-auto max-w-3xl px-4 pb-8 pt-4">
+        <div className="border-y border-border py-5">
+          <h2 className="font-serif text-xl text-foreground">A small tip</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Once you know the tens, <em lang="ks">dah</em> (10), <em lang="ks">wuh</em> (20),{" "}
+            <em lang="ks">trih</em> (30), <em lang="ks">tsatji</em> (40), and{" "}
+            <em lang="ks">pantsah</em> (50), the numbers in between become easier. Many follow
+            patterns built from the ones and the tens.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-16">
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h2 className="font-serif text-lg text-foreground mb-2">Sources</h2>
-          <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+      <section className="mx-auto max-w-3xl px-4 pb-16 pt-4">
+        <div className="border-t border-border pt-5">
+          <h2 className="font-serif text-xl text-foreground">Sources</h2>
+          <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-muted-foreground">
             <li>
               Braj B. Kachru, <em>An Introduction to Spoken Kashmiri</em> (University of Illinois,
               1973).
             </li>
-            <li>Omniglot — Kashmiri language and numbers page.</li>
-            <li>Wiktionary — Kashmiri numerals category.</li>
+            <li>Omniglot: Kashmiri language and numbers page.</li>
+            <li>Wiktionary: Kashmiri numerals category.</li>
           </ul>
         </div>
-        <p className="mt-4 text-sm">
-          <Link to="/language" className="text-primary hover:underline">
-            ← Back to the Kashmiri language guide
-          </Link>
-        </p>
+        <Link
+          to="/language"
+          className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold text-primary transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Back to the Kashmiri language guide
+        </Link>
       </section>
     </SiteLayout>
   );
@@ -181,6 +194,6 @@ const englishWords: Record<number, string> = {
   50: "fifty",
 };
 
-function toEnglishWord(n: number): string {
-  return englishWords[n] ?? String(n);
+function toEnglishWord(number: number): string {
+  return englishWords[number] ?? String(number);
 }

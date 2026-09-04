@@ -1,3 +1,6 @@
+import "@fontsource-variable/newsreader";
+import "@fontsource-variable/source-sans-3";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -19,7 +22,7 @@ function NotFoundComponent() {
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <div className="mt-6">
           <Link
@@ -77,13 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
+      { name: "theme-color", content: "#f3f8fa" },
+      { title: "Kashmiri.dev | Learn Kashmir's history, language, and AI" },
       {
         name: "description",
         content:
           "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
       },
-      { property: "og:title", content: "Kashmiri.dev — Learn Kashmir's history, language, and AI" },
+      { property: "og:title", content: "Kashmiri.dev | Learn Kashmir's history, language, and AI" },
       {
         property: "og:description",
         content:
@@ -93,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Kashmiri.dev — Learn Kashmir's history, language, and AI",
+        content: "Kashmiri.dev | Learn Kashmir's history, language, and AI",
       },
       {
         name: "twitter:description",
@@ -121,10 +125,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png",
         type: "image/png",
       },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap",
-      },
     ],
     scripts: [
       {
@@ -147,7 +147,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Kashmiri.dev",
           url: "https://kashmiri.dev",
           description:
-            "Free educational website about Kashmir — history, language, and learning with AI.",
+            "Free educational website about Kashmir: history, language, and learning with AI.",
         }),
       },
     ],

@@ -28,78 +28,121 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-saffron: var(--saffron);
+  --color-overlay: var(--overlay);
   --color-chinar: var(--chinar);
-  --font-serif: "Fraunces", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Newsreader Variable", Georgia, serif;
+  --font-sans: "Source Sans 3 Variable", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.98 0.008 225);
-  --foreground: oklch(0.22 0.025 240);
-  --card: oklch(0.995 0.003 225);
-  --card-foreground: oklch(0.22 0.025 240);
-  --popover: oklch(0.995 0.003 225);
-  --popover-foreground: oklch(0.22 0.025 240);
-  --primary: oklch(0.48 0.15 28);
-  --primary-foreground: oklch(0.985 0.006 225);
-  --secondary: oklch(0.94 0.014 225);
-  --secondary-foreground: oklch(0.28 0.028 240);
-  --muted: oklch(0.95 0.011 225);
-  --muted-foreground: oklch(0.46 0.025 235);
-  --accent: oklch(0.92 0.048 82);
-  --accent-foreground: oklch(0.3 0.05 42);
-  --destructive: oklch(0.55 0.2 27);
-  --destructive-foreground: oklch(0.985 0.006 225);
-  --border: oklch(0.87 0.018 225);
-  --input: oklch(0.89 0.018 225);
-  --ring: oklch(0.48 0.15 28);
-  --saffron: oklch(0.74 0.14 76);
-  --chinar: oklch(0.48 0.15 28);
+  --background: #f3f8fa;
+  --foreground: #14242d;
+  --card: #fcfdfd;
+  --card-foreground: #14242d;
+  --popover: #fcfdfd;
+  --popover-foreground: #14242d;
+  --primary: #a43b32;
+  --primary-foreground: #fcfdfd;
+  --secondary: color-mix(in srgb, #cbd9df 42%, #fcfdfd);
+  --secondary-foreground: #14242d;
+  --muted: color-mix(in srgb, #cbd9df 34%, #f3f8fa);
+  --muted-foreground: color-mix(in srgb, #14242d 70%, #f3f8fa);
+  --accent: color-mix(in srgb, #a43b32 9%, #fcfdfd);
+  --accent-foreground: #14242d;
+  --destructive: #a43b32;
+  --destructive-foreground: #fcfdfd;
+  --border: #cbd9df;
+  --input: #cbd9df;
+  --ring: #a43b32;
+  --overlay: color-mix(in srgb, #0c1a21 76%, transparent);
+  --chinar: #a43b32;
+  --surface-shadow:
+    0 1px 2px color-mix(in srgb, #14242d 8%, transparent),
+    0 12px 32px color-mix(in srgb, #14242d 5%, transparent);
 }
 
 .dark {
-  --background: oklch(0.19 0.02 235);
-  --foreground: oklch(0.95 0.008 220);
-  --card: oklch(0.24 0.02 235);
-  --card-foreground: oklch(0.95 0.008 220);
-  --popover: oklch(0.24 0.02 235);
-  --popover-foreground: oklch(0.95 0.008 220);
-  --primary: oklch(0.7 0.15 30);
-  --primary-foreground: oklch(0.16 0.024 235);
-  --secondary: oklch(0.3 0.021 235);
-  --secondary-foreground: oklch(0.95 0.008 220);
-  --muted: oklch(0.29 0.018 235);
-  --muted-foreground: oklch(0.74 0.018 225);
-  --accent: oklch(0.31 0.024 228);
-  --accent-foreground: oklch(0.95 0.008 220);
-  --destructive: oklch(0.64 0.19 28);
-  --destructive-foreground: oklch(0.98 0.006 220);
-  --border: oklch(0.42 0.022 232 / 70%);
-  --input: oklch(0.44 0.022 232 / 75%);
-  --ring: oklch(0.7 0.15 30);
-  --saffron: oklch(0.8 0.13 77);
-  --chinar: oklch(0.7 0.15 30);
+  --background: #0c1a21;
+  --foreground: #fcfdfd;
+  --card: color-mix(in srgb, #0c1a21 88%, #cbd9df);
+  --card-foreground: #fcfdfd;
+  --popover: color-mix(in srgb, #0c1a21 84%, #cbd9df);
+  --popover-foreground: #fcfdfd;
+  --primary: color-mix(in srgb, #a43b32 78%, #fcfdfd);
+  --primary-foreground: #0c1a21;
+  --secondary: color-mix(in srgb, #0c1a21 74%, #cbd9df);
+  --secondary-foreground: #fcfdfd;
+  --muted: color-mix(in srgb, #0c1a21 79%, #cbd9df);
+  --muted-foreground: color-mix(in srgb, #fcfdfd 72%, #0c1a21);
+  --accent: color-mix(in srgb, #a43b32 20%, #0c1a21);
+  --accent-foreground: #fcfdfd;
+  --destructive: color-mix(in srgb, #a43b32 78%, #fcfdfd);
+  --destructive-foreground: #0c1a21;
+  --border: color-mix(in srgb, #cbd9df 28%, #0c1a21);
+  --input: color-mix(in srgb, #cbd9df 36%, #0c1a21);
+  --ring: color-mix(in srgb, #a43b32 72%, #fcfdfd);
+  --chinar: color-mix(in srgb, #a43b32 78%, #fcfdfd);
+  --surface-shadow:
+    0 1px 2px color-mix(in srgb, #0c1a21 68%, transparent),
+    0 18px 44px color-mix(in srgb, #0c1a21 52%, transparent);
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
   }
+
   html {
+    background-color: var(--color-background);
     color-scheme: light;
+    scroll-padding-top: 5.5rem;
   }
+
   html.dark {
     color-scheme: dark;
   }
+
   body {
+    min-width: 20rem;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4 {
+
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-serif);
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :where(a, button, input, textarea, select):focus-visible {
+    outline-color: var(--color-ring);
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--primary) 24%, transparent);
+    color: var(--color-foreground);
   }
 }
