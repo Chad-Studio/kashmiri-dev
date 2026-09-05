@@ -2,6 +2,7 @@ import "@fontsource-variable/newsreader";
 import "@fontsource-variable/source-sans-3";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   Outlet,
   Link,
@@ -179,6 +180,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <SpeedInsights />
         <Scripts />
       </body>
     </html>
