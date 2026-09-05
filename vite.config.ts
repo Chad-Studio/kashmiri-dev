@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Pre-bundle telemetry during startup so adding it cannot invalidate TanStack's
+    // client entry while the browser is hydrating.
+    optimizeDeps: {
+      include: ["@vercel/speed-insights/react"],
+    },
+  },
 });
