@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
 import { PageIntro } from "@/components/PageIntro";
-import { SiteLayout } from "@/components/SiteLayout";
 import { numbers } from "@/data/numbers";
 
 export const Route = createFileRoute("/language/numbers")({
@@ -56,7 +55,7 @@ const numberGroups = [
 
 function NumbersPage() {
   return (
-    <SiteLayout>
+    <>
       <PageIntro
         label="Language / Numbers"
         title="Kashmiri counting: 1 to 50"
@@ -131,13 +130,14 @@ function NumbersPage() {
         </div>
         <Link
           to="/language"
+          activeOptions={{ exact: true }}
           className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold text-primary transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
           Back to the Kashmiri language guide
         </Link>
       </section>
-    </SiteLayout>
+    </>
   );
 }
 

@@ -15,7 +15,13 @@ is `src/routes/__root.tsx`.
 | `users/$id.tsx` | `/users/:id` (dynamic — bare `$`, no curly braces) |
 | `posts/{-$category}.tsx` | `/posts/:category?` (optional segment) |
 | `files/$.tsx` | `/files/*` (splat — read via `_splat` param, never `*`) |
-| `_layout.tsx` | layout route (renders children via `<Outlet />`) |
+| `language.tsx` | layout for `/language` — must render `<Outlet />` |
+| `language.index.tsx` | `/language` |
+| `language.numbers.tsx` | `/language/numbers` |
+| `posts_.$postId.tsx` | `/posts/:postId` without nesting under `posts` |
+| `_layout.tsx` | pathless layout (renders children via `<Outlet />`) |
 | `__root.tsx` | app shell — wraps every page; preserve `<Outlet />` |
+
+A parent file with children (`language.tsx` + `language.index.tsx`) is a layout. Put shared chrome there and render `<Outlet />`. Do not put the index page in the parent file — visiting a child URL will then show the parent page and hide the child.
 
 `routeTree.gen.ts` is auto-generated. Don't edit it by hand.

@@ -18,6 +18,7 @@ import { Route as HistoryRouteImport } from './routes/history'
 import { Route as CivicGuideRouteImport } from './routes/civic-guide'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LanguageIndexRouteImport } from './routes/language.index'
 import { Route as LanguageNumbersRouteImport } from './routes/language.numbers'
 
 const WatchListenRoute = WatchListenRouteImport.update({
@@ -65,6 +66,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguageIndexRoute = LanguageIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LanguageRoute,
+} as any)
 const LanguageNumbersRoute = LanguageNumbersRouteImport.update({
   id: '/numbers',
   path: '/numbers',
@@ -82,18 +88,19 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
+  '/language/': typeof LanguageIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/civic-guide': typeof CivicGuideRoute
   '/history': typeof HistoryRoute
-  '/language': typeof LanguageRouteWithChildren
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
+  '/language': typeof LanguageIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +114,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
+  '/language/': typeof LanguageIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,18 +129,19 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/watch-listen'
     | '/language/numbers'
+    | '/language/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/civic-guide'
     | '/history'
-    | '/language'
     | '/learn-ai'
     | '/people'
     | '/sitemap.xml'
     | '/watch-listen'
     | '/language/numbers'
+    | '/language'
   id:
     | '__root__'
     | '/'
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/watch-listen'
     | '/language/numbers'
+    | '/language/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/language/': {
+      id: '/language/'
+      path: '/'
+      fullPath: '/language/'
+      preLoaderRoute: typeof LanguageIndexRouteImport
+      parentRoute: typeof LanguageRoute
+    }
     '/language/numbers': {
       id: '/language/numbers'
       path: '/numbers'
@@ -236,10 +253,12 @@ declare module '@tanstack/react-router' {
 
 interface LanguageRouteChildren {
   LanguageNumbersRoute: typeof LanguageNumbersRoute
+  LanguageIndexRoute: typeof LanguageIndexRoute
 }
 
 const LanguageRouteChildren: LanguageRouteChildren = {
   LanguageNumbersRoute: LanguageNumbersRoute,
+  LanguageIndexRoute: LanguageIndexRoute,
 }
 
 const LanguageRouteWithChildren = LanguageRoute._addFileChildren(
