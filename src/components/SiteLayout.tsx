@@ -13,14 +13,15 @@ const navItems = [
   { to: "/history", label: "History" },
   { to: "/language", label: "Language" },
   { to: "/people", label: "People" },
+  { to: "/stats", label: "Stats" },
   { to: "/civic-guide", label: "Civic Guide" },
   { to: "/learn-ai", label: "Learn with AI" },
   { to: "/watch-listen", label: "Watch & Listen" },
 ] as const;
 
 const mobileNavGroups = [
-  { label: "Explore", items: navItems.slice(0, 3) },
-  { label: "Learn", items: navItems.slice(3) },
+  { label: "Explore", items: navItems.slice(0, 4) },
+  { label: "Learn", items: navItems.slice(4) },
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
