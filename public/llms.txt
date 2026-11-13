@@ -11,7 +11,7 @@ Kashmiri.dev is a free educational resource. Content is drafted with AI help and
 - [Language (Koshur)](/language): Scripts, ~30 starter words, and 10 everyday phrases in Kashmiri with loanword notes.
 - [Kashmiri Counting 1 to 50](/language/numbers): Koshur numbers from 1 to 50 in Roman transliteration.
 - [People](/people): Notable Kashmiri poets, mystics, and traditional crafts (Pashmina, papier-mâché, walnut wood, copperware).
-- [Stats](/stats): Population, literacy, education, and economy figures with source links, reporting periods, and geographic coverage. Includes a selectable map of ten Kashmir Valley districts, population and literacy shading, district comparisons, literacy calculations from Census 2011 counts, and separately labelled J&K-wide education and income figures. Map boundaries represent 2021; statistics retain their own reporting periods.
+- [Stats](/stats): Population, literacy, education, work, economy, households, and digital access figures with source links, reporting periods, and geographic coverage. Includes a selectable map of ten Kashmir Valley districts with Census 2011 population/literacy and NSO ASUSE 2025 local business shading, district comparisons, CSV export, NSO 2023–25 survey estimates (PLFS, ASUSE, HCES, Telecom), and separately labelled J&K-wide figures. Map boundaries represent 2021; statistics retain their own reporting periods.
 - [Civic Guide](/civic-guide): Plain-language explainers of RTI, consumer rights, cybercrime reporting, and fact-checking.
 - [Learn with AI](/learn-ai): Copyable prompt recipes, free AI tools, and awareness of hallucinations, deepfakes, and fake news.
 - [Watch & Listen](/watch-listen): Curated podcasts, channels, and audio resources about Kashmir.

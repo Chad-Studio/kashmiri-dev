@@ -35,14 +35,16 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Statistics
 
-The `/stats` page covers population, literacy, education, and the economy. The main
-navigation and home page link to it. Readers can filter by topic and area, compare
-the ten Kashmir Valley districts, and download the district table as CSV.
+The `/stats` page covers population, literacy, education, work, economy,
+households, and digital access. The main navigation and home page link to it.
+Readers can filter by topic and area, compare the ten Kashmir Valley districts,
+and download the district table as CSV.
 
 An interactive district map uses a local ten-feature GeoJSON subset of
 geoBoundaries gbOpen IND ADM2 (2021; Pathways Data). It supports district selection
-and population/literacy shading, with keyboard and text-button alternatives.
-The map distinguishes the 2021 boundary snapshot from Census 2011 figures.
+and shading by Census 2011 population/literacy or NSO ASUSE 2025 unincorporated
+local businesses, with keyboard and text-button alternatives. The map distinguishes
+the 2021 boundary snapshot from the underlying reporting years.
 
 The derivative boundary data and generated paths are published under ODbL 1.0;
 attribution, licence links, and a GeoJSON download appear beside the map. See
@@ -56,15 +58,15 @@ node --experimental-strip-types scripts/generate-district-map.mjs
 The map uses local SVG paths and does not require a map API key or a tile server.
 
 `src/data/stats.ts` stores typed figures, source URLs, reporting periods, geographic
-coverage, and the original Census 2011 district counts. All content records include
-`lang: "en"`. Valley literacy is calculated from the combined literate population
-divided by the combined population aged seven and above. District percentages are
-not averaged. The 2011 census counts are labelled as historical figures.
+coverage, original Census 2011 district counts, and weighted NSO 2023–25 survey
+estimates (PLFS 2025, ASUSE 2025, HCES 2023–24, and CMS: Telecom 2025). All content
+records include `lang: "en"`. Valley rates and shares are calculated from combined
+numerators and denominators rather than averaging district percentages.
 
-Education and income figures currently cover the wider Jammu & Kashmir union
-territory and are labelled separately. Economic advance estimates are marked as
-estimates. The statistics page reads the checked-in data and does not require a
-visitor account or tracking service.
+School counts, economic output, per-capita income, and published rural/urban MPCE
+figures cover the wider Jammu & Kashmir union territory and are labelled separately.
+Economic advance estimates and NSO sample survey estimates are clearly marked. The
+statistics page reads checked-in data and requires no visitor account or tracking.
 
 When updating a figure, check its source, reporting year, units, age group, and
 coverage. Update the review date after checking the data. When adding a new page,
@@ -72,11 +74,11 @@ update both `public/sitemap.xml` and `src/routes/sitemap[.]xml.ts`.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Prefer working locally? Use [Bun](https://bun.sh) (this repository uses `bun.lock` and `bunfig.toml`):
 
 ```sh
 git clone <this-repository-url>
 cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev
 ```

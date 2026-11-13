@@ -49,7 +49,7 @@ const secondaryPaths = [
   {
     to: "/stats" as const,
     title: "Stats",
-    desc: "Population, literacy, education, and economy figures, with dates and sources.",
+    desc: "Population, literacy, work, households, digital access, and economy figures, with dates and sources.",
   },
   {
     to: "/people" as const,

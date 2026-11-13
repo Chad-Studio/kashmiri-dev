@@ -8,13 +8,15 @@ import {
   formatCount,
   formatRate,
   getFemaleLiteracyRate,
+  getFemaleWorkerShare,
   getLiteracyRate,
   getMaleLiteracyRate,
+  getManufacturingShare,
   statsSources,
 } from "@/data/stats";
 import { cn } from "@/lib/utils";
 
-type MapMetric = "districts" | "population" | "literacy";
+type MapMetric = "districts" | "population" | "literacy" | "establishments";
 
 const mappedDistricts = districtMapShapes.flatMap((shape) => {
   const stats = districtStats.find((district) => district.id === shape.id);
@@ -25,6 +27,7 @@ const mapMetrics: { id: MapMetric; label: string }[] = [
   { id: "districts", label: "Districts" },
   { id: "population", label: "Population" },
   { id: "literacy", label: "Literacy" },
+  { id: "establishments", label: "Local businesses" },
 ];
 
 const tint = (strength: number) =>
@@ -39,12 +42,24 @@ export function DistrictMap() {
   const literacy = getLiteracyRate(selected);
   const maleLiteracy = getMaleLiteracyRate(selected);
   const femaleLiteracy = getFemaleLiteracyRate(selected);
-  const metricValue = (district: (typeof districtStats)[number]) =>
-    metric === "population" ? district.population : getLiteracyRate(district);
+  const femaleWorkerShare = getFemaleWorkerShare(selected);
+  const manufacturingShare = getManufacturingShare(selected);
+  const metricValue = (district: (typeof districtStats)[number]) => {
+    if (metric === "population") return district.population;
+    if (metric === "establishments") return district.establishments;
+    return getLiteracyRate(district);
+  };
   const values = mappedDistricts.map((district) => metricValue(district.stats));
   const minimum = Math.min(...values);
   const maximum = Math.max(...values);
-  const formatMetric = metric === "population" ? formatCount : formatRate;
+  const formatMetric =
+    metric === "population" || metric === "establishments" ? formatCount : formatRate;
+  const metricUnitLabel =
+    metric === "population"
+      ? "people (2011)"
+      : metric === "establishments"
+        ? "local businesses (2025)"
+        : "literacy, age 7+ (2011)";
 
   const fill = (district: (typeof mappedDistricts)[number]) => {
     if (metric === "districts") {
@@ -60,7 +75,7 @@ export function DistrictMap() {
       <SectionHeading
         id="district-map-heading"
         title="Explore Kashmir Valley’s districts"
-        description="Choose a district on the map or from the list to see its population and literacy. The map covers the same ten districts as the statistics below."
+        description="Choose a district on the map or from the list to see its Census 2011 population and literacy alongside 2025 unincorporated local business figures."
       />
       <div className="mt-5 overflow-hidden rounded-xl border border-border bg-card shadow-[var(--surface-shadow)]">
         <div className="flex flex-col gap-3 border-b border-border px-4 py-4 sm:px-5 lg:flex-row lg:items-center lg:justify-between">
@@ -89,7 +104,9 @@ export function DistrictMap() {
           </div>
           <p className="text-xs leading-relaxed text-muted-foreground">
             Boundaries: {districtMapMetadata.boundaryYear} <span aria-hidden="true">·</span>{" "}
-            Figures: Census 2011
+            {metric === "establishments"
+              ? "Shading: NSO ASUSE 2025"
+              : "Figures: Census 2011 & ASUSE 2025"}
           </p>
         </div>
 
@@ -106,7 +123,7 @@ export function DistrictMap() {
               <desc id={descriptionId}>
                 Ten districts, north up. Select a district with a click, or focus it and press Enter
                 or Space. The district list provides the same choices. Population and literacy
-                figures refer to Census 2011.
+                figures refer to Census 2011, and local business figures refer to ASUSE 2025.
               </desc>
               {mappedDistricts.map((district) => (
                 <path
@@ -132,7 +149,7 @@ export function DistrictMap() {
                   }}
                   className="cursor-pointer transition-[fill,stroke] duration-150 hover:brightness-95 focus-visible:stroke-foreground focus-visible:[stroke-width:3] focus-visible:outline-none"
                 >
-                  <title>{`${district.name}: ${formatMetric(metricValue(district.stats))}${metric === "population" ? " people" : " literacy, age 7+"}`}</title>
+                  <title>{`${district.name}: ${formatMetric(metricValue(district.stats))} ${metricUnitLabel}`}</title>
                 </path>
               ))}
               <g aria-hidden="true" pointerEvents="none">
@@ -207,7 +224,7 @@ export function DistrictMap() {
                     aria-hidden="true"
                   />
                   <span>{formatMetric(maximum)}</span>
-                  <span>{metric === "population" ? "people" : "literacy, age 7+"}</span>
+                  <span>{metricUnitLabel}</span>
                 </>
               )}
             </div>
@@ -221,13 +238,15 @@ export function DistrictMap() {
               {selected.name}
             </h3>
             <p role="status" className="sr-only">
-              {selected.name} selected. Population {formatCount(selected.population)}. Literacy{" "}
-              {formatRate(literacy)}, Census 2011.
+              {selected.name} selected. Population {formatCount(selected.population)}, literacy{" "}
+              {formatRate(literacy)}, Census 2011. Local businesses{" "}
+              {formatCount(selected.establishments)}, workers{" "}
+              {formatCount(selected.establishmentWorkers)}, NSO ASUSE 2025.
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
               Kashmir Valley <span aria-hidden="true">·</span> Census 2011
             </p>
-            <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-5 border-y border-border py-5">
+            <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 border-y border-border py-4">
               <div>
                 <dt className="text-xs text-muted-foreground">Population</dt>
                 <dd className="mt-1 text-xl font-semibold tabular-nums text-foreground">
@@ -253,13 +272,52 @@ export function DistrictMap() {
                 </dd>
               </div>
             </dl>
-            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
               Male–female literacy gap:{" "}
               <span className="font-semibold tabular-nums text-foreground">
                 {(maleLiteracy - femaleLiteracy).toFixed(2)} percentage points
               </span>
               .
             </p>
+
+            <p className="mt-5 text-sm text-muted-foreground">
+              Local businesses <span aria-hidden="true">·</span> NSO ASUSE 2025
+            </p>
+            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 border-y border-border py-4">
+              <div>
+                <dt className="text-xs text-muted-foreground">Establishments</dt>
+                <dd className="mt-1 text-xl font-semibold tabular-nums text-foreground">
+                  {formatCount(selected.establishments)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Workers</dt>
+                <dd className="mt-1 text-xl font-semibold tabular-nums text-foreground">
+                  {formatCount(selected.establishmentWorkers)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Manufacturing</dt>
+                <dd className="mt-1 text-base font-semibold tabular-nums text-foreground">
+                  {formatRate(manufacturingShare)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Women workers</dt>
+                <dd className="mt-1 text-base font-semibold tabular-nums text-foreground">
+                  {formatRate(femaleWorkerShare)}
+                </dd>
+              </div>
+            </dl>
+            <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
+              Includes{" "}
+              <span className="font-semibold tabular-nums text-foreground">
+                {formatCount(selected.handEmbroideryEstablishments)}
+              </span>{" "}
+              hand-embroidery units ({formatCount(selected.surveyedEstablishments)} surveyed
+              businesses).
+            </p>
+
             <p className="mt-5 text-sm font-semibold text-foreground">Choose a district</p>
             <div
               role="group"
@@ -289,15 +347,26 @@ export function DistrictMap() {
                 </button>
               ))}
             </div>
-            <a
-              href={statsSources.census.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-flex min-h-8 items-center gap-1 rounded-sm text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Figures: Census of India 2011
-              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-            </a>
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+              <a
+                href={statsSources.census.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-8 items-center gap-1 rounded-sm text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Census of India 2011
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </a>
+              <a
+                href={statsSources.asuse.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-8 items-center gap-1 rounded-sm text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                NSO ASUSE 2025
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </a>
+            </div>
           </aside>
         </div>
 

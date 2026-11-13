@@ -3,10 +3,13 @@ import {
   ArrowDownToLine,
   ArrowUpRight,
   BookOpen,
+  Briefcase,
   GraduationCap,
+  Home,
   Search,
   Sprout,
   Users,
+  Wifi,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -19,8 +22,10 @@ import {
   formatRate,
   formatStatistic,
   getFemaleLiteracyRate,
+  getFemaleWorkerShare,
   getLiteracyRate,
   getMaleLiteracyRate,
+  getManufacturingShare,
   statsAreas,
   statsCategories,
   statsIndicators,
@@ -34,12 +39,12 @@ import {
 import { cn } from "@/lib/utils";
 
 const pageDescription =
-  "Explore Kashmir statistics on population, literacy, education, and the economy, with an interactive district map, dated figures, and original sources.";
+  "Explore Kashmir statistics on population, literacy, schools, work, local businesses, household spending, and digital access, with an interactive district map and original sources.";
 
 export const Route = createFileRoute("/stats")({
   head: () => ({
     meta: [
-      { title: "Kashmir Statistics: Population, Literacy & Economy | Kashmiri.dev" },
+      { title: "Kashmir Statistics: Population, Work, Economy & Digital Access | Kashmiri.dev" },
       { name: "description", content: pageDescription },
       { property: "og:title", content: "Kashmir, in numbers | Kashmiri.dev" },
       { property: "og:description", content: pageDescription },
@@ -67,11 +72,14 @@ export const Route = createFileRoute("/stats")({
   component: StatsPage,
 });
 
-const categoryIcons = {
+const categoryIcons: Record<StatsCategory, typeof Users> = {
   population: Users,
   literacy: BookOpen,
   education: GraduationCap,
+  work: Briefcase,
   economy: Sprout,
+  households: Home,
+  digital: Wifi,
 };
 const controlClass =
   "min-h-11 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -124,27 +132,39 @@ function downloadDistricts() {
   const rows = [
     [
       "District",
-      "Census year",
-      "Population",
-      "Population age 0-6",
-      "Literates age 7+",
-      "Literacy rate (%)",
-      "Male literacy rate (%)",
-      "Female literacy rate (%)",
+      "Population (2011)",
+      "Population age 0-6 (2011)",
+      "Literates age 7+ (2011)",
+      "Literacy rate 2011 (%)",
+      "Male literacy rate 2011 (%)",
+      "Female literacy rate 2011 (%)",
+      "Surveyed establishments (2025)",
+      "Estimated establishments (2025)",
+      "Estimated workers (2025)",
+      "Female worker share 2025 (%)",
+      "Manufacturing share 2025 (%)",
+      "Hand-embroidery establishments (2025)",
       "Geography",
-      "Source",
+      "Census source",
+      "ASUSE source",
     ],
     ...districtStats.map((district) => [
       district.name,
-      2011,
       district.population,
       district.children,
       district.literates,
       getLiteracyRate(district).toFixed(2),
       getMaleLiteracyRate(district).toFixed(2),
       getFemaleLiteracyRate(district).toFixed(2),
+      district.surveyedEstablishments,
+      Math.round(district.establishments),
+      Math.round(district.establishmentWorkers),
+      getFemaleWorkerShare(district).toFixed(2),
+      getManufacturingShare(district).toFixed(2),
+      Math.round(district.handEmbroideryEstablishments),
       "Kashmir Valley",
       statsSources.census.url,
+      statsSources.asuse.url,
     ]),
   ];
   const csv = rows
@@ -153,7 +173,7 @@ function downloadDistricts() {
   const url = URL.createObjectURL(new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" }));
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "kashmir-district-statistics-census-2011.csv";
+  anchor.download = "kashmir-district-statistics.csv";
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
@@ -178,6 +198,8 @@ function StatsPage() {
       )
       .sort((a, b) => {
         if (sort === "literacy") return getLiteracyRate(b) - getLiteracyRate(a);
+        if (sort === "establishments") return b.establishments - a.establishments;
+        if (sort === "workers") return b.establishmentWorkers - a.establishmentWorkers;
         if (sort === "name") return a.name.localeCompare(b.name);
         return b.population - a.population;
       });
@@ -188,7 +210,7 @@ function StatsPage() {
       <PageIntro
         label="Stats"
         title="Kashmir, in numbers"
-        description="A dated snapshot of population, literacy, schools, and livelihoods. Follow the sources, compare districts, and see what each figure actually measures."
+        description="A dated snapshot of population, literacy, schools, work, households, and digital access. Follow the sources, compare districts, and see what each figure actually measures."
       >
         <p className="text-sm text-muted-foreground">
           Sources reviewed <time dateTime={statsReviewedDate}>13 November 2026</time>{" "}
@@ -210,13 +232,14 @@ function StatsPage() {
           <div className="mt-3 grid gap-4 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-8">
             <p>
               <span className="font-semibold text-foreground">Kashmir Valley</span> means the ten
-              districts in the comparison below. Population and literacy use Census 2011. These are
-              historical figures, not 2026 estimates.
+              districts in the comparison below. Population and literacy use Census 2011, while
+              work, local businesses, and telecom figures use 2025 national surveys across those ten
+              districts (2023–24 household figures cover nine sampled Valley districts).
             </p>
             <p>
               <span className="font-semibold text-foreground">Jammu & Kashmir</span> figures cover
-              the whole union territory, including Jammu. The school and income figures below use
-              this wider area.
+              the whole union territory, including Jammu. School counts, economic output, per-capita
+              income, and published rural and urban monthly spending use this wider area.
             </p>
           </div>
         </div>
@@ -281,8 +304,10 @@ function StatsPage() {
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               {category === "education" && area === "valley"
-                ? "The education figures currently cover all of Jammu & Kashmir."
-                : "Choose another topic or area to see the available figures."}
+                ? "The school figures currently cover all of Jammu & Kashmir."
+                : (category === "population" || category === "literacy") && area === "jk"
+                  ? "The Census 2011 population and literacy figures on this page focus on Kashmir Valley’s ten districts."
+                  : "Choose another topic or area to see the available figures."}
             </p>
             <button
               type="button"
@@ -304,7 +329,7 @@ function StatsPage() {
             <SectionHeading
               id="districts-heading"
               title="Compare the ten districts"
-              description="Census 2011. Literacy rates describe people aged seven and above. District percentages are calculated from the original census counts."
+              description="Population and age 7+ literacy come from Census 2011. Unincorporated local businesses and their workers come from NSO ASUSE 2025."
             />
             <button
               type="button"
@@ -343,8 +368,10 @@ function StatsPage() {
                 onChange={(event) => setSort(event.target.value)}
                 className={cn(controlClass, "flex-1 sm:flex-none")}
               >
-                <option value="population">Population, highest first</option>
-                <option value="literacy">Literacy, highest first</option>
+                <option value="population">Population (2011), highest first</option>
+                <option value="literacy">Literacy (2011), highest first</option>
+                <option value="establishments">Local businesses (2025), highest first</option>
+                <option value="workers">Business workers (2025), highest first</option>
                 <option value="name">District name</option>
               </select>
             </div>
@@ -355,10 +382,11 @@ function StatsPage() {
             tabIndex={0}
             className="overflow-x-auto rounded-xl border border-border bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <table className="w-full min-w-[660px] text-sm">
+            <table className="w-full min-w-[780px] text-sm">
               <caption className="sr-only">
-                Population and literacy in the ten Kashmir Valley districts, Census 2011. Male and
-                female rates each use the corresponding population aged seven and above.
+                Population and age 7+ literacy from Census 2011 alongside unincorporated
+                establishments and workers from NSO ASUSE 2025 across the ten Kashmir Valley
+                districts.
               </caption>
               <thead className="border-b border-border bg-muted/50">
                 <tr>
@@ -366,16 +394,22 @@ function StatsPage() {
                     District
                   </th>
                   <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Population
+                    Population, 2011
                   </th>
                   <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Literacy, 7+
+                    Literacy, 7+ (2011)
                   </th>
                   <th scope="col" className="px-4 py-4 text-right font-semibold">
                     Male, 7+
                   </th>
                   <th scope="col" className="px-4 py-4 text-right font-semibold">
                     Female, 7+
+                  </th>
+                  <th scope="col" className="px-4 py-4 text-right font-semibold">
+                    Businesses, 2025
+                  </th>
+                  <th scope="col" className="px-4 py-4 text-right font-semibold">
+                    Workers, 2025
                   </th>
                 </tr>
               </thead>
@@ -397,6 +431,12 @@ function StatsPage() {
                     <td className="px-4 py-4 text-right tabular-nums text-muted-foreground">
                       {formatRate(getFemaleLiteracyRate(district))}
                     </td>
+                    <td className="px-4 py-4 text-right tabular-nums text-foreground">
+                      {formatCount(district.establishments)}
+                    </td>
+                    <td className="px-4 py-4 text-right tabular-nums text-muted-foreground">
+                      {formatCount(district.establishmentWorkers)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -417,6 +457,12 @@ function StatsPage() {
                   <td className="px-4 py-4 text-right font-semibold tabular-nums">
                     {formatRate(valleySummary.femaleLiteracy)}
                   </td>
+                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
+                    {formatCount(valleySummary.establishments)}
+                  </td>
+                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
+                    {formatCount(valleySummary.establishmentWorkers)}
+                  </td>
                 </tr>
               </tfoot>
             </table>
@@ -428,14 +474,24 @@ function StatsPage() {
           )}
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             The final row always covers all ten districts. Its literacy rate uses the combined
-            population aged 7+, rather than an average of district percentages.{" "}
+            population aged 7+, rather than an average of district percentages, and 2025 business
+            totals sum the weighted estimates across all ten districts.{" "}
             <a
               href={statsSources.census.url}
               target="_blank"
               rel="noreferrer"
               className="font-semibold text-primary underline-offset-4 hover:underline"
             >
-              Open the Census source
+              Census 2011 source
+            </a>{" "}
+            <span aria-hidden="true">·</span>{" "}
+            <a
+              href={statsSources.asuse.url}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              ASUSE 2025 source
             </a>
             .
           </p>
@@ -450,7 +506,7 @@ function StatsPage() {
         <SectionHeading
           id="sources-heading"
           title="Sources & methods"
-          description="Each figure keeps its original reporting period. A newer report can contain older data, and an advance estimate can change."
+          description="Each figure keeps its original reporting period. A newer report can contain older data, and an advance or sample survey estimate has sampling margins."
         />
         <div className="mt-6 grid gap-x-8 sm:grid-cols-2">
           {Object.entries(statsSources).map(([id, source]) => (
@@ -478,10 +534,17 @@ function StatsPage() {
             use their own counts. Displayed rates are rounded to two decimal places.
           </p>
           <p className="mt-3">
+            <span className="font-semibold text-foreground">Survey estimates:</span> 2023–25 figures
+            from PLFS, ASUSE, HCES, and the Telecom survey apply official NSO sampling multipliers
+            to unit-level microdata for NSS Region 013 (Kashmir Valley) and State 01 (Jammu &
+            Kashmir). ASUSE business counts exclude household residential rentals (NIC 68108) to
+            match published MoSPI tables.
+          </p>
+          <p className="mt-3">
             <span className="font-semibold text-foreground">Coverage:</span> Anantnag, Bandipora,
-            Baramulla, Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar. Wider J&K
-            figures are labelled separately. No population projection or Valley-only income estimate
-            is implied.
+            Baramulla, Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar (Shopian
+            had no sampled blocks in HCES 2023–24). Wider J&K figures are labelled separately. No
+            population projection or Valley-only GDP estimate is implied.
           </p>
         </div>
       </section>
