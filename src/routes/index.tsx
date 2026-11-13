@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
-import { brandMarkUrl, SiteLayout } from "@/components/SiteLayout";
+import { brandMarkSrcSet, brandMarkUrl, SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -87,6 +87,11 @@ function Home() {
         <aside className="flex items-center gap-5 border-s-2 border-primary/45 ps-5 sm:flex-col sm:items-start sm:gap-4 sm:ps-7">
           <img
             src={brandMarkUrl}
+            srcSet={brandMarkSrcSet}
+            sizes="(min-width: 1024px) 192px, (min-width: 640px) 144px, 96px"
+            width={192}
+            height={192}
+            decoding="async"
             alt=""
             aria-hidden="true"
             className="size-24 shrink-0 object-contain sm:size-36 lg:size-48"

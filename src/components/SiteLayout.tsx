@@ -5,8 +5,9 @@ import { Menu, Moon, Sun, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-export const brandMarkUrl =
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Aug%2029%2C%202026%2C%2002_54_48%20PM-TOP6Dt2lsin3wVQzDhgRXw9f8LbHQM.png";
+export const brandMarkUrl = "/images/brand-mark-192.webp";
+export const brandMarkSrcSet =
+  "/images/brand-mark-48.webp 48w, /images/brand-mark-96.webp 96w, /images/brand-mark-144.webp 144w, /images/brand-mark-192.webp 192w, /images/brand-mark-288.webp 288w, /images/brand-mark-384.webp 384w, /images/brand-mark-576.webp 576w";
 
 const navItems = [
   { to: "/history", label: "History" },
@@ -68,7 +69,12 @@ function SiteHeader() {
           onClick={() => setOpen(false)}
         >
           <img
-            src={brandMarkUrl}
+            src="/images/brand-mark-48.webp"
+            srcSet={brandMarkSrcSet}
+            sizes="40px"
+            width={40}
+            height={40}
+            decoding="async"
             alt=""
             aria-hidden="true"
             className="size-10 shrink-0 object-contain"
