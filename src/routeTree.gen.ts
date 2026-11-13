@@ -9,51 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WatchListenRouteImport } from './routes/watch-listen'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as PeopleRouteImport } from './routes/people'
-import { Route as LearnAiRouteImport } from './routes/learn-ai'
-import { Route as LanguageRouteImport } from './routes/language'
-import { Route as HistoryRouteImport } from './routes/history'
-import { Route as CivicGuideRouteImport } from './routes/civic-guide'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CivicGuideRouteImport } from './routes/civic-guide'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as LanguageRouteImport } from './routes/language'
+import { Route as LearnAiRouteImport } from './routes/learn-ai'
+import { Route as PeopleRouteImport } from './routes/people'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WatchListenRouteImport } from './routes/watch-listen'
 import { Route as LanguageIndexRouteImport } from './routes/language.index'
 import { Route as LanguageNumbersRouteImport } from './routes/language.numbers'
 
-const WatchListenRoute = WatchListenRouteImport.update({
-  id: '/watch-listen',
-  path: '/watch-listen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PeopleRoute = PeopleRouteImport.update({
-  id: '/people',
-  path: '/people',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearnAiRoute = LearnAiRouteImport.update({
-  id: '/learn-ai',
-  path: '/learn-ai',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LanguageRoute = LanguageRouteImport.update({
-  id: '/language',
-  path: '/language',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HistoryRoute = HistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CivicGuideRoute = CivicGuideRouteImport.update({
-  id: '/civic-guide',
-  path: '/civic-guide',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -61,9 +31,39 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const CivicGuideRoute = CivicGuideRouteImport.update({
+  id: '/civic-guide',
+  path: '/civic-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LanguageRoute = LanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnAiRoute = LearnAiRouteImport.update({
+  id: '/learn-ai',
+  path: '/learn-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeopleRoute = PeopleRouteImport.update({
+  id: '/people',
+  path: '/people',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WatchListenRoute = WatchListenRouteImport.update({
+  id: '/watch-listen',
+  path: '/watch-listen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LanguageIndexRoute = LanguageIndexRouteImport.update({
@@ -171,53 +171,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/watch-listen': {
-      id: '/watch-listen'
-      path: '/watch-listen'
-      fullPath: '/watch-listen'
-      preLoaderRoute: typeof WatchListenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/people': {
-      id: '/people'
-      path: '/people'
-      fullPath: '/people'
-      preLoaderRoute: typeof PeopleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learn-ai': {
-      id: '/learn-ai'
-      path: '/learn-ai'
-      fullPath: '/learn-ai'
-      preLoaderRoute: typeof LearnAiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/language': {
-      id: '/language'
-      path: '/language'
-      fullPath: '/language'
-      preLoaderRoute: typeof LanguageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/history': {
-      id: '/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof HistoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/civic-guide': {
-      id: '/civic-guide'
-      path: '/civic-guide'
-      fullPath: '/civic-guide'
-      preLoaderRoute: typeof CivicGuideRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -227,11 +185,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/civic-guide': {
+      id: '/civic-guide'
+      path: '/civic-guide'
+      fullPath: '/civic-guide'
+      preLoaderRoute: typeof CivicGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/language': {
+      id: '/language'
+      path: '/language'
+      fullPath: '/language'
+      preLoaderRoute: typeof LanguageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn-ai': {
+      id: '/learn-ai'
+      path: '/learn-ai'
+      fullPath: '/learn-ai'
+      preLoaderRoute: typeof LearnAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/people': {
+      id: '/people'
+      path: '/people'
+      fullPath: '/people'
+      preLoaderRoute: typeof PeopleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/watch-listen': {
+      id: '/watch-listen'
+      path: '/watch-listen'
+      fullPath: '/watch-listen'
+      preLoaderRoute: typeof WatchListenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/language/': {
