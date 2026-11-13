@@ -20,9 +20,9 @@ export const Route = createFileRoute("/")({
         content:
           "A simple, calm place to learn about Kashmir: its history, the Kashmiri language, and how to learn with AI. Made for readers in the valley.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/" },
+      { property: "og:url", content: "https://www.kashmiri.dev/" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/" }],
   }),
   component: Home,
 });

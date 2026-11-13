@@ -18,9 +18,9 @@ export const Route = createFileRoute("/language/numbers")({
         property: "og:description",
         content: "Kashmiri (Koshur) numbers 1 to 50 with easy Roman spellings for beginners.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/language/numbers" },
+      { property: "og:url", content: "https://www.kashmiri.dev/language/numbers" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/language/numbers" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/language/numbers" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -32,11 +32,11 @@ export const Route = createFileRoute("/language/numbers")({
             "Kashmiri (Koshur) numbers from 1 to 50 in Roman transliteration, for beginners.",
           inLanguage: "en",
           learningResourceType: "Language guide",
-          url: "https://kashmiri.dev/language/numbers",
+          url: "https://www.kashmiri.dev/language/numbers",
           isPartOf: {
             "@type": "LearningResource",
             name: "Kashmiri Language (Koshur)",
-            url: "https://kashmiri.dev/language",
+            url: "https://www.kashmiri.dev/language",
           },
         }),
       },

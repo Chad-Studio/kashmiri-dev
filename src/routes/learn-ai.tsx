@@ -22,9 +22,9 @@ export const Route = createFileRoute("/learn-ai")({
         content:
           "Use AI safely to learn faster, with prompts, tools, and ways to spot fake AI content.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/learn-ai" },
+      { property: "og:url", content: "https://www.kashmiri.dev/learn-ai" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/learn-ai" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/learn-ai" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/learn-ai")({
           description: "AI prompts, free tools, and safety tips for learning with AI.",
           inLanguage: "en",
           learningResourceType: "Guide",
-          url: "https://kashmiri.dev/learn-ai",
+          url: "https://www.kashmiri.dev/learn-ai",
         }),
       },
       {

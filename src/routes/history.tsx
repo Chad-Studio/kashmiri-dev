@@ -35,9 +35,9 @@ export const Route = createFileRoute("/history")({
         content:
           "Explore Kashmir's past through archaeology, texts, traditions, and carefully sourced corrections.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/history" },
+      { property: "og:url", content: "https://www.kashmiri.dev/history" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/history" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/history" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/history")({
             "A sourced timeline distinguishing established evidence, scholarly debate, and tradition.",
           inLanguage: "en",
           learningResourceType: "Timeline",
-          url: "https://kashmiri.dev/history",
+          url: "https://www.kashmiri.dev/history",
         }),
       },
     ],
