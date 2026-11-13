@@ -19,9 +19,9 @@ export const Route = createFileRoute("/watch-listen")({
         property: "og:description",
         content: "Podcasts, YouTube channels, and audio archives to learn about Kashmir.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/watch-listen" },
+      { property: "og:url", content: "https://www.kashmiri.dev/watch-listen" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/watch-listen" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/watch-listen" }],
   }),
   component: WatchListenPage,
 });

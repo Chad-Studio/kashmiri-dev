@@ -18,9 +18,9 @@ export const Route = createFileRoute("/civic-guide")({
         property: "og:description",
         content: "Simple explainers of long-standing civic rights and services in India.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/civic-guide" },
+      { property: "og:url", content: "https://www.kashmiri.dev/civic-guide" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/civic-guide" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/civic-guide" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/civic-guide")({
           description: "Plain-language guides to civic rights and services in India.",
           inLanguage: "en",
           learningResourceType: "Guide",
-          url: "https://kashmiri.dev/civic-guide",
+          url: "https://www.kashmiri.dev/civic-guide",
         }),
       },
     ],

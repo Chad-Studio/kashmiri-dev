@@ -18,9 +18,9 @@ export const Route = createFileRoute("/about")({
         content:
           "About Kashmiri.dev, our editorial approach, the sources we use, and how to get in touch.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/about" },
+      { property: "og:url", content: "https://www.kashmiri.dev/about" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/about" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/about" }],
   }),
   component: AboutPage,
 });

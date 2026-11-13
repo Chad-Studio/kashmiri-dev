@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kashmiri.dev/</loc>
+    <loc>https://www.kashmiri.dev/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/history</loc>
+    <loc>https://www.kashmiri.dev/history</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/language</loc>
+    <loc>https://www.kashmiri.dev/language</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/language/numbers</loc>
+    <loc>https://www.kashmiri.dev/language/numbers</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/people</loc>
+    <loc>https://www.kashmiri.dev/people</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/civic-guide</loc>
+    <loc>https://www.kashmiri.dev/civic-guide</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/learn-ai</loc>
+    <loc>https://www.kashmiri.dev/learn-ai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/watch-listen</loc>
+    <loc>https://www.kashmiri.dev/watch-listen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kashmiri.dev/about</loc>
+    <loc>https://www.kashmiri.dev/about</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

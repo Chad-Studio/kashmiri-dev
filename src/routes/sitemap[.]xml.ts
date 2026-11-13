@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://kashmiri.dev";
+const BASE_URL = "https://www.kashmiri.dev";
 
 const paths = [
   { path: "/", priority: "1.0", changefreq: "weekly" as const },

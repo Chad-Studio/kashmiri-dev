@@ -135,7 +135,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Kashmiri.dev",
-          url: "https://kashmiri.dev",
+          url: "https://www.kashmiri.dev",
           description:
             "A simple, calm place to learn about Kashmir: history, language, people, and how to learn with AI.",
           inLanguage: "en",
@@ -147,7 +147,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
           name: "Kashmiri.dev",
-          url: "https://kashmiri.dev",
+          url: "https://www.kashmiri.dev",
           description:
             "Free educational website about Kashmir: history, language, and learning with AI.",
         }),

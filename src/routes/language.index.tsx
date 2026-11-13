@@ -21,9 +21,9 @@ export const Route = createFileRoute("/language/")({
         content:
           "A gentle intro to the Kashmiri language, including scripts, starter vocabulary, and common phrases.",
       },
-      { property: "og:url", content: "https://kashmiri.dev/language" },
+      { property: "og:url", content: "https://www.kashmiri.dev/language" },
     ],
-    links: [{ rel: "canonical", href: "https://kashmiri.dev/language" }],
+    links: [{ rel: "canonical", href: "https://www.kashmiri.dev/language" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/language/")({
             "Scripts, starter vocabulary, and everyday phrases in Kashmiri, for beginners.",
           inLanguage: "en",
           learningResourceType: "Language guide",
-          url: "https://kashmiri.dev/language",
+          url: "https://www.kashmiri.dev/language",
         }),
       },
     ],
