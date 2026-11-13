@@ -33,6 +33,27 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
 - **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
+## Statistics
+
+The `/stats` page covers population, literacy, education, and the economy. The main
+navigation and home page link to it. Readers can filter by topic and area, compare
+the ten Kashmir Valley districts, and download the district table as CSV.
+
+`src/data/stats.ts` stores typed figures, source URLs, reporting periods, geographic
+coverage, and the original Census 2011 district counts. All content records include
+`lang: "en"`. Valley literacy is calculated from the combined literate population
+divided by the combined population aged seven and above. District percentages are
+not averaged. The 2011 census counts are labelled as historical figures.
+
+Education and income figures currently cover the wider Jammu & Kashmir union
+territory and are labelled separately. Economic advance estimates are marked as
+estimates. The statistics page reads the checked-in data and does not require a
+visitor account or tracking service.
+
+When updating a figure, check its source, reporting year, units, age group, and
+coverage. Update the review date after checking the data. When adding a new page,
+update both `public/sitemap.xml` and `src/routes/sitemap[.]xml.ts`.
+
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

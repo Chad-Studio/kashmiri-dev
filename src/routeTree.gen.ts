@@ -17,6 +17,7 @@ import { Route as LanguageRouteImport } from './routes/language'
 import { Route as LearnAiRouteImport } from './routes/learn-ai'
 import { Route as PeopleRouteImport } from './routes/people'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StatsRouteImport } from './routes/stats'
 import { Route as WatchListenRouteImport } from './routes/watch-listen'
 import { Route as LanguageIndexRouteImport } from './routes/language.index'
 import { Route as LanguageNumbersRouteImport } from './routes/language.numbers'
@@ -61,6 +62,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WatchListenRoute = WatchListenRouteImport.update({
   id: '/watch-listen',
   path: '/watch-listen',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stats': typeof StatsRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
   '/language/': typeof LanguageIndexRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stats': typeof StatsRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
   '/language': typeof LanguageIndexRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/learn-ai': typeof LearnAiRoute
   '/people': typeof PeopleRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stats': typeof StatsRoute
   '/watch-listen': typeof WatchListenRoute
   '/language/numbers': typeof LanguageNumbersRoute
   '/language/': typeof LanguageIndexRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/learn-ai'
     | '/people'
     | '/sitemap.xml'
+    | '/stats'
     | '/watch-listen'
     | '/language/numbers'
     | '/language/'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/learn-ai'
     | '/people'
     | '/sitemap.xml'
+    | '/stats'
     | '/watch-listen'
     | '/language/numbers'
     | '/language'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/learn-ai'
     | '/people'
     | '/sitemap.xml'
+    | '/stats'
     | '/watch-listen'
     | '/language/numbers'
     | '/language/'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   LearnAiRoute: typeof LearnAiRoute
   PeopleRoute: typeof PeopleRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StatsRoute: typeof StatsRoute
   WatchListenRoute: typeof WatchListenRoute
 }
 
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/watch-listen': {
       id: '/watch-listen'
       path: '/watch-listen'
@@ -274,6 +294,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnAiRoute: LearnAiRoute,
   PeopleRoute: PeopleRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StatsRoute: StatsRoute,
   WatchListenRoute: WatchListenRoute,
 }
 export const routeTree = rootRouteImport

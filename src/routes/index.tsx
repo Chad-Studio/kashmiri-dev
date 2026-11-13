@@ -47,6 +47,11 @@ const primaryPaths = [
 
 const secondaryPaths = [
   {
+    to: "/stats" as const,
+    title: "Stats",
+    desc: "Population, literacy, education, and economy figures, with dates and sources.",
+  },
+  {
     to: "/people" as const,
     title: "People",
     desc: "Poets, mystics, and crafts of the valley.",
@@ -110,7 +115,7 @@ function Home() {
           <h2 id="learning-index" className="font-serif text-3xl text-foreground sm:text-4xl">
             Choose a place to begin
           </h2>
-          <p className="text-sm text-muted-foreground">Six paths, built for unhurried reading.</p>
+          <p className="text-sm text-muted-foreground">Seven paths, built for unhurried reading.</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-12">
@@ -141,7 +146,7 @@ function Home() {
           ))}
         </div>
 
-        <div className="grid border-b border-border sm:grid-cols-3">
+        <div className="grid border-b border-border sm:grid-cols-2 lg:grid-cols-4">
           {secondaryPaths.map((path) => (
             <Link
               key={path.to}
