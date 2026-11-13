@@ -1,0 +1,27 @@
+Kashmir Valley district boundary data
+
+Contains information from geoBoundaries gbOpen IND ADM2,
+boundary ID IND-ADM2-76128533, representing 2021 boundaries.
+Original source: Pathways Data Pvt. Ltd., lgdirectory.gov.in.
+
+This boundary dataset is made available under the Open Data Commons
+Open Database License (ODbL) v1.0:
+https://opendatacommons.org/licenses/odbl/1-0/
+
+Source metadata:
+https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/
+
+Pinned source geometry:
+https://github.com/wmgeolab/geoBoundaries/blob/9469f09/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2_simplified.geojson
+
+Modifications: selected ten Kashmir Valley district features and added Census
+district identifiers and display names. Source geometries are retained in the
+GeoJSON. The displayed SVG paths use Web Mercator projection and screen
+coordinates rounded to two decimal places.
+
+The derivative boundary database is available, free of charge, at:
+/data/kashmir-valley-districts.geojson
+
+The boundary database and generated district path data in
+src/data/district-map.ts are offered under ODbL v1.0. The licence of the
+boundary database does not change the licence of unrelated application code.

@@ -39,6 +39,22 @@ The `/stats` page covers population, literacy, education, and the economy. The m
 navigation and home page link to it. Readers can filter by topic and area, compare
 the ten Kashmir Valley districts, and download the district table as CSV.
 
+An interactive district map uses a local ten-feature GeoJSON subset of
+geoBoundaries gbOpen IND ADM2 (2021; Pathways Data). It supports district selection
+and population/literacy shading, with keyboard and text-button alternatives.
+The map distinguishes the 2021 boundary snapshot from Census 2011 figures.
+
+The derivative boundary data and generated paths are published under ODbL 1.0;
+attribution, licence links, and a GeoJSON download appear beside the map. See
+`public/data/kashmir-valley-districts.LICENSE.txt`. Regenerate the SVG path data
+with Node.js 24 or later:
+
+```sh
+node --experimental-strip-types scripts/generate-district-map.mjs
+```
+
+The map uses local SVG paths and does not require a map API key or a tile server.
+
 `src/data/stats.ts` stores typed figures, source URLs, reporting periods, geographic
 coverage, and the original Census 2011 district counts. All content records include
 `lang: "en"`. Valley literacy is calculated from the combined literate population

@@ -36,6 +36,15 @@ export const statsCategories: { id: StatsCategory; label: string; lang: "en" }[]
 ];
 
 export const statsSources = {
+  boundaries: {
+    title: "Kashmir Valley district boundaries: 2021 snapshot",
+    shortTitle: "geoBoundaries / Pathways Data",
+    publisher: "Pathways Data Pvt. Ltd., lgdirectory.gov.in; distributed by geoBoundaries",
+    url: "https://www.geoboundaries.org/api/current/gbOpen/IND/ADM2/",
+    detail:
+      "The map uses a ten-district subset of geoBoundaries gbOpen IND ADM2, representing 2021 boundaries. Boundary data are available under ODbL 1.0. Population and literacy still use the separate 2011 Census records.",
+    lang: "en",
+  },
   census: {
     title: "Census of India 2011: Primary Census Abstract",
     shortTitle: "Census 2011",

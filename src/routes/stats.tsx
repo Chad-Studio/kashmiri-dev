@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { DistrictMap } from "@/components/DistrictMap";
 import { PageIntro, SectionHeading } from "@/components/PageIntro";
 import { SiteLayout } from "@/components/SiteLayout";
 import {
@@ -33,7 +34,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const pageDescription =
-  "Explore Kashmir statistics on population, literacy, education, and the economy, with district comparisons, dated figures, and original sources.";
+  "Explore Kashmir statistics on population, literacy, education, and the economy, with an interactive district map, dated figures, and original sources.";
 
 export const Route = createFileRoute("/stats")({
   head: () => ({
@@ -220,6 +221,8 @@ function StatsPage() {
           </div>
         </div>
       </section>
+
+      <DistrictMap />
 
       <section aria-labelledby="figures-heading" className="mx-auto max-w-6xl px-4 pb-14">
         <SectionHeading id="figures-heading" title="Explore the figures" />
