@@ -52,7 +52,7 @@ TanStack Start uses file-based routing in `src/routes/` (see `src/routes/README.
 | `/language` | `src/routes/language.tsx` (layout), `src/routes/language.index.tsx` | `src/data/language.ts` | Koshur scripts (Perso-Arabic, Devanagari, Sharada), searchable vocabulary, loanword badges, and common phrases. |
 | `/language/numbers` | `src/routes/language.numbers.tsx` | `src/data/numbers.ts` | Koshur counting 1–50 in Roman transliteration, grouped by tens. |
 | `/people` | `src/routes/people.tsx` | `src/data/people.ts` | Profiles of Kashmiri poets/mystics (modal view) and traditional crafts. |
-| `/stats` | `src/routes/stats.tsx` | `src/data/stats.ts`, `src/components/DistrictMap.tsx`, `src/data/district-map.ts` | Topic/area-filtered figures, interactive 10-district SVG map, Census 2011 district comparison table, and CSV export. |
+| `/stats` | `src/routes/stats.tsx` | `src/data/stats.ts`, `src/components/DistrictMap.tsx`, `src/data/district-map.ts` | 7-topic / area-filtered figures (Census 2011, J&K publications, and 2023–25 NSO surveys), interactive 10-district SVG map, district comparison table, and CSV export. |
 | `/civic-guide` | `src/routes/civic-guide.tsx` | `src/data/civic.ts` | Plain-language explainers (RTI, consumer rights, cybercrime `1930`/portal, verifying news) with review dates. |
 | `/learn-ai` | `src/routes/learn-ai.tsx` | `src/data/ai.ts` | One-click copyable study/coding/CV prompt recipes, free AI tools, and hallucination/deepfake safety tips. |
 | `/watch-listen` | `src/routes/watch-listen.tsx` | `src/data/media.ts` | Curated podcasts, channels, and audio archives. |
@@ -68,8 +68,8 @@ TanStack Start uses file-based routing in `src/routes/` (see `src/routes/README.
 
 - **Localization-ready data (`src/data/*.ts`)**: Keep content structured as typed TypeScript arrays/objects with `lang: "en"` on every record so translations can be added later without changing schemas.
 - **Statistics & District Map (`src/data/stats.ts`, `src/components/DistrictMap.tsx`)**:
-  - Store raw Census 2011 district counts in `districtStats`. Calculate Valley-wide literacy from combined `literates / (population - children)` (aged 7+) — **never** average district literacy percentages.
-  - Keep the distinction explicit between **2021 district boundary shapes** (`public/data/kashmir-valley-districts.geojson`, ODbL 1.0; see `public/data/kashmir-valley-districts.LICENSE.txt`) and **2011 Census counts**, and between **Kashmir Valley** (10 districts) and **Jammu & Kashmir** UT figures.
+  - Store raw Census 2011 district counts and weighted NSO ASUSE 2025 district totals in `districtStats`. Calculate Valley-wide literacy and workforce/sector shares from combined numerators and denominators — **never** average district percentages.
+  - Keep the distinction explicit between **2021 district boundary shapes** (`public/data/kashmir-valley-districts.geojson`, ODbL 1.0; see `public/data/kashmir-valley-districts.LICENSE.txt`), **2011 Census counts**, and **2023–25 NSO survey estimates** (PLFS 2025, ASUSE 2025 excluding NIC `68108` residential rentals, HCES 2023–24 where Shopian had 0 sampled blocks, and CMS: Telecom 2025), and between **Kashmir Valley** (10 districts) and **Jammu & Kashmir** UT figures.
   - Do not hand-edit `src/data/district-map.ts`. Regenerate SVG paths (requires Node.js 24+) via:
     ```sh
     node --experimental-strip-types scripts/generate-district-map.mjs
@@ -83,9 +83,12 @@ TanStack Start uses file-based routing in `src/routes/` (see `src/routes/README.
 
 ## Commands & Package Hygiene
 
-- `npm run dev` — start local Vite / TanStack Start dev server
-- `npm run build` — build client and Nitro SSR output (also regenerates `routeTree.gen.ts` and validates types/imports)
-- `npm run preview` — preview production build locally
-- `npm run lint` — run ESLint + Prettier checks (`eslint .`)
-- `npm run format` — format repository files (`prettier --write .`)
+Use **Bun** (`bun.lock` + `bunfig.toml`; `package.json` uses Bun selector overrides that `npm` does not support):
+
+- `bun install` — install dependencies
+- `bun run dev` — start local Vite / TanStack Start dev server
+- `bun run build` — build client and Nitro SSR output (also regenerates `routeTree.gen.ts` and validates types/imports)
+- `bun run preview` — preview production build locally
+- `bun run lint` — run ESLint + Prettier checks (`eslint .`)
+- `bun run format` — format repository files (`prettier --write .`)
 - **Supply-chain guard (`bunfig.toml`)**: `minimumReleaseAge = 86400` blocks packages published less than 24 hours ago when installing with Bun. Confirm with the user before adding any package to `minimumReleaseAgeExcludes`.
