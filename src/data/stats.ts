@@ -55,12 +55,12 @@ export const statsSources = {
     lang: "en",
   },
   horticulture: {
-    title: "Digest of Statistics 2023–24",
-    shortTitle: "Digest 2023–24",
+    title: "Digest of Statistics 2024–25",
+    shortTitle: "Digest 2024–25",
     publisher: "Directorate of Economics & Statistics, Jammu & Kashmir",
-    url: "https://www.jkplanning.gov.in/pdf/Digest%20of%20Statistics%202023-24.pdf",
+    url: "https://ecostatjk.nic.in/pdf/publications/digeststat/Digest%20of%20Statistics%202024-251.pdf",
     detail:
-      "Table 5.01, printed page 103. The apple area figure is the published total for Kashmir Division, in hectares.",
+      "Table 5.01, printed page 117. The apple area figure is the published total for Kashmir Division, in hectares.",
     lang: "en",
   },
   education: {
@@ -426,15 +426,15 @@ export const statsIndicators: StatsIndicator[] = [
     title: "Land under apple cultivation",
     category: "economy",
     area: "valley",
-    value: 150615.41,
+    value: 151281.97,
     format: "decimal",
     unit: "hectares",
-    period: "2023–24",
+    period: "2024–25",
     kind: "Reported",
     description:
       "The area under apple cultivation in Kashmir Division. Area measures land use, not the weight or value of apples produced.",
     sourceId: "horticulture",
-    locator: "Table 5.01, printed page 103",
+    locator: "Table 5.01, printed page 117",
     lang: "en",
   },
   {
