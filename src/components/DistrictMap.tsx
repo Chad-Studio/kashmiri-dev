@@ -490,39 +490,41 @@ export function DistrictMap({
               {formatCount(selected.surveyedEstablishments)} surveyed).
             </p>
 
-            <p className="mt-4 text-sm font-semibold text-foreground">Choose a district</p>
-            <div
-              role="group"
-              aria-label="Choose a district"
-              className="mt-2 grid grid-cols-2 gap-2"
-            >
-              {mappedDistricts.map((district) => (
-                <button
-                  key={district.id}
-                  type="button"
-                  aria-pressed={district.id === selectedId}
-                  onClick={() => handleSelectDistrict(district.id)}
-                  className={cn(
-                    "flex min-h-10 cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 text-left text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    district.id === selectedId
-                      ? "border-primary bg-accent text-primary"
-                      : "border-border text-muted-foreground hover:bg-muted hover:text-foreground",
-                  )}
-                >
-                  <span
+            <div className="mt-4 sm:hidden">
+              <p className="text-sm font-semibold text-foreground">Choose a district</p>
+              <div
+                role="group"
+                aria-label="Choose a district"
+                className="mt-2 grid grid-cols-2 gap-2"
+              >
+                {mappedDistricts.map((district) => (
+                  <button
+                    key={district.id}
+                    type="button"
+                    aria-pressed={district.id === selectedId}
+                    onClick={() => handleSelectDistrict(district.id)}
                     className={cn(
-                      "inline-flex size-5 shrink-0 items-center justify-center rounded-full text-xs tabular-nums",
+                      "flex min-h-10 cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 text-left text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                       district.id === selectedId
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-foreground",
+                        ? "border-primary bg-accent text-primary"
+                        : "border-border text-muted-foreground hover:bg-muted hover:text-foreground",
                     )}
-                    aria-hidden="true"
                   >
-                    {district.number}
-                  </span>
-                  <span className="truncate">{district.name}</span>
-                </button>
-              ))}
+                    <span
+                      className={cn(
+                        "inline-flex size-5 shrink-0 items-center justify-center rounded-full text-xs tabular-nums",
+                        district.id === selectedId
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-foreground",
+                      )}
+                      aria-hidden="true"
+                    >
+                      {district.number}
+                    </span>
+                    <span className="truncate">{district.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
               <a

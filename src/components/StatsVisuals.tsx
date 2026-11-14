@@ -1,15 +1,9 @@
-import { ArrowDownToLine, ArrowLeftRight, ArrowUpDown, ArrowUpRight, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { ArrowDownToLine, ArrowLeftRight, ArrowUpDown, ArrowUpRight } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis, YAxis } from "recharts";
 
 import { SectionHeading } from "@/components/PageIntro";
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  type ChartConfig,
-} from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, type ChartConfig } from "@/components/ui/chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   districtStats,
@@ -24,14 +18,11 @@ import {
   getMaleLiteracyRate,
   isRateMetric,
   mapMetrics,
-  statsContrasts,
   statsSources,
   valleyHundredLenses,
   valleySummary,
-  valleyVsJkBenchmarks,
   type IndicatorVisual,
   type MapMetric,
-  type StatsCategory,
   type VisualTone,
 } from "@/data/stats";
 import { cn } from "@/lib/utils";
@@ -129,116 +120,6 @@ export function IndicatorMicroVisual({ visual }: { visual: IndicatorVisual }) {
         ))}
       </div>
     </div>
-  );
-}
-
-export function StatsContrastsStrip({
-  onSelectTopic,
-}: {
-  onSelectTopic: (topic: StatsCategory) => void;
-}) {
-  return (
-    <section
-      id="contrasts"
-      aria-labelledby="contrasts-heading"
-      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14 sm:px-6"
-    >
-      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id="contrasts-heading" className="font-serif text-2xl text-foreground">
-          Three contrasts that shape everyday life
-        </h2>
-        <p className="text-xs text-muted-foreground">
-          Weighted NSO survey estimates for Kashmir Valley (2025)
-        </p>
-      </div>
-      <div className="grid gap-4 lg:grid-cols-3">
-        {statsContrasts.map((item) => {
-          const source = statsSources[item.sourceId];
-          return (
-            <article
-              key={item.id}
-              className="flex flex-col justify-between rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)]"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 text-xs">
-                  <span className="font-semibold text-primary">{item.eyebrow}</span>
-                  <span className="rounded-full bg-muted px-2 py-0.5 font-medium tabular-nums text-muted-foreground">
-                    {item.period}
-                  </span>
-                </div>
-                <h3 className="mt-2.5 font-serif text-xl leading-snug text-foreground">
-                  {item.headline}
-                </h3>
-
-                <div className="mt-4 space-y-3 rounded-lg border border-border/80 bg-muted/30 p-3.5">
-                  <div>
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="font-serif text-2xl font-semibold tabular-nums text-foreground">
-                        {item.primaryFigure}
-                      </span>
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {item.primaryLabel}
-                      </span>
-                    </div>
-                    <div
-                      className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted"
-                      aria-hidden="true"
-                    >
-                      <div
-                        className="h-full rounded-full bg-chart-1"
-                        style={{ width: `${Math.min(100, Math.max(3, item.primaryPercent))}%` }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="font-serif text-xl font-semibold tabular-nums text-foreground">
-                        {item.secondaryFigure}
-                      </span>
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {item.secondaryLabel}
-                      </span>
-                    </div>
-                    <div
-                      className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted"
-                      aria-hidden="true"
-                    >
-                      <div
-                        className="h-full rounded-full bg-chart-2"
-                        style={{ width: `${Math.min(100, Math.max(3, item.secondaryPercent))}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <p className="mt-3.5 text-sm leading-relaxed text-muted-foreground">
-                  {item.summary}
-                </p>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-3 text-xs">
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-8 items-center gap-1 font-semibold text-muted-foreground underline-offset-4 hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {source.shortTitle}
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </a>
-                <button
-                  type="button"
-                  onClick={() => onSelectTopic(item.topic)}
-                  className="inline-flex min-h-8 cursor-pointer items-center gap-1 rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  See topic figures ↓
-                </button>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
   );
 }
 
@@ -452,9 +333,14 @@ export function DistrictExplorerTabs({
   onDownloadCsv,
 }: DistrictExplorerTabsProps) {
   const [chartMode, setChartMode] = useState<"metric" | "literacyGap">("metric");
-  const [tableQuery, setTableQuery] = useState("");
   const [sortField, setSortField] = useState<TableSortField>("population");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  useEffect(() => {
+    if (metric !== "districts") {
+      setChartMode("metric");
+    }
+  }, [metric]);
 
   const effectiveChartMetric: Exclude<MapMetric, "districts"> =
     metric === "districts" ? "establishments" : metric;
@@ -558,37 +444,34 @@ export function DistrictExplorerTabs({
   const maxPopulation = useMemo(() => Math.max(...districtStats.map((d) => d.population)), []);
   const maxBusinesses = useMemo(() => Math.max(...districtStats.map((d) => d.establishments)), []);
 
-  const filteredDistricts = useMemo(() => {
-    const q = tableQuery.trim().toLowerCase();
-    return districtStats
-      .filter((district) => `${district.name} ${district.censusName}`.toLowerCase().includes(q))
-      .sort((a, b) => {
-        let comparison = 0;
-        switch (sortField) {
-          case "name":
-            comparison = a.name.localeCompare(b.name);
-            break;
-          case "literacy":
-            comparison = getLiteracyRate(a) - getLiteracyRate(b);
-            break;
-          case "maleLiteracy":
-            comparison = getMaleLiteracyRate(a) - getMaleLiteracyRate(b);
-            break;
-          case "femaleLiteracy":
-            comparison = getFemaleLiteracyRate(a) - getFemaleLiteracyRate(b);
-            break;
-          case "establishments":
-            comparison = a.establishments - b.establishments;
-            break;
-          case "workers":
-            comparison = a.establishmentWorkers - b.establishmentWorkers;
-            break;
-          default:
-            comparison = a.population - b.population;
-        }
-        return sortDir === "asc" ? comparison : -comparison;
-      });
-  }, [tableQuery, sortField, sortDir]);
+  const sortedDistricts = useMemo(() => {
+    return [...districtStats].sort((a, b) => {
+      let comparison = 0;
+      switch (sortField) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "literacy":
+          comparison = getLiteracyRate(a) - getLiteracyRate(b);
+          break;
+        case "maleLiteracy":
+          comparison = getMaleLiteracyRate(a) - getMaleLiteracyRate(b);
+          break;
+        case "femaleLiteracy":
+          comparison = getFemaleLiteracyRate(a) - getFemaleLiteracyRate(b);
+          break;
+        case "establishments":
+          comparison = a.establishments - b.establishments;
+          break;
+        case "workers":
+          comparison = a.establishmentWorkers - b.establishmentWorkers;
+          break;
+        default:
+          comparison = a.population - b.population;
+      }
+      return sortDir === "asc" ? comparison : -comparison;
+    });
+  }, [sortField, sortDir]);
 
   const toggleSort = (field: TableSortField) => {
     if (sortField === field) {
@@ -615,6 +498,8 @@ export function DistrictExplorerTabs({
     } => item.id !== "districts",
   );
 
+  const rankSelectValue = chartMode === "literacyGap" ? "literacyGap" : effectiveChartMetric;
+
   return (
     <section
       aria-labelledby="district-explorer-heading"
@@ -635,7 +520,7 @@ export function DistrictExplorerTabs({
                 Rank all ten districts visually, compare any two side by side, or download the CSV.
               </p>
             </div>
-            <TabsList className="grid h-auto w-full grid-cols-3 gap-1 p-1 sm:w-auto sm:inline-flex">
+            <TabsList className="grid h-auto w-full grid-cols-3 gap-1 p-1 sm:inline-flex sm:w-auto">
               <TabsTrigger value="chart" className="min-h-9 px-3 py-1.5 text-xs sm:text-sm">
                 Visual ranking
               </TabsTrigger>
@@ -649,58 +534,59 @@ export function DistrictExplorerTabs({
           </div>
 
           <TabsContent value="chart" className="mt-5">
-            <div
-              role="group"
-              aria-label="Choose district ranking chart"
-              className="flex flex-wrap items-center gap-2"
-            >
-              {numericMetrics.map((item) => {
-                const isSelected = chartMode === "metric" && effectiveChartMetric === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    aria-pressed={isSelected}
-                    onClick={() => {
-                      setChartMode("metric");
-                      onSelectMetric(item.id);
-                    }}
-                    className={cn(
-                      "min-h-9 cursor-pointer rounded-full border px-3 py-1 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                      isSelected
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground",
-                    )}
-                  >
-                    {item.label} {item.period ? `(${item.period})` : ""}
-                  </button>
-                );
-              })}
-              <button
-                type="button"
-                aria-pressed={chartMode === "literacyGap"}
-                onClick={() => setChartMode("literacyGap")}
-                className={cn(
-                  "min-h-9 cursor-pointer rounded-full border px-3 py-1 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  chartMode === "literacyGap"
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground",
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-xs text-muted-foreground">
+                {chartMode === "metric" ? (
+                  <>
+                    Showing{" "}
+                    <span className="font-semibold text-foreground">
+                      {getDistrictMetricUnit(effectiveChartMetric)}
+                    </span>
+                    . Click any bar to select on the map above (
+                    <span className="font-semibold text-primary">{districtA.name}</span>{" "}
+                    highlighted).
+                  </>
+                ) : (
+                  <>
+                    Sorted from smallest to widest gap (Census 2011, age 7+). Click a row to select
+                    on the map above.
+                  </>
                 )}
-              >
-                Male–female literacy gap (2011)
-              </button>
+              </p>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <label
+                  htmlFor="district-rank-metric"
+                  className="text-xs font-semibold text-foreground"
+                >
+                  Rank by
+                </label>
+                <select
+                  id="district-rank-metric"
+                  value={rankSelectValue}
+                  onChange={(event) => {
+                    const next = event.target.value;
+                    if (next === "literacyGap") {
+                      setChartMode("literacyGap");
+                    } else {
+                      setChartMode("metric");
+                      onSelectMetric(next as MapMetric);
+                    }
+                  }}
+                  className={cn(controlClass, "min-h-9 py-1.5 text-xs font-semibold sm:text-sm")}
+                >
+                  {numericMetrics.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.label} {item.period ? `(${item.period})` : ""}
+                    </option>
+                  ))}
+                  <option value="literacyGap">Male–female literacy gap (2011)</option>
+                </select>
+              </div>
             </div>
 
             {chartMode === "metric" ? (
-              <div className="mt-5">
-                <p className="mb-3 text-xs text-muted-foreground">
-                  Showing{" "}
-                  <span className="font-semibold text-foreground">
-                    {getDistrictMetricUnit(effectiveChartMetric)}
-                  </span>
-                  . Click any bar to select that district on the map above (
-                  <span className="font-semibold text-primary">{districtA.name}</span> highlighted).
-                </p>
+              <div className="mt-4">
                 <ChartContainer
                   config={districtRankChartConfig}
                   className="aspect-auto h-[360px] w-full"
@@ -736,9 +622,7 @@ export function DistrictExplorerTabs({
                           <div className="rounded-lg border border-border bg-background px-3 py-2 text-xs shadow-lg">
                             <p className="font-semibold text-foreground">{row.name}</p>
                             <p className="mt-1 tabular-nums text-muted-foreground">
-                              <span className="font-semibold text-foreground">
-                                {row.formatted}
-                              </span>{" "}
+                              <span className="font-semibold text-foreground">{row.formatted}</span>{" "}
                               {getDistrictMetricUnit(effectiveChartMetric)}
                             </p>
                           </div>
@@ -774,22 +658,16 @@ export function DistrictExplorerTabs({
                 </ChartContainer>
               </div>
             ) : (
-              <div className="mt-5">
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-                  <p>
-                    Sorted from smallest to widest gap (Census 2011, age 7+). Click a row to select
-                    that district on the map.
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
-                      <span className="size-2.5 rounded-full bg-chart-1" aria-hidden="true" />
-                      Female literacy
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
-                      <span className="size-2.5 rounded-full bg-chart-2" aria-hidden="true" />
-                      Male literacy
-                    </span>
-                  </div>
+              <div className="mt-4">
+                <div className="mb-3 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="size-2.5 rounded-full bg-chart-1" aria-hidden="true" />
+                    Female literacy
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="size-2.5 rounded-full bg-chart-2" aria-hidden="true" />
+                    Male literacy
+                  </span>
                 </div>
                 <div className="space-y-1.5">
                   {literacyGapDistricts.map((row) => {
@@ -800,7 +678,7 @@ export function DistrictExplorerTabs({
                         type="button"
                         onClick={() => onSelectDistrict(row.id)}
                         className={cn(
-                          "grid w-full cursor-pointer grid-cols-[5.5rem_minmax(0,1fr)_5.5rem] items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors sm:grid-cols-[7rem_minmax(0,1fr)_8.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                          "grid w-full cursor-pointer grid-cols-[5.5rem_minmax(0,1fr)_5.5rem] items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[7rem_minmax(0,1fr)_8.5rem]",
                           isSelected
                             ? "border-primary bg-primary/5"
                             : "border-border/70 bg-background hover:bg-muted/40",
@@ -975,55 +853,21 @@ export function DistrictExplorerTabs({
           </TabsContent>
 
           <TabsContent value="table" className="mt-5">
-            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="relative sm:w-72">
-                <Search
-                  className="absolute left-3 top-3 size-4 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <input
-                  type="search"
-                  value={tableQuery}
-                  onChange={(event) => setTableQuery(event.target.value)}
-                  placeholder="Find a district"
-                  aria-label="Search districts"
-                  className={cn(controlClass, "w-full pl-9")}
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2.5">
-                <label htmlFor="district-sort" className="text-xs font-semibold text-foreground">
-                  Sort
-                </label>
-                <select
-                  id="district-sort"
-                  value={sortField}
-                  onChange={(event) => {
-                    const next = event.target.value as TableSortField;
-                    setSortField(next);
-                    setSortDir(next === "name" ? "asc" : "desc");
-                  }}
-                  className={cn(controlClass, "flex-1 sm:flex-none")}
-                >
-                  <option value="population">Population (2011)</option>
-                  <option value="literacy">Literacy (2011)</option>
-                  <option value="femaleLiteracy">Female literacy (2011)</option>
-                  <option value="establishments">Local businesses (2025)</option>
-                  <option value="workers">Business workers (2025)</option>
-                  <option value="name">District name (A–Z)</option>
-                </select>
-                <button
-                  type="button"
-                  onClick={onDownloadCsv}
-                  className={cn(
-                    controlClass,
-                    "inline-flex cursor-pointer items-center justify-center gap-2 font-semibold hover:bg-accent",
-                  )}
-                >
-                  <ArrowDownToLine className="size-4" aria-hidden="true" />
-                  Download CSV
-                </button>
-              </div>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs text-muted-foreground">
+                Click any column header to sort, or click a row to select that district on the map.
+              </p>
+              <button
+                type="button"
+                onClick={onDownloadCsv}
+                className={cn(
+                  controlClass,
+                  "inline-flex min-h-9 cursor-pointer items-center justify-center gap-2 py-1.5 text-xs font-semibold hover:bg-accent sm:text-sm",
+                )}
+              >
+                <ArrowDownToLine className="size-4" aria-hidden="true" />
+                Download CSV
+              </button>
             </div>
 
             <div
@@ -1162,7 +1006,7 @@ export function DistrictExplorerTabs({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {filteredDistricts.map((district) => {
+                  {sortedDistricts.map((district) => {
                     const isSelected = district.id === selectedId;
                     const literacy = getLiteracyRate(district);
                     return (
@@ -1267,12 +1111,6 @@ export function DistrictExplorerTabs({
               </table>
             </div>
 
-            {filteredDistricts.length === 0 ? (
-              <p role="status" className="mt-4 text-sm text-muted-foreground">
-                No district matches “{tableQuery}”. Try another spelling.
-              </p>
-            ) : null}
-
             <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
               The Kashmir Valley row always covers all ten districts: literacy uses combined counts
               aged 7+ rather than averaging district rates, and 2025 business figures sum weighted
@@ -1297,140 +1135,6 @@ export function DistrictExplorerTabs({
             </p>
           </TabsContent>
         </Tabs>
-      </div>
-    </section>
-  );
-}
-
-const benchmarkChartConfig = {
-  valley: {
-    label: "Kashmir Valley (10 districts)",
-    color: "var(--chart-1)",
-  },
-  jk: {
-    label: "Jammu & Kashmir (whole UT)",
-    color: "var(--chart-2)",
-  },
-} satisfies ChartConfig;
-
-export function ValleyVsJkChartSection() {
-  return (
-    <section
-      aria-labelledby="benchmark-heading"
-      className="mx-auto max-w-6xl px-4 pb-14 sm:px-6"
-    >
-      <SectionHeading
-        id="benchmark-heading"
-        title="Kashmir Valley vs. Jammu & Kashmir"
-        description="Official reports often publish union-territory totals alongside regional survey microdata. Here is how the ten Valley districts compare with all of Jammu & Kashmir across 2023–25 NSO surveys."
-      />
-
-      <div className="mt-5 rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)] sm:p-6">
-        <ChartContainer config={benchmarkChartConfig} className="aspect-auto h-[390px] w-full">
-          <BarChart
-            data={valleyVsJkBenchmarks}
-            layout="vertical"
-            margin={{ top: 4, right: 24, left: 4, bottom: 4 }}
-            barGap={3}
-          >
-            <CartesianGrid horizontal={false} strokeDasharray="3 3" />
-            <XAxis
-              type="number"
-              domain={[0, 100]}
-              tickFormatter={(value: number) => `${value}%`}
-              tickLine={false}
-              axisLine={false}
-            />
-            <YAxis
-              dataKey="shortLabel"
-              type="category"
-              width={126}
-              tickLine={false}
-              axisLine={false}
-              tick={{ fontSize: 12, fontWeight: 600 }}
-            />
-            <ChartLegend verticalAlign="top" content={<ChartLegendContent />} />
-            <ChartTooltip
-              cursor={{ fill: "var(--muted)", opacity: 0.45 }}
-              content={({ active, payload }) => {
-                if (!active || !payload?.length) return null;
-                const row = payload[0]?.payload as
-                  | (typeof valleyVsJkBenchmarks)[number]
-                  | undefined;
-                if (!row) return null;
-                const source = statsSources[row.sourceId];
-                return (
-                  <div className="max-w-xs rounded-lg border border-border bg-background p-3 text-xs shadow-lg">
-                    <p className="font-semibold text-foreground">{row.label}</p>
-                    <p className="mt-0.5 text-[11px] text-muted-foreground">
-                      {row.period} · {source.shortTitle}
-                    </p>
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center justify-between gap-4">
-                        <span className="inline-flex items-center gap-1.5 text-muted-foreground">
-                          <span className="size-2 rounded-sm bg-chart-1" />
-                          Kashmir Valley
-                        </span>
-                        <span className="font-semibold tabular-nums text-foreground">
-                          {row.valley.toFixed(2)}%
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between gap-4">
-                        <span className="inline-flex items-center gap-1.5 text-muted-foreground">
-                          <span className="size-2 rounded-sm bg-chart-2" />
-                          All Jammu & Kashmir
-                        </span>
-                        <span className="font-semibold tabular-nums text-foreground">
-                          {row.jk.toFixed(2)}%
-                        </span>
-                      </div>
-                    </div>
-                    <p className="mt-2 border-t border-border pt-1.5 text-[11px] text-muted-foreground">
-                      {row.note}
-                    </p>
-                  </div>
-                );
-              }}
-            />
-            <Bar
-              dataKey="valley"
-              fill="var(--color-valley)"
-              radius={[0, 4, 4, 0]}
-              maxBarSize={14}
-            />
-            <Bar dataKey="jk" fill="var(--color-jk)" radius={[0, 4, 4, 0]} maxBarSize={14} />
-          </BarChart>
-        </ChartContainer>
-
-        <table className="sr-only">
-          <caption>
-            Comparison of Kashmir Valley and Jammu & Kashmir percentages across 2023–25 NSO surveys
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Indicator</th>
-              <th scope="col">Kashmir Valley</th>
-              <th scope="col">Jammu & Kashmir</th>
-              <th scope="col">Period</th>
-            </tr>
-          </thead>
-          <tbody>
-            {valleyVsJkBenchmarks.map((row) => (
-              <tr key={row.id}>
-                <th scope="row">{row.label}</th>
-                <td>{row.valley.toFixed(2)}%</td>
-                <td>{row.jk.toFixed(2)}%</td>
-                <td>{row.period}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Kashmir Valley leads in household LPG cooking (87.91% across nine sampled Valley districts
-          vs. 72.74% across all of J&K) and household internet access (97.41% vs. 92.73%), while
-          fixed home Wi-Fi remains low in both areas (6.66% in the Valley vs. 9.36% across J&K).
-        </p>
       </div>
     </section>
   );
