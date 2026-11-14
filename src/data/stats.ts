@@ -558,77 +558,6 @@ export interface StatsIndicator {
   lang: "en";
 }
 
-export interface StatsContrast {
-  id: string;
-  eyebrow: string;
-  headline: string;
-  primaryFigure: string;
-  primaryLabel: string;
-  secondaryFigure: string;
-  secondaryLabel: string;
-  primaryPercent: number;
-  secondaryPercent: number;
-  summary: string;
-  sourceId: keyof typeof statsSources;
-  period: string;
-  topic: StatsCategory;
-  lang: "en";
-}
-
-export const statsContrasts: StatsContrast[] = [
-  {
-    id: "mobile-vs-wifi",
-    eyebrow: "Digital access · Kashmir Valley",
-    headline: "Almost every home is online — almost none via fixed Wi-Fi",
-    primaryFigure: "97.41%",
-    primaryLabel: "homes with internet",
-    secondaryFigure: "6.66%",
-    secondaryLabel: "homes with fixed Wi-Fi",
-    primaryPercent: 97.41,
-    secondaryPercent: 6.66,
-    summary:
-      "95.34% of Valley homes rely on mobile data, and 72.24% of adults use smartphones compared with 13.37% using a computer or laptop.",
-    sourceId: "cmst",
-    period: "Jan–Mar 2025",
-    topic: "digital",
-    lang: "en",
-  },
-  {
-    id: "embroidery-share",
-    eyebrow: "Craft & livelihoods · Kashmir Valley",
-    headline: "Nearly 1 in 7 local businesses is a hand-embroidery unit",
-    primaryFigure: "84,974",
-    primaryLabel: "embroidery units (13.80%)",
-    secondaryFigure: "615,571",
-    secondaryLabel: "all local businesses",
-    primaryPercent: 13.8,
-    secondaryPercent: 100,
-    summary:
-      "Hand embroidery and lace making (NIC 13991) is the Valley’s signature household industry, led by Budgam (30,920), Baramulla (15,729), and Ganderbal (15,039).",
-    sourceId: "asuse",
-    period: "2025",
-    topic: "economy",
-    lang: "en",
-  },
-  {
-    id: "work-self-employed",
-    eyebrow: "Work · Kashmir Valley",
-    headline: "Two in three working adults run their own farm, shop, or craft",
-    primaryFigure: "66.70%",
-    primaryLabel: "self-employed workers",
-    secondaryFigure: "21.69%",
-    secondaryLabel: "regular salaried jobs",
-    primaryPercent: 66.7,
-    secondaryPercent: 21.69,
-    summary:
-      "64.66% of Valley residents aged 15+ are in the labour force — including 53.57% of adult women across farming, crafts, and paid employment.",
-    sourceId: "plfs",
-    period: "2025",
-    topic: "work",
-    lang: "en",
-  },
-];
-
 export interface ValleyHundredSegment {
   label: string;
   dots: number;
@@ -657,7 +586,7 @@ export const valleyHundredLenses: ValleyHundredLens[] = [
     period: "Jan–Mar 2025",
     sourceId: "cmst",
     takeaway:
-      "97 out of 100 homes have internet access, yet only 7 have fixed Wi-Fi or broadband — showing why mobile networks carry almost all everyday reading and study.",
+      "97 out of 100 homes have internet access, yet only 7 have fixed Wi-Fi — and 72% of adults use smartphones compared with 13% using a computer or laptop.",
     segments: [
       { label: "Fixed Wi-Fi / broadband", dots: 7, exactPercent: 6.66, tone: "teal" },
       { label: "Mobile internet (no fixed Wi-Fi)", dots: 90, exactPercent: 90.75, tone: "primary" },
@@ -673,7 +602,7 @@ export const valleyHundredLenses: ValleyHundredLens[] = [
     period: "2025",
     sourceId: "plfs",
     takeaway:
-      "67 out of 100 adult workers work in their own or family farm, shop, or workshop, while 22 earn a regular salary and 11 work for casual daily wages.",
+      "67 out of 100 adult workers run their own or family farm, shop, or craft, while 22 earn a regular salary and 11 work for casual daily wages.",
     segments: [
       { label: "Self-employed & family work", dots: 67, exactPercent: 66.7, tone: "primary" },
       { label: "Regular salaried jobs", dots: 22, exactPercent: 21.69, tone: "teal" },
@@ -689,7 +618,7 @@ export const valleyHundredLenses: ValleyHundredLens[] = [
     period: "2025",
     sourceId: "asuse",
     takeaway:
-      "Out of every 100 local unincorporated businesses, 38 are shops and traders, 33 provide services, 15 are other makers, and 14 are hand-embroidery workshops.",
+      "Out of every 100 local unincorporated businesses, 38 are shops and traders, 33 provide services, 15 are other makers, and 14 are hand-embroidery units (led by Budgam with 30,920).",
     segments: [
       { label: "Hand-embroidery & lace units", dots: 14, exactPercent: 13.8, tone: "primary" },
       { label: "Other manufacturing workshops", dots: 15, exactPercent: 15.38, tone: "amber" },
@@ -711,98 +640,6 @@ export const valleyHundredLenses: ValleyHundredLens[] = [
       { label: "LPG cooking gas", dots: 88, exactPercent: 87.91, tone: "primary" },
       { label: "Firewood & other fuels", dots: 12, exactPercent: 12.09, tone: "amber" },
     ],
-    lang: "en",
-  },
-];
-
-export interface ValleyVsJkBenchmark {
-  id: string;
-  label: string;
-  shortLabel: string;
-  valley: number;
-  jk: number;
-  period: string;
-  sourceId: keyof typeof statsSources;
-  note: string;
-  lang: "en";
-}
-
-export const valleyVsJkBenchmarks: ValleyVsJkBenchmark[] = [
-  {
-    id: "home-internet",
-    label: "Homes with internet access",
-    shortLabel: "Home internet",
-    valley: 97.41,
-    jk: 92.73,
-    period: "Jan–Mar 2025",
-    sourceId: "cmst",
-    note: "Share of households with internet at home",
-    lang: "en",
-  },
-  {
-    id: "lpg-cooking",
-    label: "Homes cooking with LPG",
-    shortLabel: "LPG cooking",
-    valley: 87.91,
-    jk: 72.74,
-    period: "2023–24",
-    sourceId: "hces",
-    note: "9 sampled Valley districts vs. whole UT",
-    lang: "en",
-  },
-  {
-    id: "adult-lfpr",
-    label: "Labour force (age 15+)",
-    shortLabel: "Adult labour force",
-    valley: 64.66,
-    jk: 64.95,
-    period: "2025",
-    sourceId: "plfs",
-    note: "Usual status (principal + subsidiary)",
-    lang: "en",
-  },
-  {
-    id: "women-lfpr",
-    label: "Women in labour force (15+)",
-    shortLabel: "Women labour force",
-    valley: 53.57,
-    jk: 53.09,
-    period: "2025",
-    sourceId: "plfs",
-    note: "Females aged 15+ working or seeking work",
-    lang: "en",
-  },
-  {
-    id: "business-internet",
-    label: "Local businesses online",
-    shortLabel: "Businesses online",
-    valley: 47.09,
-    jk: 47.65,
-    period: "2025",
-    sourceId: "asuse",
-    note: "Unincorporated non-farm establishments",
-    lang: "en",
-  },
-  {
-    id: "computer-use",
-    label: "Adults using a computer (15+)",
-    shortLabel: "Computer use (15+)",
-    valley: 13.37,
-    jk: 11.62,
-    period: "Jan–Mar 2025",
-    sourceId: "cmst",
-    note: "Used desktop, laptop, or tablet in past 3 months",
-    lang: "en",
-  },
-  {
-    id: "fixed-wifi",
-    label: "Homes with fixed Wi-Fi",
-    shortLabel: "Fixed Wi-Fi",
-    valley: 6.66,
-    jk: 9.36,
-    period: "Jan–Mar 2025",
-    sourceId: "cmst",
-    note: "Fixed broadband / Wi-Fi router at home",
     lang: "en",
   },
 ];
@@ -863,7 +700,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2011",
     kind: "Calculated",
     description:
-      "Calculated from the total number of literate people and the population aged seven and above across all ten districts.",
+      "Calculated from combined literate counts aged seven and above across all ten districts: 72.83% for males and 52.08% for females.",
     sourceId: "census",
     locator: "Literates ÷ population aged 7+",
     visual: {
@@ -873,38 +710,6 @@ export const statsIndicators: StatsIndicator[] = [
       compareLabel: "Female (52.08%)",
       compareValue: valleySummary.femaleLiteracy,
     },
-    lang: "en",
-  },
-  {
-    id: "male-literacy",
-    title: "Male literacy rate",
-    category: "literacy",
-    area: "valley",
-    value: valleySummary.maleLiteracy,
-    format: "percent",
-    unit: "of males aged 7+",
-    period: "2011",
-    kind: "Calculated",
-    description: "Uses male literate counts and the male population aged seven and above.",
-    sourceId: "census",
-    locator: "Male literates ÷ male population aged 7+",
-    visual: { kind: "meter", value: valleySummary.maleLiteracy },
-    lang: "en",
-  },
-  {
-    id: "female-literacy",
-    title: "Female literacy rate",
-    category: "literacy",
-    area: "valley",
-    value: valleySummary.femaleLiteracy,
-    format: "percent",
-    unit: "of females aged 7+",
-    period: "2011",
-    kind: "Calculated",
-    description: "Uses female literate counts and the female population aged seven and above.",
-    sourceId: "census",
-    locator: "Female literates ÷ female population aged 7+",
-    visual: { kind: "meter", value: valleySummary.femaleLiteracy },
     lang: "en",
   },
   {
@@ -918,7 +723,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2011",
     kind: "Calculated",
     description:
-      "The difference between the male and female literacy rates. A percentage-point gap is different from a percentage change.",
+      "The difference between male and female literacy rates across the ten districts. Srinagar had the smallest gap (14.40 points) and Kupwara the widest (26.25 points).",
     sourceId: "census",
     locator: "Male literacy rate minus female literacy rate",
     visual: {
@@ -932,7 +737,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "schools",
-    title: "Schools",
+    title: "Total schools in J&K",
     category: "education",
     area: "jk",
     value: 24137,
@@ -941,7 +746,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2024–25",
     kind: "Reported",
     description:
-      "The reported school total for the whole of Jammu & Kashmir, including Jammu. This is not a Kashmir Valley-only count.",
+      "Reported across the whole of Jammu & Kashmir: 18,724 government schools and 5,413 schools under private and other managements.",
     sourceId: "education",
     locator: "School Education section",
     visual: {
@@ -955,7 +760,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "government-schools",
-    title: "Government schools",
+    title: "Government schools in J&K",
     category: "education",
     area: "jk",
     value: 18724,
@@ -963,75 +768,11 @@ export const statsIndicators: StatsIndicator[] = [
     unit: "schools",
     period: "2024–25",
     kind: "Reported",
-    description: "Government-managed schools across the whole union territory.",
+    description:
+      "Government-managed schools across the whole union territory, making up over three-quarters of all schools.",
     sourceId: "education",
     locator: "School Education section",
     visual: { kind: "meter", value: 77.57, label: "77.57% of all J&K schools" },
-    lang: "en",
-  },
-  {
-    id: "other-schools",
-    title: "Schools under other managements",
-    category: "education",
-    area: "jk",
-    value: 5413,
-    format: "count",
-    unit: "schools",
-    period: "2024–25",
-    kind: "Reported",
-    description:
-      "Schools under managements other than government, using the source’s classification.",
-    sourceId: "education",
-    locator: "School Education section",
-    visual: { kind: "meter", value: 22.43, label: "22.43% of all J&K schools" },
-    lang: "en",
-  },
-  {
-    id: "apple-area",
-    title: "Land under apple cultivation",
-    category: "economy",
-    area: "valley",
-    value: 151281.97,
-    format: "decimal",
-    unit: "hectares",
-    period: "2024–25",
-    kind: "Reported",
-    description:
-      "The area under apple cultivation in Kashmir Division. Area measures land use, not the weight or value of apples produced.",
-    sourceId: "horticulture",
-    locator: "Table 5.01, printed page 117",
-    lang: "en",
-  },
-  {
-    id: "gsdp",
-    title: "Size of the J&K economy",
-    category: "economy",
-    area: "jk",
-    value: 285674,
-    format: "crore",
-    unit: "lakh crore rupees",
-    period: "2025–26",
-    kind: "Advance estimate",
-    description:
-      "Nominal Gross State Domestic Product (GSDP) for the whole union territory: approximately ₹2,85,674 crore at current prices. This is an estimate of total output.",
-    sourceId: "economy",
-    locator: "Macro Economic Aggregates",
-    lang: "en",
-  },
-  {
-    id: "per-capita-income",
-    title: "J&K per-capita income",
-    category: "economy",
-    area: "jk",
-    value: 168243,
-    format: "rupees",
-    unit: "per person, per year",
-    period: "2025–26",
-    kind: "Advance estimate",
-    description:
-      "The published nominal per-capita income estimate for the whole union territory. An average does not describe each person’s income.",
-    sourceId: "economy",
-    locator: "Macro Economic Aggregates",
     lang: "en",
   },
   {
@@ -1045,7 +786,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2025",
     kind: "Survey estimate",
     description:
-      "People aged 15 and older who are either working or looking for work (usual status). The rate is 75.30% for men and 53.57% for women.",
+      "People aged 15+ working or seeking work (75.30% for men and 53.57% for women; 64.95% across all of J&K).",
     sourceId: "plfs",
     locator: "NSS Region 013, usual status (ps+ss), age 15+",
     visual: {
@@ -1068,7 +809,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2025",
     kind: "Survey estimate",
     description:
-      "More than half of adult women in Kashmir Valley take part in paid jobs, family farming, or household craft and trade work.",
+      "More than half of adult women in Kashmir Valley take part in paid jobs, family farming, or household craft and trade work (53.09% across all of J&K).",
     sourceId: "plfs",
     locator: "NSS Region 013, female usual status (ps+ss), age 15+",
     visual: {
@@ -1115,7 +856,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2025",
     kind: "Survey estimate",
     description:
-      "People in the adult labour force who looked for work but remained without work over the year (usual status). Among young people aged 15–29, the rate is 13.55%.",
+      "Adults in the labour force who looked for work but remained without work over the year (4.95% across J&K). Among youth aged 15–29 in the Valley, the rate is 13.55%.",
     sourceId: "plfs",
     locator: "NSS Region 013, usual status (ps+ss), age 15+",
     visual: {
@@ -1129,7 +870,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "valley-enterprise-workers",
-    title: "Workers in local unincorporated businesses",
+    title: "Workers in local small businesses",
     category: "work",
     area: "valley",
     value: valleySummary.establishmentWorkers,
@@ -1138,7 +879,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2025",
     kind: "Survey estimate",
     description:
-      "Estimated people working in small non-farm shops, workshops, and service businesses across all ten Valley districts. Women make up 18.33% of this workforce.",
+      "Estimated people working in unincorporated non-farm shops, workshops, and services across the ten Valley districts (out of 14.39 lakh across all of J&K).",
     sourceId: "asuse",
     locator: "Block 8 item 789, ten Kashmir Valley districts",
     visual: {
@@ -1147,29 +888,6 @@ export const statsIndicators: StatsIndicator[] = [
         { label: "Men", value: 81.67, tone: "teal" },
         { label: "Women", value: 18.33, tone: "primary" },
       ],
-    },
-    lang: "en",
-  },
-  {
-    id: "jk-lfpr",
-    title: "J&K labour force participation",
-    category: "work",
-    area: "jk",
-    value: 64.95,
-    format: "percent",
-    unit: "of people aged 15+",
-    period: "2025",
-    kind: "Survey estimate",
-    description:
-      "Adult labour force participation across the whole union territory (76.26% for men and 53.09% for women), with an adult unemployment rate of 4.95%.",
-    sourceId: "plfs",
-    locator: "State 01, usual status (ps+ss), age 15+",
-    visual: {
-      kind: "meter",
-      value: 76.26,
-      label: "Men (76.26%)",
-      compareLabel: "Women (53.09%)",
-      compareValue: 53.09,
     },
     lang: "en",
   },
@@ -1184,7 +902,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2025",
     kind: "Survey estimate",
     description:
-      "Small non-agricultural shops, workshops, and services not registered as companies across the ten Valley districts. Trade makes up 38.06%, services 32.76%, and manufacturing 29.18%.",
+      "Small non-farm shops, workshops, and services across the ten Valley districts — 70.22% of J&K’s 8,76,588 total unincorporated establishments.",
     sourceId: "asuse",
     locator: "Block 2 (excluding NIC 68108), ten Valley districts",
     visual: {
@@ -1219,26 +937,51 @@ export const statsIndicators: StatsIndicator[] = [
     lang: "en",
   },
   {
-    id: "jk-establishments",
-    title: "J&K unincorporated businesses",
+    id: "apple-area",
+    title: "Land under apple cultivation",
+    category: "economy",
+    area: "valley",
+    value: 151281.97,
+    format: "decimal",
+    unit: "hectares",
+    period: "2024–25",
+    kind: "Reported",
+    description:
+      "Area under apple cultivation in Kashmir Division. Area measures orchard land use, not the weight or value of apples harvested.",
+    sourceId: "horticulture",
+    locator: "Table 5.01, printed page 117",
+    lang: "en",
+  },
+  {
+    id: "gsdp",
+    title: "Size of the J&K economy",
     category: "economy",
     area: "jk",
-    value: 876587.62,
-    format: "count",
-    unit: "establishments",
-    period: "2025",
-    kind: "Survey estimate",
+    value: 285674,
+    format: "crore",
+    unit: "lakh crore rupees",
+    period: "2025–26",
+    kind: "Advance estimate",
     description:
-      "Estimated non-agricultural unincorporated businesses across Jammu & Kashmir, employing about 14.39 lakh workers. Srinagar accounts for 18.49% of the UT total.",
-    sourceId: "asuse",
-    locator: "State 01 (excluding NIC 68108)",
-    visual: {
-      kind: "segments",
-      items: [
-        { label: "Kashmir Valley", value: 70.22, tone: "primary" },
-        { label: "Jammu Division", value: 29.78, tone: "teal" },
-      ],
-    },
+      "Nominal Gross State Domestic Product (GSDP) for the whole union territory: approximately ₹2,85,674 crore at current prices.",
+    sourceId: "economy",
+    locator: "Macro Economic Aggregates",
+    lang: "en",
+  },
+  {
+    id: "per-capita-income",
+    title: "J&K per-capita income",
+    category: "economy",
+    area: "jk",
+    value: 168243,
+    format: "rupees",
+    unit: "per person, per year",
+    period: "2025–26",
+    kind: "Advance estimate",
+    description:
+      "Published nominal per-capita income estimate for the whole union territory. An average does not describe every person’s income.",
+    sourceId: "economy",
+    locator: "Macro Economic Aggregates",
     lang: "en",
   },
   {
@@ -1252,7 +995,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2023–24",
     kind: "Survey estimate",
     description:
-      "Share of homes using LPG as their main cooking fuel across the nine sampled Valley districts (Shopian had no sampled blocks in this round). Firewood makes up 12.07%.",
+      "Share of homes cooking mainly with LPG across the nine sampled Valley districts (firewood makes up 12.07%, vs. 72.74% LPG use across all of J&K).",
     sourceId: "hces",
     locator: "Level 03 cooking energy code 02, NSS Region 013",
     visual: {
@@ -1282,7 +1025,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "jk-mpce-rural",
-    title: "J&K rural monthly spending per person",
+    title: "J&K rural monthly spending",
     category: "households",
     area: "jk",
     value: 4774,
@@ -1291,7 +1034,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2023–24",
     kind: "Survey estimate",
     description:
-      "Published average Monthly Per Capita Consumption Expenditure (MPCE) in rural Jammu & Kashmir, without imputed values for free goods.",
+      "Published average Monthly Per Capita Consumption Expenditure (MPCE) in rural Jammu & Kashmir, excluding imputed values of free goods.",
     sourceId: "hces",
     locator: "HCES 2023–24 Fact Sheet, Jammu & Kashmir (Rural)",
     visual: {
@@ -1303,7 +1046,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "jk-mpce-urban",
-    title: "J&K urban monthly spending per person",
+    title: "J&K urban monthly spending",
     category: "households",
     area: "jk",
     value: 6327,
@@ -1312,32 +1055,9 @@ export const statsIndicators: StatsIndicator[] = [
     period: "2023–24",
     kind: "Survey estimate",
     description:
-      "Published average Monthly Per Capita Consumption Expenditure (MPCE) in urban Jammu & Kashmir, without imputed values for free goods.",
+      "Published average Monthly Per Capita Consumption Expenditure (MPCE) in urban Jammu & Kashmir, excluding imputed values of free goods.",
     sourceId: "hces",
     locator: "HCES 2023–24 Fact Sheet, Jammu & Kashmir (Urban)",
-    lang: "en",
-  },
-  {
-    id: "jk-lpg-cooking",
-    title: "J&K households cooking with LPG",
-    category: "households",
-    area: "jk",
-    value: 72.74,
-    format: "percent",
-    unit: "of households",
-    period: "2023–24",
-    kind: "Survey estimate",
-    description:
-      "Share of households across the whole union territory using LPG as their primary cooking fuel (66.03% in rural areas and 94.03% in urban areas).",
-    sourceId: "hces",
-    locator: "Level 03 cooking energy code 02, State 01",
-    visual: {
-      kind: "meter",
-      value: 94.03,
-      label: "Urban J&K (94.03%)",
-      compareLabel: "Rural J&K (66.03%)",
-      compareValue: 66.03,
-    },
     lang: "en",
   },
   {
@@ -1351,7 +1071,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "Jan–Mar 2025",
     kind: "Survey estimate",
     description:
-      "Almost all surveyed Valley households had internet access within the home, mainly over mobile networks (95.34%).",
+      "Almost all surveyed Valley homes had internet access (mainly mobile data at 95.34%, compared with 92.73% home internet across all of J&K).",
     sourceId: "cmst",
     locator: "CMST80HH item b5q2, NSS Region 013",
     visual: {
@@ -1365,7 +1085,7 @@ export const statsIndicators: StatsIndicator[] = [
   },
   {
     id: "valley-home-wifi",
-    title: "Households with fixed Wi-Fi or broadband",
+    title: "Households with fixed Wi-Fi",
     category: "digital",
     area: "valley",
     value: 6.66,
@@ -1374,7 +1094,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "Jan–Mar 2025",
     kind: "Survey estimate",
     description:
-      "Only a small share of Valley homes had fixed Wi-Fi or broadband (2.89% via optical fiber), showing how heavily households rely on mobile data.",
+      "Only a small share of Valley homes had fixed Wi-Fi or broadband (2.89% via optical fiber; 9.36% fixed Wi-Fi across all of J&K).",
     sourceId: "cmst",
     locator: "CMST80HH item b5q4_i, NSS Region 013",
     visual: {
@@ -1420,7 +1140,7 @@ export const statsIndicators: StatsIndicator[] = [
     period: "Jan–Mar 2025",
     kind: "Survey estimate",
     description:
-      "Share of people aged 15 and older in Kashmir Valley who used a desktop, laptop, or tablet at least once in the past three months (11.62% across J&K).",
+      "Share of people aged 15 and older in Kashmir Valley who used a desktop, laptop, or tablet in the past three months (11.62% across all of J&K).",
     sourceId: "cmst",
     locator: "CMST80PER item b4q8, NSS Region 013, age 15+",
     visual: {
@@ -1452,29 +1172,6 @@ export const statsIndicators: StatsIndicator[] = [
       label: "Kashmir Valley (47.09%)",
       compareLabel: "All J&K (47.65%)",
       compareValue: 47.65,
-    },
-    lang: "en",
-  },
-  {
-    id: "jk-home-internet",
-    title: "J&K households with internet access",
-    category: "digital",
-    area: "jk",
-    value: 92.73,
-    format: "percent",
-    unit: "of households",
-    period: "Jan–Mar 2025",
-    kind: "Survey estimate",
-    description:
-      "Share of households across the whole union territory with internet access at home (9.36% via fixed Wi-Fi or broadband and 91.37% via mobile networks).",
-    sourceId: "cmst",
-    locator: "CMST80HH item b5q2, State 01",
-    visual: {
-      kind: "meter",
-      value: 91.37,
-      label: "Mobile networks (91.37%)",
-      compareLabel: "Fixed Wi-Fi (9.36%)",
-      compareValue: 9.36,
     },
     lang: "en",
   },

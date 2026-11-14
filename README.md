@@ -37,10 +37,9 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 The `/stats` page covers population, literacy, education, work, economy,
 households, and digital access. The main navigation and home page link to it.
-Readers can explore key data contrasts, an interactive 100-unit Valley grid, a
-Kashmir Valley vs. Jammu & Kashmir benchmark chart, topic/area/keyword filters with
-one-click sourced citations, visual district rankings, two-district comparisons,
-and CSV export.
+Readers can explore visual district rankings, two-district comparisons, CSV export,
+an interactive 100-unit Valley grid, and topic/area/keyword filters linked to
+original sources.
 
 An interactive district map uses a local ten-feature GeoJSON subset of
 geoBoundaries gbOpen IND ADM2 (2021; Pathways Data). It supports district selection,

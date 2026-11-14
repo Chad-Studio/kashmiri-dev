@@ -3,8 +3,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Briefcase,
-  Check,
-  Copy,
   GraduationCap,
   Home,
   Search,
@@ -12,7 +10,7 @@ import {
   Users,
   Wifi,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { DistrictMap } from "@/components/DistrictMap";
 import { PageIntro, SectionHeading } from "@/components/PageIntro";
@@ -20,9 +18,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import {
   DistrictExplorerTabs,
   IndicatorMicroVisual,
-  StatsContrastsStrip,
   ValleyHundredSection,
-  ValleyVsJkChartSection,
   type DistrictExplorerView,
 } from "@/components/StatsVisuals";
 import {
@@ -49,7 +45,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const pageDescription =
-  "Explore Kashmir statistics on population, literacy, schools, work, local businesses, household spending, and digital access, with interactive charts, a 10-district map, and original sources.";
+  "Explore Kashmir statistics on population, literacy, schools, work, local businesses, household spending, and digital access, with a 10-district map, human-scale visuals, and original sources.";
 
 export type StatsSearch = {
   district?: string;
@@ -140,7 +136,7 @@ const categorySummaries: Record<StatsCategory, string> = {
   education: "School counts across Jammu & Kashmir from the 2025–26 Economic Survey.",
   work: "Adult employment, women’s work, and job types from NSO PLFS & ASUSE 2025.",
   economy: "Small businesses, hand embroidery, orchards, and J&K macroeconomic output.",
-  households: "Cooking fuel, electricity, homes, and monthly spending (HCES 2023–24).",
+  households: "Cooking fuel, household size, and monthly spending (HCES 2023–24).",
   digital: "Mobile data, home Wi-Fi, smartphone, and computer use in 2025.",
 };
 
@@ -148,22 +144,10 @@ const controlClass =
   "min-h-10 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 function StatisticCard({ indicator }: { indicator: StatsIndicator }) {
-  const [copied, setCopied] = useState(false);
   const Icon = categoryIcons[indicator.category];
   const source = statsSources[indicator.sourceId];
   const areaLabel = statsAreas[indicator.area].label;
   const formattedValue = formatStatistic(indicator);
-
-  const copyCitation = async () => {
-    const text = `${areaLabel} — ${indicator.title} (${indicator.period}): ${formattedValue} ${indicator.unit}. Source: ${source.shortTitle} (https://www.kashmiri.dev/stats)`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Ignore clipboard failures in restricted contexts
-    }
-  };
 
   return (
     <article className="flex flex-col gap-3.5 rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)] sm:p-6">
@@ -198,40 +182,18 @@ function StatisticCard({ indicator }: { indicator: StatsIndicator }) {
 
       <p className="text-sm leading-relaxed text-muted-foreground">{indicator.description}</p>
 
-      <div className="mt-auto border-t border-border pt-3.5">
-        <div className="flex items-center justify-between gap-2">
-          <a
-            href={source.url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-8 items-center gap-1 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {source.shortTitle}
-            <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
-          </a>
-
-          <button
-            type="button"
-            onClick={copyCitation}
-            aria-label={`Copy ${indicator.title} figure and source`}
-            className="inline-flex min-h-8 cursor-pointer items-center gap-1 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {copied ? (
-              <>
-                <Check className="size-3.5 text-primary" aria-hidden="true" />
-                <span className="text-primary">Copied</span>
-              </>
-            ) : (
-              <>
-                <Copy className="size-3.5" aria-hidden="true" />
-                <span>Cite</span>
-              </>
-            )}
-          </button>
-        </div>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-          {indicator.kind} · {indicator.locator}
-        </p>
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-3">
+        <a
+          href={source.url}
+          target="_blank"
+          rel="noreferrer"
+          title={`${source.title} (${indicator.locator})`}
+          className="inline-flex min-h-8 items-center gap-1 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {source.shortTitle}
+          <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
+        </a>
+        <span className="text-right text-xs text-muted-foreground">{indicator.kind}</span>
       </div>
     </article>
   );
@@ -347,13 +309,6 @@ function StatsPage() {
     updateSearch({ view: nextView === "chart" ? undefined : nextView });
   };
 
-  const handleJumpToTopic = (topic: StatsCategory) => {
-    updateSearch({ topic, area: undefined, q: undefined });
-    if (typeof document !== "undefined") {
-      document.getElementById("figures")?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const normalizedFigureQuery = figureQuery.trim().toLowerCase();
 
   const indicators = useMemo(() => {
@@ -407,13 +362,6 @@ function StatsPage() {
           </a>
           <span aria-hidden="true">·</span>
           <a
-            href="#contrasts"
-            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Key contrasts
-          </a>
-          <span aria-hidden="true">·</span>
-          <a
             href="#hundred"
             className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
@@ -455,11 +403,7 @@ function StatsPage() {
         onDownloadCsv={downloadDistricts}
       />
 
-      <StatsContrastsStrip onSelectTopic={handleJumpToTopic} />
-
       <ValleyHundredSection />
-
-      <ValleyVsJkChartSection />
 
       <section
         id="figures"
@@ -525,7 +469,7 @@ function StatsPage() {
                       updateSearch({ area: option.id === "all" ? undefined : option.id })
                     }
                     className={cn(
-                      "min-h-9 cursor-pointer rounded-md border px-3 py-1 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      "min-h-9 cursor-pointer rounded-md border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:text-sm",
                       isSelected
                         ? "border-primary bg-accent text-primary"
                         : "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -586,9 +530,7 @@ function StatsPage() {
                           {group.items.length}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {categorySummaries[group.id]}
-                      </p>
+                      <p className="text-xs text-muted-foreground">{categorySummaries[group.id]}</p>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {group.items.map((indicator) => (
@@ -614,8 +556,12 @@ function StatsPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               {category === "education" && area === "valley"
                 ? "The school figures currently cover all of Jammu & Kashmir."
-                : (category === "population" || category === "literacy") && area === "jk"
-                  ? "The Census 2011 population and literacy figures on this page focus on Kashmir Valley’s ten districts."
+                : (category === "population" ||
+                      category === "literacy" ||
+                      category === "work" ||
+                      category === "digital") &&
+                    area === "jk"
+                  ? "Figures in this topic focus on Kashmir Valley’s ten districts (with J&K comparisons noted inside each card)."
                   : "Try clearing the search box or choosing another topic or area."}
             </p>
             <button
@@ -629,36 +575,15 @@ function StatsPage() {
         )}
       </section>
 
-      <section aria-labelledby="coverage-heading" className="mx-auto max-w-6xl px-4 pb-4 sm:px-6">
-        <div className="rounded-xl border border-border bg-muted/40 p-5 sm:p-6">
-          <h2 id="coverage-heading" className="font-serif text-xl text-foreground">
-            Reading the area and the reporting year
-          </h2>
-          <div className="mt-3 grid gap-4 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-8">
-            <p>
-              <span className="font-semibold text-foreground">Kashmir Valley</span> means the ten
-              districts in the map and rankings above. Population and literacy use Census 2011,
-              while work, local businesses, and telecom figures use 2025 national surveys across
-              those ten districts (2023–24 household figures cover nine sampled Valley districts).
-            </p>
-            <p>
-              <span className="font-semibold text-foreground">Jammu & Kashmir</span> figures cover
-              the whole union territory, including Jammu. School counts, economic output, per-capita
-              income, and published rural and urban monthly spending use this wider area.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section
         id="sources"
         aria-labelledby="sources-heading"
-        className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-10 sm:px-6"
+        className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-4 sm:px-6"
       >
         <SectionHeading
           id="sources-heading"
           title="Sources & methods"
-          description="Each figure keeps its original reporting period. A newer report can contain older data, and an advance or sample survey estimate has sampling margins."
+          description="Each figure keeps its original reporting period and geographic scope. A newer publication can contain older data, and sample survey estimates carry sampling margins."
         />
         <div className="mt-6 grid gap-x-8 sm:grid-cols-2">
           {Object.entries(statsSources).map(([id, source]) => (
@@ -679,25 +604,30 @@ function StatsPage() {
             </article>
           ))}
         </div>
-        <div className="mt-3 border-y border-border py-5 text-sm leading-relaxed text-muted-foreground">
-          <div className="max-w-3xl space-y-3">
+        <div className="mt-3 grid gap-6 border-y border-border py-5 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-8">
+          <div className="space-y-3">
+            <p>
+              <span className="font-semibold text-foreground">Kashmir Valley vs. J&K:</span> Kashmir
+              Valley covers the ten districts in the map above (Anantnag, Bandipora, Baramulla,
+              Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar). School counts,
+              GSDP, per-capita income, and published rural/urban monthly spending cover the whole
+              union territory and are labelled{" "}
+              <span className="font-semibold text-foreground">Jammu & Kashmir</span>.
+            </p>
             <p>
               <span className="font-semibold text-foreground">How literacy is calculated:</span>{" "}
-              literate people ÷ (total population − children aged 0–6) × 100. Male and female rates
-              use their own counts. Displayed rates are rounded to two decimal places.
+              literate people ÷ (total population − children aged 0–6) × 100 across combined counts,
+              never by averaging district percentages.
             </p>
+          </div>
+          <div className="space-y-3">
             <p>
-              <span className="font-semibold text-foreground">Survey estimates:</span> 2023–25
-              figures from PLFS, ASUSE, HCES, and the Telecom survey apply official NSO sampling
-              multipliers to unit-level microdata for NSS Region 013 (Kashmir Valley) and State 01
-              (Jammu & Kashmir). ASUSE business counts exclude household residential rentals (NIC
-              68108) to match published MoSPI tables.
-            </p>
-            <p>
-              <span className="font-semibold text-foreground">Coverage:</span> Anantnag, Bandipora,
-              Baramulla, Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar (Shopian
-              had no sampled blocks in HCES 2023–24). Wider J&K figures are labelled separately. No
-              population projection or Valley-only GDP estimate is implied.
+              <span className="font-semibold text-foreground">2023–25 survey estimates:</span> PLFS,
+              ASUSE, HCES, and Telecom figures apply official NSO sampling multipliers to unit-level
+              microdata for NSS Region 013 (Kashmir Valley) and State 01 (Jammu & Kashmir). ASUSE
+              business counts exclude household residential rentals (NIC 68108) to match published
+              MoSPI tables, and HCES 2023–24 covered nine sampled Valley districts (Shopian had no
+              sampled blocks).
             </p>
           </div>
         </div>
