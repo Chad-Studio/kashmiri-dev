@@ -32,6 +32,10 @@
   --color-ring: var(--ring);
   --color-overlay: var(--overlay);
   --color-chinar: var(--chinar);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
   --font-serif: "Newsreader Variable", Georgia, serif;
   --font-sans: "Source Sans 3 Variable", system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -60,6 +64,10 @@
   --ring: #a43b32;
   --overlay: color-mix(in srgb, #0c1a21 76%, transparent);
   --chinar: #a43b32;
+  --chart-1: #a43b32;
+  --chart-2: #24636e;
+  --chart-3: #b57419;
+  --chart-4: #4b7355;
   --surface-shadow:
     0 1px 2px color-mix(in srgb, #14242d 8%, transparent),
     0 12px 32px color-mix(in srgb, #14242d 5%, transparent);
@@ -86,6 +94,10 @@
   --input: color-mix(in srgb, #cbd9df 36%, #0c1a21);
   --ring: color-mix(in srgb, #a43b32 72%, #fcfdfd);
   --chinar: color-mix(in srgb, #a43b32 78%, #fcfdfd);
+  --chart-1: color-mix(in srgb, #a43b32 78%, #fcfdfd);
+  --chart-2: #5fb0be;
+  --chart-3: #e0a449;
+  --chart-4: #7db089;
   --surface-shadow:
     0 1px 2px color-mix(in srgb, #0c1a21 68%, transparent),
     0 18px 44px color-mix(in srgb, #0c1a21 52%, transparent);
