@@ -37,14 +37,17 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 The `/stats` page covers population, literacy, education, work, economy,
 households, and digital access. The main navigation and home page link to it.
-Readers can filter by topic and area, compare the ten Kashmir Valley districts,
-and download the district table as CSV.
+Readers can explore key data contrasts, an interactive 100-unit Valley grid, a
+Kashmir Valley vs. Jammu & Kashmir benchmark chart, topic/area/keyword filters with
+one-click sourced citations, visual district rankings, two-district comparisons,
+and CSV export.
 
 An interactive district map uses a local ten-feature GeoJSON subset of
-geoBoundaries gbOpen IND ADM2 (2021; Pathways Data). It supports district selection
-and shading by Census 2011 population/literacy or NSO ASUSE 2025 unincorporated
-local businesses, with keyboard and text-button alternatives. The map distinguishes
-the 2021 boundary snapshot from the underlying reporting years.
+geoBoundaries gbOpen IND ADM2 (2021; Pathways Data). It supports district selection,
+local rank stories, shareable URLs, and shading by Census 2011 population/literacy
+or NSO ASUSE 2025 local businesses, hand-embroidery units, and women workers, with
+keyboard and text-button alternatives. The map distinguishes the 2021 boundary
+snapshot from the underlying reporting years.
 
 The derivative boundary data and generated paths are published under ODbL 1.0;
 attribution, licence links, and a GeoJSON download appear beside the map. See

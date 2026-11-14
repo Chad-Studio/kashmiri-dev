@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowDownToLine,
   ArrowUpRight,
   BookOpen,
   Briefcase,
+  Check,
+  Copy,
   GraduationCap,
   Home,
   Search,
@@ -17,21 +18,30 @@ import { DistrictMap } from "@/components/DistrictMap";
 import { PageIntro, SectionHeading } from "@/components/PageIntro";
 import { SiteLayout } from "@/components/SiteLayout";
 import {
+  DistrictExplorerTabs,
+  IndicatorMicroVisual,
+  StatsContrastsStrip,
+  ValleyHundredSection,
+  ValleyVsJkChartSection,
+  type DistrictExplorerView,
+} from "@/components/StatsVisuals";
+import {
   districtStats,
-  formatCount,
-  formatRate,
+  findDistrictBySlug,
   formatStatistic,
+  getDistrictSlug,
   getFemaleLiteracyRate,
   getFemaleWorkerShare,
   getLiteracyRate,
   getMaleLiteracyRate,
   getManufacturingShare,
+  mapMetrics,
   statsAreas,
   statsCategories,
   statsIndicators,
   statsReviewedDate,
   statsSources,
-  valleySummary,
+  type MapMetric,
   type StatsArea,
   type StatsCategory,
   type StatsIndicator,
@@ -39,9 +49,51 @@ import {
 import { cn } from "@/lib/utils";
 
 const pageDescription =
-  "Explore Kashmir statistics on population, literacy, schools, work, local businesses, household spending, and digital access, with an interactive district map and original sources.";
+  "Explore Kashmir statistics on population, literacy, schools, work, local businesses, household spending, and digital access, with interactive charts, a 10-district map, and original sources.";
+
+export type StatsSearch = {
+  district?: string;
+  compare?: string;
+  metric?: MapMetric;
+  view?: DistrictExplorerView;
+  topic?: StatsCategory;
+  area?: StatsArea;
+  q?: string;
+};
+
+const validMetrics = new Set<MapMetric>(mapMetrics.map((item) => item.id));
+const validViews = new Set<DistrictExplorerView>(["chart", "compare", "table"]);
+const validTopics = new Set<StatsCategory>(statsCategories.map((item) => item.id));
+const validAreas = new Set<StatsArea>(["valley", "jk"]);
+
+function validateStatsSearch(search: Record<string, unknown>): StatsSearch {
+  const result: StatsSearch = {};
+  if (typeof search.district === "string" && findDistrictBySlug(search.district)) {
+    result.district = search.district.trim().toLowerCase();
+  }
+  if (typeof search.compare === "string" && findDistrictBySlug(search.compare)) {
+    result.compare = search.compare.trim().toLowerCase();
+  }
+  if (typeof search.metric === "string" && validMetrics.has(search.metric as MapMetric)) {
+    result.metric = search.metric as MapMetric;
+  }
+  if (typeof search.view === "string" && validViews.has(search.view as DistrictExplorerView)) {
+    result.view = search.view as DistrictExplorerView;
+  }
+  if (typeof search.topic === "string" && validTopics.has(search.topic as StatsCategory)) {
+    result.topic = search.topic as StatsCategory;
+  }
+  if (typeof search.area === "string" && validAreas.has(search.area as StatsArea)) {
+    result.area = search.area as StatsArea;
+  }
+  if (typeof search.q === "string" && search.q.trim().length > 0) {
+    result.q = search.q.slice(0, 80);
+  }
+  return result;
+}
 
 export const Route = createFileRoute("/stats")({
+  validateSearch: validateStatsSearch,
   head: () => ({
     meta: [
       { title: "Kashmir Statistics: Population, Work, Economy & Digital Access | Kashmiri.dev" },
@@ -81,48 +133,105 @@ const categoryIcons: Record<StatsCategory, typeof Users> = {
   households: Home,
   digital: Wifi,
 };
+
+const categorySummaries: Record<StatsCategory, string> = {
+  population: "Census 2011 counts across the ten Kashmir Valley districts.",
+  literacy: "Age 7+ reading and writing rates from Census 2011.",
+  education: "School counts across Jammu & Kashmir from the 2025–26 Economic Survey.",
+  work: "Adult employment, women’s work, and job types from NSO PLFS & ASUSE 2025.",
+  economy: "Small businesses, hand embroidery, orchards, and J&K macroeconomic output.",
+  households: "Cooking fuel, electricity, homes, and monthly spending (HCES 2023–24).",
+  digital: "Mobile data, home Wi-Fi, smartphone, and computer use in 2025.",
+};
+
 const controlClass =
-  "min-h-11 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "min-h-10 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 function StatisticCard({ indicator }: { indicator: StatsIndicator }) {
+  const [copied, setCopied] = useState(false);
   const Icon = categoryIcons[indicator.category];
   const source = statsSources[indicator.sourceId];
+  const areaLabel = statsAreas[indicator.area].label;
+  const formattedValue = formatStatistic(indicator);
+
+  const copyCitation = async () => {
+    const text = `${areaLabel} — ${indicator.title} (${indicator.period}): ${formattedValue} ${indicator.unit}. Source: ${source.shortTitle} (https://www.kashmiri.dev/stats)`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Ignore clipboard failures in restricted contexts
+    }
+  };
+
   return (
-    <article className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)] sm:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <span
-          className={cn(
-            "rounded-full px-2.5 py-1 text-xs font-semibold",
-            indicator.area === "valley" ? "bg-primary/10 text-primary" : "bg-muted text-foreground",
-          )}
-        >
-          {statsAreas[indicator.area].label}
-        </span>
-        <Icon className="mt-1 size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+    <article className="flex flex-col gap-3.5 rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)] sm:p-6">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span
+            className={cn(
+              "rounded-full px-2.5 py-0.5 text-xs font-semibold",
+              indicator.area === "valley"
+                ? "bg-primary/10 text-primary"
+                : "bg-muted text-foreground",
+            )}
+          >
+            {areaLabel}
+          </span>
+          <span className="rounded-full border border-border px-2 py-0.5 text-xs font-medium tabular-nums text-muted-foreground">
+            {indicator.period}
+          </span>
+        </div>
+        <Icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       </div>
+
       <div>
         <h3 className="text-sm font-semibold text-foreground">{indicator.title}</h3>
-        <p className="mt-3 break-words font-serif text-4xl font-semibold tabular-nums tracking-tight text-foreground">
-          {formatStatistic(indicator)}
+        <p className="mt-2 break-words font-serif text-4xl font-semibold tabular-nums tracking-tight text-foreground">
+          {formattedValue}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">{indicator.unit}</p>
       </div>
+
+      {indicator.visual ? <IndicatorMicroVisual visual={indicator.visual} /> : null}
+
       <p className="text-sm leading-relaxed text-muted-foreground">{indicator.description}</p>
-      <div className="mt-auto border-t border-border pt-4">
-        <p className="text-sm font-semibold tabular-nums text-foreground">
-          {indicator.period}{" "}
-          <span className="font-normal text-muted-foreground">· {indicator.kind}</span>
+
+      <div className="mt-auto border-t border-border pt-3.5">
+        <div className="flex items-center justify-between gap-2">
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-8 items-center gap-1 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {source.shortTitle}
+            <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
+          </a>
+
+          <button
+            type="button"
+            onClick={copyCitation}
+            aria-label={`Copy ${indicator.title} figure and source`}
+            className="inline-flex min-h-8 cursor-pointer items-center gap-1 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {copied ? (
+              <>
+                <Check className="size-3.5 text-primary" aria-hidden="true" />
+                <span className="text-primary">Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="size-3.5" aria-hidden="true" />
+                <span>Cite</span>
+              </>
+            )}
+          </button>
+        </div>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+          {indicator.kind} · {indicator.locator}
         </p>
-        <a
-          href={source.url}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-2 inline-flex min-h-8 items-center gap-1 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          {source.shortTitle}
-          <ArrowUpRight className="size-3.5 shrink-0" aria-hidden="true" />
-        </a>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{indicator.locator}</p>
       </div>
     </article>
   );
@@ -181,60 +290,349 @@ function downloadDistricts() {
 }
 
 function StatsPage() {
-  const [category, setCategory] = useState<StatsCategory | "all">("all");
-  const [area, setArea] = useState<StatsArea | "all">("all");
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState("population");
-  const indicators = statsIndicators.filter(
-    (indicator) =>
-      (category === "all" || indicator.category === category) &&
-      (area === "all" || indicator.area === area),
-  );
-  const districts = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    return districtStats
-      .filter((district) =>
-        `${district.name} ${district.censusName}`.toLowerCase().includes(normalizedQuery),
-      )
-      .sort((a, b) => {
-        if (sort === "literacy") return getLiteracyRate(b) - getLiteracyRate(a);
-        if (sort === "establishments") return b.establishments - a.establishments;
-        if (sort === "workers") return b.establishmentWorkers - a.establishmentWorkers;
-        if (sort === "name") return a.name.localeCompare(b.name);
-        return b.population - a.population;
-      });
-  }, [query, sort]);
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+
+  const updateSearch = (patch: Partial<StatsSearch>) => {
+    void navigate({
+      search: (prev) => {
+        const next: StatsSearch = { ...prev, ...patch };
+        for (const key of Object.keys(next) as (keyof StatsSearch)[]) {
+          if (!next[key]) {
+            delete next[key];
+          }
+        }
+        return next;
+      },
+      replace: true,
+      resetScroll: false,
+    });
+  };
+
+  const selectedDistrict =
+    findDistrictBySlug(search.district) ??
+    districtStats.find((district) => district.id === "010") ??
+    districtStats[0];
+
+  const defaultCompareId = selectedDistrict.id === "010" ? "002" : "010";
+  const parsedCompare = findDistrictBySlug(search.compare);
+  const compareDistrictId =
+    parsedCompare && parsedCompare.id !== selectedDistrict.id
+      ? parsedCompare.id
+      : defaultCompareId;
+
+  const metric: MapMetric = search.metric ?? "districts";
+  const view: DistrictExplorerView = search.view ?? "chart";
+  const category: StatsCategory | "all" = search.topic ?? "all";
+  const area: StatsArea | "all" = search.area ?? "all";
+  const figureQuery = search.q ?? "";
+
+  const handleSelectDistrict = (id: string) => {
+    const found = districtStats.find((district) => district.id === id);
+    if (!found) return;
+    updateSearch({ district: getDistrictSlug(found) });
+  };
+
+  const handleSelectCompareDistrict = (id: string) => {
+    const found = districtStats.find((district) => district.id === id);
+    if (!found) return;
+    updateSearch({ compare: getDistrictSlug(found) });
+  };
+
+  const handleSelectMetric = (nextMetric: MapMetric) => {
+    updateSearch({ metric: nextMetric === "districts" ? undefined : nextMetric });
+  };
+
+  const handleSelectView = (nextView: DistrictExplorerView) => {
+    updateSearch({ view: nextView === "chart" ? undefined : nextView });
+  };
+
+  const handleJumpToTopic = (topic: StatsCategory) => {
+    updateSearch({ topic, area: undefined, q: undefined });
+    if (typeof document !== "undefined") {
+      document.getElementById("figures")?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const normalizedFigureQuery = figureQuery.trim().toLowerCase();
+
+  const indicators = useMemo(() => {
+    return statsIndicators.filter((indicator) => {
+      if (category !== "all" && indicator.category !== category) return false;
+      if (area !== "all" && indicator.area !== area) return false;
+      if (!normalizedFigureQuery) return true;
+      const source = statsSources[indicator.sourceId];
+      const haystack = [
+        indicator.title,
+        indicator.description,
+        indicator.unit,
+        indicator.period,
+        source.shortTitle,
+      ]
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(normalizedFigureQuery);
+    });
+  }, [category, area, normalizedFigureQuery]);
+
+  const groupedIndicators = useMemo(() => {
+    return statsCategories
+      .map((cat) => ({
+        ...cat,
+        items: indicators.filter((indicator) => indicator.category === cat.id),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [indicators]);
+
+  const isFiltered = category !== "all" || area !== "all" || normalizedFigureQuery.length > 0;
+  const showGroupedByTopic = category === "all" && normalizedFigureQuery.length === 0;
 
   return (
     <SiteLayout>
       <PageIntro
         label="Stats"
         title="Kashmir, in numbers"
-        description="A dated snapshot of population, literacy, schools, work, households, and digital access. Follow the sources, compare districts, and see what each figure actually measures."
+        description="A visual, source-linked guide to population, literacy, schools, work, small businesses, household life, and digital access across Kashmir Valley and Jammu & Kashmir."
       >
-        <p className="text-sm text-muted-foreground">
-          Sources reviewed <time dateTime={statsReviewedDate}>13 November 2026</time>{" "}
-          <span aria-hidden="true">·</span>{" "}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
+          <span>
+            Reviewed <time dateTime={statsReviewedDate}>13 November 2026</time>
+          </span>
+          <span aria-hidden="true">·</span>
+          <a
+            href="#hundred"
+            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            100-unit view
+          </a>
+          <span aria-hidden="true">·</span>
+          <a
+            href="#districts"
+            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            10 districts
+          </a>
+          <span aria-hidden="true">·</span>
+          <a
+            href="#figures"
+            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            All {statsIndicators.length} figures
+          </a>
+          <span aria-hidden="true">·</span>
           <a
             href="#sources"
             className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Sources & methods
           </a>
-        </p>
+        </div>
       </PageIntro>
 
-      <section aria-labelledby="coverage-heading" className="mx-auto max-w-5xl px-4 pb-8">
+      <StatsContrastsStrip onSelectTopic={handleJumpToTopic} />
+
+      <ValleyHundredSection />
+
+      <DistrictMap
+        selectedId={selectedDistrict.id}
+        onSelectDistrict={handleSelectDistrict}
+        metric={metric}
+        onSelectMetric={handleSelectMetric}
+      />
+
+      <DistrictExplorerTabs
+        view={view}
+        onChangeView={handleSelectView}
+        selectedId={selectedDistrict.id}
+        onSelectDistrict={handleSelectDistrict}
+        compareId={compareDistrictId}
+        onSelectCompareDistrict={handleSelectCompareDistrict}
+        metric={metric}
+        onSelectMetric={handleSelectMetric}
+        onDownloadCsv={downloadDistricts}
+      />
+
+      <ValleyVsJkChartSection />
+
+      <section
+        id="figures"
+        aria-labelledby="figures-heading"
+        className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14"
+      >
+        <SectionHeading
+          id="figures-heading"
+          title="Explore all verified figures"
+          description="Filter by topic, switch between Kashmir Valley (10 districts) and wider Jammu & Kashmir, or search for any subject."
+        />
+
+        <div className="mt-5 space-y-3 rounded-xl border border-border bg-card p-4 shadow-[var(--surface-shadow)] sm:p-5">
+          <div
+            role="group"
+            aria-label="Filter statistics by topic"
+            className="flex flex-wrap gap-2"
+          >
+            {[{ id: "all" as const, label: "All topics" }, ...statsCategories].map((item) => {
+              const isSelected = category === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => updateSearch({ topic: item.id === "all" ? undefined : item.id })}
+                  className={cn(
+                    "min-h-10 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    isSelected
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground",
+                  )}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-border pt-3 lg:flex-row lg:items-center lg:justify-between">
+            <div
+              role="group"
+              aria-label="Filter statistics by geographic area"
+              className="inline-flex flex-wrap items-center gap-1.5"
+            >
+              <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Area
+              </span>
+              {(
+                [
+                  { id: "all", label: "All areas" },
+                  { id: "valley", label: "Kashmir Valley (10 districts)" },
+                  { id: "jk", label: "Jammu & Kashmir (UT)" },
+                ] as const
+              ).map((option) => {
+                const isSelected = area === option.id;
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() =>
+                      updateSearch({ area: option.id === "all" ? undefined : option.id })
+                    }
+                    className={cn(
+                      "min-h-9 cursor-pointer rounded-md border px-3 py-1 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      isSelected
+                        ? "border-primary bg-accent text-primary"
+                        : "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground",
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="relative w-full lg:w-80">
+              <Search
+                className="absolute left-3 top-3 size-4 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <input
+                type="search"
+                value={figureQuery}
+                onChange={(event) =>
+                  updateSearch({ q: event.target.value ? event.target.value : undefined })
+                }
+                placeholder="Search figures (Wi-Fi, apples, LPG…)"
+                aria-label="Search figures by keyword"
+                className={cn(controlClass, "w-full pl-9")}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="my-4 flex flex-wrap items-center justify-between gap-2">
+          <p aria-live="polite" aria-atomic="true" className="text-sm text-muted-foreground">
+            {indicators.length} {indicators.length === 1 ? "figure" : "figures"} shown
+          </p>
+          {isFiltered ? (
+            <button
+              type="button"
+              onClick={() => updateSearch({ topic: undefined, area: undefined, q: undefined })}
+              className="cursor-pointer rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Reset filters
+            </button>
+          ) : null}
+        </div>
+
+        {indicators.length > 0 ? (
+          showGroupedByTopic ? (
+            <div className="space-y-10">
+              {groupedIndicators.map((group) => {
+                const GroupIcon = categoryIcons[group.id];
+                return (
+                  <div key={group.id}>
+                    <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <GroupIcon className="size-4 text-primary" aria-hidden="true" />
+                        <h3 className="font-serif text-2xl text-foreground">{group.label}</h3>
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold tabular-nums text-muted-foreground">
+                          {group.items.length}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {categorySummaries[group.id]}
+                      </p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {group.items.map((indicator) => (
+                        <StatisticCard key={indicator.id} indicator={indicator} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {indicators.map((indicator) => (
+                <StatisticCard key={indicator.id} indicator={indicator} />
+              ))}
+            </div>
+          )
+        ) : (
+          <div className="rounded-xl border border-dashed border-border px-6 py-10 text-center">
+            <p className="font-semibold text-foreground">
+              No verified figures match this selection.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {category === "education" && area === "valley"
+                ? "The school figures currently cover all of Jammu & Kashmir."
+                : (category === "population" || category === "literacy") && area === "jk"
+                  ? "The Census 2011 population and literacy figures on this page focus on Kashmir Valley’s ten districts."
+                  : "Try clearing the search box or choosing another topic or area."}
+            </p>
+            <button
+              type="button"
+              onClick={() => updateSearch({ topic: undefined, area: undefined, q: undefined })}
+              className="mt-4 min-h-10 cursor-pointer rounded-md px-4 py-2 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Show all figures
+            </button>
+          </div>
+        )}
+      </section>
+
+      <section aria-labelledby="coverage-heading" className="mx-auto max-w-5xl px-4 pb-4">
         <div className="rounded-xl border border-border bg-muted/40 p-5 sm:p-6">
           <h2 id="coverage-heading" className="font-serif text-xl text-foreground">
-            Start with the area and the year
+            Reading the area and the reporting year
           </h2>
           <div className="mt-3 grid gap-4 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2 sm:gap-8">
             <p>
               <span className="font-semibold text-foreground">Kashmir Valley</span> means the ten
-              districts in the comparison below. Population and literacy use Census 2011, while
-              work, local businesses, and telecom figures use 2025 national surveys across those ten
-              districts (2023–24 household figures cover nine sampled Valley districts).
+              districts in the map and rankings above. Population and literacy use Census 2011,
+              while work, local businesses, and telecom figures use 2025 national surveys across
+              those ten districts (2023–24 household figures cover nine sampled Valley districts).
             </p>
             <p>
               <span className="font-semibold text-foreground">Jammu & Kashmir</span> figures cover
@@ -245,263 +643,10 @@ function StatsPage() {
         </div>
       </section>
 
-      <DistrictMap />
-
-      <section aria-labelledby="figures-heading" className="mx-auto max-w-6xl px-4 pb-14">
-        <SectionHeading id="figures-heading" title="Explore the figures" />
-        <div className="mt-5 flex flex-col gap-4 border-y border-border py-4 lg:flex-row lg:items-center lg:justify-between">
-          <div
-            role="group"
-            aria-label="Filter statistics by topic"
-            className="flex flex-wrap gap-2"
-          >
-            {[{ id: "all" as const, label: "All topics" }, ...statsCategories].map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={category === item.id}
-                onClick={() => setCategory(item.id)}
-                className={cn(
-                  "min-h-11 rounded-full border px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  category === item.id
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground",
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-            <label htmlFor="stats-area" className="shrink-0 text-sm font-semibold text-foreground">
-              Area
-            </label>
-            <select
-              id="stats-area"
-              value={area}
-              onChange={(event) => setArea(event.target.value as StatsArea | "all")}
-              className={cn(controlClass, "w-full lg:w-auto")}
-            >
-              <option value="all">All areas</option>
-              <option value="valley">Kashmir Valley</option>
-              <option value="jk">Jammu & Kashmir</option>
-            </select>
-          </div>
-        </div>
-        <p aria-live="polite" aria-atomic="true" className="my-4 text-sm text-muted-foreground">
-          {indicators.length} {indicators.length === 1 ? "figure" : "figures"} shown
-        </p>
-        {indicators.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {indicators.map((indicator) => (
-              <StatisticCard key={indicator.id} indicator={indicator} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-xl border border-dashed border-border px-6 py-10 text-center">
-            <p className="font-semibold text-foreground">
-              No verified figures for this selection yet.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {category === "education" && area === "valley"
-                ? "The school figures currently cover all of Jammu & Kashmir."
-                : (category === "population" || category === "literacy") && area === "jk"
-                  ? "The Census 2011 population and literacy figures on this page focus on Kashmir Valley’s ten districts."
-                  : "Choose another topic or area to see the available figures."}
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setArea("all");
-                setCategory("all");
-              }}
-              className="mt-4 min-h-11 rounded-md px-4 py-2 text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Show all figures
-            </button>
-          </div>
-        )}
-      </section>
-
-      <section aria-labelledby="districts-heading" className="border-y border-border bg-muted/30">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:py-14">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading
-              id="districts-heading"
-              title="Compare the ten districts"
-              description="Population and age 7+ literacy come from Census 2011. Unincorporated local businesses and their workers come from NSO ASUSE 2025."
-            />
-            <button
-              type="button"
-              onClick={downloadDistricts}
-              className={cn(
-                controlClass,
-                "inline-flex shrink-0 items-center justify-center gap-2 font-semibold hover:bg-accent",
-              )}
-            >
-              <ArrowDownToLine className="size-4" aria-hidden="true" />
-              Download CSV
-            </button>
-          </div>
-          <div className="my-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="relative sm:w-72">
-              <Search
-                className="absolute left-3 top-3.5 size-4 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Find a district"
-                aria-label="Search districts"
-                className={cn(controlClass, "w-full pl-9")}
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <label htmlFor="district-sort" className="text-sm font-semibold text-foreground">
-                Sort by
-              </label>
-              <select
-                id="district-sort"
-                value={sort}
-                onChange={(event) => setSort(event.target.value)}
-                className={cn(controlClass, "flex-1 sm:flex-none")}
-              >
-                <option value="population">Population (2011), highest first</option>
-                <option value="literacy">Literacy (2011), highest first</option>
-                <option value="establishments">Local businesses (2025), highest first</option>
-                <option value="workers">Business workers (2025), highest first</option>
-                <option value="name">District name</option>
-              </select>
-            </div>
-          </div>
-          <div
-            role="region"
-            aria-label="District statistics table; scroll horizontally on small screens"
-            tabIndex={0}
-            className="overflow-x-auto rounded-xl border border-border bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <table className="w-full min-w-[780px] text-sm">
-              <caption className="sr-only">
-                Population and age 7+ literacy from Census 2011 alongside unincorporated
-                establishments and workers from NSO ASUSE 2025 across the ten Kashmir Valley
-                districts.
-              </caption>
-              <thead className="border-b border-border bg-muted/50">
-                <tr>
-                  <th scope="col" className="px-4 py-4 text-left font-semibold">
-                    District
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Population, 2011
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Literacy, 7+ (2011)
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Male, 7+
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Female, 7+
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Businesses, 2025
-                  </th>
-                  <th scope="col" className="px-4 py-4 text-right font-semibold">
-                    Workers, 2025
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {districts.map((district) => (
-                  <tr key={district.id} className="hover:bg-muted/30">
-                    <th scope="row" className="px-4 py-4 text-left font-semibold text-foreground">
-                      {district.name}
-                    </th>
-                    <td className="px-4 py-4 text-right tabular-nums text-foreground">
-                      {formatCount(district.population)}
-                    </td>
-                    <td className="px-4 py-4 text-right tabular-nums text-foreground">
-                      {formatRate(getLiteracyRate(district))}
-                    </td>
-                    <td className="px-4 py-4 text-right tabular-nums text-muted-foreground">
-                      {formatRate(getMaleLiteracyRate(district))}
-                    </td>
-                    <td className="px-4 py-4 text-right tabular-nums text-muted-foreground">
-                      {formatRate(getFemaleLiteracyRate(district))}
-                    </td>
-                    <td className="px-4 py-4 text-right tabular-nums text-foreground">
-                      {formatCount(district.establishments)}
-                    </td>
-                    <td className="px-4 py-4 text-right tabular-nums text-muted-foreground">
-                      {formatCount(district.establishmentWorkers)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot className="border-t-2 border-border bg-muted/40">
-                <tr>
-                  <th scope="row" className="px-4 py-4 text-left font-semibold">
-                    Kashmir Valley
-                  </th>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatCount(valleySummary.population)}
-                  </td>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatRate(valleySummary.literacy)}
-                  </td>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatRate(valleySummary.maleLiteracy)}
-                  </td>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatRate(valleySummary.femaleLiteracy)}
-                  </td>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatCount(valleySummary.establishments)}
-                  </td>
-                  <td className="px-4 py-4 text-right font-semibold tabular-nums">
-                    {formatCount(valleySummary.establishmentWorkers)}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          {districts.length === 0 && (
-            <p role="status" className="mt-4 text-sm text-muted-foreground">
-              No district matches “{query}”. Try another spelling.
-            </p>
-          )}
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            The final row always covers all ten districts. Its literacy rate uses the combined
-            population aged 7+, rather than an average of district percentages, and 2025 business
-            totals sum the weighted estimates across all ten districts.{" "}
-            <a
-              href={statsSources.census.url}
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-primary underline-offset-4 hover:underline"
-            >
-              Census 2011 source
-            </a>{" "}
-            <span aria-hidden="true">·</span>{" "}
-            <a
-              href={statsSources.asuse.url}
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-primary underline-offset-4 hover:underline"
-            >
-              ASUSE 2025 source
-            </a>
-            .
-          </p>
-        </div>
-      </section>
-
       <section
         id="sources"
         aria-labelledby="sources-heading"
-        className="mx-auto max-w-5xl scroll-mt-24 px-4 pt-12"
+        className="mx-auto max-w-5xl scroll-mt-24 px-4 pt-10"
       >
         <SectionHeading
           id="sources-heading"
