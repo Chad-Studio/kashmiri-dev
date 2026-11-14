@@ -138,7 +138,11 @@ export function StatsContrastsStrip({
   onSelectTopic: (topic: StatsCategory) => void;
 }) {
   return (
-    <section aria-labelledby="contrasts-heading" className="mx-auto max-w-6xl px-4 pb-12">
+    <section
+      id="contrasts"
+      aria-labelledby="contrasts-heading"
+      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14 sm:px-6"
+    >
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="contrasts-heading" className="font-serif text-2xl text-foreground">
           Three contrasts that shape everyday life
@@ -269,7 +273,7 @@ export function ValleyHundredSection() {
     <section
       id="hundred"
       aria-labelledby="hundred-heading"
-      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14"
+      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14 sm:px-6"
     >
       <SectionHeading
         id="hundred-heading"
@@ -612,7 +616,10 @@ export function DistrictExplorerTabs({
   );
 
   return (
-    <section aria-labelledby="district-explorer-heading" className="mx-auto max-w-6xl px-4 pb-14">
+    <section
+      aria-labelledby="district-explorer-heading"
+      className="mx-auto max-w-6xl px-4 pb-14 sm:px-6"
+    >
       <div className="rounded-xl border border-border bg-card p-5 shadow-[var(--surface-shadow)] sm:p-6">
         <Tabs
           value={view}
@@ -913,7 +920,10 @@ export function DistrictExplorerTabs({
                 const widthA = Math.min(100, Math.max(2, (row.a / row.max) * 100));
                 const widthB = Math.min(100, Math.max(2, (row.b / row.max) * 100));
                 return (
-                  <div key={row.label} className="rounded-lg border border-border bg-background p-4">
+                  <div
+                    key={row.label}
+                    className="rounded-lg border border-border bg-background p-4"
+                  >
                     <div className="flex items-baseline justify-between gap-2">
                       <h4 className="text-sm font-semibold text-foreground">{row.label}</h4>
                       <span className="text-xs text-muted-foreground">{row.period}</span>
@@ -1305,7 +1315,10 @@ const benchmarkChartConfig = {
 
 export function ValleyVsJkChartSection() {
   return (
-    <section aria-labelledby="benchmark-heading" className="mx-auto max-w-6xl px-4 pb-14">
+    <section
+      aria-labelledby="benchmark-heading"
+      className="mx-auto max-w-6xl px-4 pb-14 sm:px-6"
+    >
       <SectionHeading
         id="benchmark-heading"
         title="Kashmir Valley vs. Jammu & Kashmir"

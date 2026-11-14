@@ -12,7 +12,9 @@ interface PageIntroProps {
 
 export function PageIntro({ label, title, description, children, className }: PageIntroProps) {
   return (
-    <header className={cn("mx-auto max-w-5xl px-4 pb-8 pt-12 md:pb-10 md:pt-16", className)}>
+    <header
+      className={cn("mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 md:pb-10 md:pt-16", className)}
+    >
       <div className="flex max-w-3xl flex-col gap-4 border-s-2 border-primary/45 ps-5 sm:ps-7">
         <p className="text-sm font-semibold text-primary">{label}</p>
         <h1 className="text-balance font-serif text-4xl text-foreground sm:text-5xl">{title}</h1>

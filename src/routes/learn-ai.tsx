@@ -67,7 +67,7 @@ function LearnAI() {
         description="AI can help you study, practise writing, or work through a coding problem. Here are a few prompts to start with, some useful tools, and advice for checking what AI gives you."
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-8">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <SectionHeading title="Learn anything with AI" />
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {prompts.map((prompt) => (
@@ -81,7 +81,7 @@ function LearnAI() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-10">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <SectionHeading title="Free AI tools worth trying" />
         <ul className="mt-5 divide-y divide-border border-y border-border">
           {tools.map((tool) => (
@@ -98,28 +98,28 @@ function LearnAI() {
                 {tool.name}
                 <ExternalLink className="size-4" aria-hidden="true" />
               </a>
-              <span className="text-sm text-muted-foreground sm:max-w-sm sm:text-right">
+              <span className="text-sm text-muted-foreground sm:max-w-md sm:text-right">
                 {tool.goodAt}
               </span>
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
           Most of these tools offer a free plan. Before sharing personal information, it is worth
           checking the tool&apos;s privacy notice.
         </p>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-10">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <SectionHeading title="AI awareness" />
         <div className="mt-5 flex flex-col">
           {awareness.map((item) => (
             <article key={item.title} className="border-t border-border py-6">
               <h3 className="font-serif text-xl text-foreground sm:text-2xl">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                 {item.body}
               </p>
-              <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-foreground/90 sm:text-base">
+              <ul className="mt-3 flex max-w-3xl list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-foreground/90 sm:text-base">
                 {item.tips.map((tip) => (
                   <li key={tip}>{tip}</li>
                 ))}

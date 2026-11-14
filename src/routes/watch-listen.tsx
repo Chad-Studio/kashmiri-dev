@@ -45,7 +45,7 @@ function WatchListenPage() {
         </p>
       </PageIntro>
 
-      <section className="mx-auto max-w-3xl px-4 pb-16">
+      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <ul className="divide-y divide-border border-y border-border">
           {media.map((item) => (
             <li key={item.id} className="py-5">
@@ -63,7 +63,7 @@ function WatchListenPage() {
                   {typeLabel[item.type] ?? item.type}
                 </span>
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                 {item.oneLiner}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
