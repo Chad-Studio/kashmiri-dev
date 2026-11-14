@@ -125,7 +125,7 @@ export const Route = createRootRoute({
         rel: "icon",
         href: "/images/brand-icon.png",
         type: "image/png",
-        sizes: "48x48",
+        sizes: "512x512",
       },
     ],
     scripts: [
