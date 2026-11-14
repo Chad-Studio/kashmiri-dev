@@ -74,7 +74,7 @@ function NumbersPage() {
         </p>
       </PageIntro>
 
-      <section className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-8">
+      <section className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 md:grid-cols-2">
         {numberGroups.map((group) => (
           <div key={group.label}>
             <h2 className="mb-3 font-serif text-2xl text-foreground">{group.label}</h2>
@@ -104,10 +104,10 @@ function NumbersPage() {
         ))}
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-8 pt-4">
+      <section className="mx-auto max-w-6xl px-4 pb-8 pt-4 sm:px-6">
         <div className="border-y border-border py-5">
           <h2 className="font-serif text-xl text-foreground">A small tip</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             Once you know the tens, <em lang="ks">dah</em> (10), <em lang="ks">wuh</em> (20),{" "}
             <em lang="ks">trih</em> (30), <em lang="ks">tsatji</em> (40), and{" "}
             <em lang="ks">pantsah</em> (50), the numbers in between become easier. Many follow
@@ -116,7 +116,7 @@ function NumbersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-16 pt-4">
+      <section className="mx-auto max-w-6xl px-4 pb-16 pt-4 sm:px-6">
         <div className="border-t border-border pt-5">
           <h2 className="font-serif text-xl text-foreground">Sources</h2>
           <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-muted-foreground">

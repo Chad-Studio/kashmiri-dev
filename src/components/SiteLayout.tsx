@@ -63,7 +63,7 @@ function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           to="/"
           className="group flex min-h-11 items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -138,7 +138,7 @@ function SiteHeader() {
           aria-label="Mobile navigation"
           className="border-t border-border/80 bg-background lg:hidden"
         >
-          <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-5">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-5 sm:px-6">
             {mobileNavGroups.map((group) => (
               <div key={group.label} className="flex flex-col gap-2">
                 <p className="px-3 text-sm font-semibold text-muted-foreground">{group.label}</p>
@@ -168,7 +168,7 @@ function SiteHeader() {
 function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-border/80">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-6">
         <p>© {new Date().getFullYear()} Kashmiri.dev. Education for the valley.</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">
           <Link

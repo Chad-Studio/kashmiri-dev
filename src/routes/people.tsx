@@ -68,7 +68,7 @@ function PeoplePage() {
         description="Meet some of the poets and mystics remembered across Kashmir, and learn about crafts that have long been part of life in the valley."
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-8">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <SectionHeading title="Poets & mystics" />
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {people.map((person) => (
@@ -94,7 +94,7 @@ function PeoplePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-12">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <SectionHeading title="Crafts of Kashmir" />
         <div className="mt-5 grid sm:grid-cols-2 sm:gap-x-8">
           {crafts.map((craft) => (

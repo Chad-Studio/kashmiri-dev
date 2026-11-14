@@ -79,7 +79,7 @@ function LanguagePage() {
         }
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
         <SectionHeading title="Scripts" />
         <div className="mt-5 grid sm:grid-cols-3 sm:gap-x-6">
           {scripts.map((script) => (
@@ -98,7 +98,7 @@ function LanguagePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-10">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading title="Starter vocabulary" />
           <Input
@@ -110,44 +110,48 @@ function LanguagePage() {
             aria-label="Search vocabulary"
           />
         </div>
-        <p className="mt-5 border-s-2 border-primary/40 ps-4 text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-5 max-w-3xl border-s-2 border-primary/40 ps-4 text-sm leading-relaxed text-muted-foreground">
           Roman spellings of Kashmiri vary, so treat these as a starting point rather than a fixed
           standard. We are reviewing the words with native speakers and plan to add native script
           and audio.
         </p>
         <div className="mt-5 overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-          <ul className="divide-y divide-border">
-            {filtered.map((word) => (
-              <li key={word.koshur} className="flex items-start justify-between gap-4 px-4 py-3">
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span lang="ks" className="font-serif text-lg text-foreground">
-                      {word.koshur}
-                    </span>
-                    {word.isLoanword && <LoanwordBadge />}
+          {filtered.length > 0 ? (
+            <ul className="-mb-px grid md:grid-cols-2">
+              {filtered.map((word) => (
+                <li
+                  key={word.koshur}
+                  className="flex items-start justify-between gap-4 border-b border-border px-4 py-3 md:odd:border-r"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span lang="ks" className="font-serif text-lg text-foreground">
+                        {word.koshur}
+                      </span>
+                      {word.isLoanword && <LoanwordBadge />}
+                    </div>
+                    {word.note && (
+                      <p className="mt-1 text-sm leading-snug text-muted-foreground">{word.note}</p>
+                    )}
                   </div>
-                  {word.note && (
-                    <p className="mt-1 text-sm leading-snug text-muted-foreground">{word.note}</p>
-                  )}
-                </div>
-                <span className="shrink-0 text-right text-sm text-muted-foreground">
-                  {word.english}
-                </span>
-              </li>
-            ))}
-            {filtered.length === 0 && (
-              <li className="px-4 py-8 text-center text-sm text-muted-foreground">
-                No word matches your search. Try a shorter spelling.
-              </li>
-            )}
-          </ul>
+                  <span className="shrink-0 text-right text-sm text-muted-foreground">
+                    {word.english}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="px-4 py-8 text-center text-sm text-muted-foreground">
+              No word matches your search. Try a shorter spelling.
+            </p>
+          )}
         </div>
         <p className="mt-3 text-sm text-muted-foreground">
           Words are shown in Roman transliteration. Pronunciation may vary by region.
         </p>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-10">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <SectionHeading title="Common phrases" />
         <ul className="mt-5 divide-y divide-border border-y border-border">
           {phrases.map((phrase) => (
@@ -163,7 +167,7 @@ function LanguagePage() {
                   <p className="mt-1 text-sm leading-snug text-muted-foreground">{phrase.note}</p>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground sm:max-w-56 sm:text-right">
+              <p className="text-sm text-muted-foreground sm:max-w-md sm:text-right">
                 {phrase.english}
               </p>
             </li>
@@ -171,7 +175,7 @@ function LanguagePage() {
         </ul>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-6">
+      <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
         <Link
           to="/language/numbers"
           className="group block rounded-xl border border-border bg-card p-5 shadow-sm transition-[background-color,border-color,box-shadow] duration-150 hover:border-primary/50 hover:shadow-[var(--surface-shadow)] active:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6"
@@ -179,7 +183,7 @@ function LanguagePage() {
           <h2 className="font-serif text-2xl text-foreground transition-colors duration-150 group-hover:text-primary">
             Kashmiri counting: 1 to 50
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             Learn Koshur numbers from one to fifty, grouped by tens for easy reading.
           </p>
           <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">
@@ -189,7 +193,7 @@ function LanguagePage() {
         </Link>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-16 pt-8">
+      <section className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
         <div className="border-t border-border pt-5">
           <h2 className="font-serif text-xl text-foreground">Sources</h2>
           <ul className="mt-3 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-muted-foreground">

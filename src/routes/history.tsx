@@ -87,8 +87,8 @@ function HistoryPage() {
         description="This timeline follows the valley from its earliest settlements to 1947. Labels show where an account rests on archaeology, where scholars disagree, and where it comes from inherited tradition."
       />
 
-      <section aria-labelledby="evidence-key" className="mx-auto max-w-5xl px-4 pb-10">
-        <div className="flex max-w-3xl flex-col gap-4 border-y border-border py-6">
+      <section aria-labelledby="evidence-key" className="mx-auto max-w-6xl px-4 pb-10 sm:px-6">
+        <div className="flex flex-col gap-4 border-y border-border py-6">
           <SectionHeading
             id="evidence-key"
             title="How to read the evidence"
@@ -102,7 +102,7 @@ function HistoryPage() {
         </div>
       </section>
 
-      <section aria-label="Historical timeline" className="mx-auto max-w-4xl px-4 pb-16">
+      <section aria-label="Historical timeline" className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <ol className="relative ms-2 flex flex-col gap-6 border-s-2 border-primary/30 sm:ms-4 sm:gap-8">
           {timeline.map((entry) => (
             <li key={entry.id} className="relative ps-5 sm:ps-7">
@@ -126,7 +126,7 @@ function HistoryPage() {
                     <EvidenceBadge status={entry.status} />
                   </div>
                 )}
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {entry.fact}
                 </p>
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">
@@ -143,7 +143,7 @@ function HistoryPage() {
             />
             <div className="border-y border-dashed border-border py-5">
               <h2 className="font-serif text-xl text-foreground">Modern history (after 1947)</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
                 This timeline currently ends in 1947. We hope to cover later history in a future
                 update.
               </p>
@@ -153,7 +153,7 @@ function HistoryPage() {
       </section>
 
       <section aria-labelledby="myths-heading" className="border-y border-border bg-muted/40">
-        <div className="mx-auto max-w-5xl px-4 py-14 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
           <SectionHeading
             id="myths-heading"
             title="Common myths, checked"

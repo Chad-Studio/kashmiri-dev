@@ -400,17 +400,24 @@ function StatsPage() {
           </span>
           <span aria-hidden="true">·</span>
           <a
-            href="#hundred"
-            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            100-unit view
-          </a>
-          <span aria-hidden="true">·</span>
-          <a
             href="#districts"
             className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             10 districts
+          </a>
+          <span aria-hidden="true">·</span>
+          <a
+            href="#contrasts"
+            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Key contrasts
+          </a>
+          <span aria-hidden="true">·</span>
+          <a
+            href="#hundred"
+            className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            100-unit view
           </a>
           <span aria-hidden="true">·</span>
           <a
@@ -428,10 +435,6 @@ function StatsPage() {
           </a>
         </div>
       </PageIntro>
-
-      <StatsContrastsStrip onSelectTopic={handleJumpToTopic} />
-
-      <ValleyHundredSection />
 
       <DistrictMap
         selectedId={selectedDistrict.id}
@@ -452,12 +455,16 @@ function StatsPage() {
         onDownloadCsv={downloadDistricts}
       />
 
+      <StatsContrastsStrip onSelectTopic={handleJumpToTopic} />
+
+      <ValleyHundredSection />
+
       <ValleyVsJkChartSection />
 
       <section
         id="figures"
         aria-labelledby="figures-heading"
-        className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14"
+        className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-14 sm:px-6"
       >
         <SectionHeading
           id="figures-heading"
@@ -622,7 +629,7 @@ function StatsPage() {
         )}
       </section>
 
-      <section aria-labelledby="coverage-heading" className="mx-auto max-w-5xl px-4 pb-4">
+      <section aria-labelledby="coverage-heading" className="mx-auto max-w-6xl px-4 pb-4 sm:px-6">
         <div className="rounded-xl border border-border bg-muted/40 p-5 sm:p-6">
           <h2 id="coverage-heading" className="font-serif text-xl text-foreground">
             Reading the area and the reporting year
@@ -646,7 +653,7 @@ function StatsPage() {
       <section
         id="sources"
         aria-labelledby="sources-heading"
-        className="mx-auto max-w-5xl scroll-mt-24 px-4 pt-10"
+        className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-10 sm:px-6"
       >
         <SectionHeading
           id="sources-heading"
@@ -673,24 +680,26 @@ function StatsPage() {
           ))}
         </div>
         <div className="mt-3 border-y border-border py-5 text-sm leading-relaxed text-muted-foreground">
-          <p>
-            <span className="font-semibold text-foreground">How literacy is calculated:</span>{" "}
-            literate people ÷ (total population − children aged 0–6) × 100. Male and female rates
-            use their own counts. Displayed rates are rounded to two decimal places.
-          </p>
-          <p className="mt-3">
-            <span className="font-semibold text-foreground">Survey estimates:</span> 2023–25 figures
-            from PLFS, ASUSE, HCES, and the Telecom survey apply official NSO sampling multipliers
-            to unit-level microdata for NSS Region 013 (Kashmir Valley) and State 01 (Jammu &
-            Kashmir). ASUSE business counts exclude household residential rentals (NIC 68108) to
-            match published MoSPI tables.
-          </p>
-          <p className="mt-3">
-            <span className="font-semibold text-foreground">Coverage:</span> Anantnag, Bandipora,
-            Baramulla, Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar (Shopian
-            had no sampled blocks in HCES 2023–24). Wider J&K figures are labelled separately. No
-            population projection or Valley-only GDP estimate is implied.
-          </p>
+          <div className="max-w-3xl space-y-3">
+            <p>
+              <span className="font-semibold text-foreground">How literacy is calculated:</span>{" "}
+              literate people ÷ (total population − children aged 0–6) × 100. Male and female rates
+              use their own counts. Displayed rates are rounded to two decimal places.
+            </p>
+            <p>
+              <span className="font-semibold text-foreground">Survey estimates:</span> 2023–25
+              figures from PLFS, ASUSE, HCES, and the Telecom survey apply official NSO sampling
+              multipliers to unit-level microdata for NSS Region 013 (Kashmir Valley) and State 01
+              (Jammu & Kashmir). ASUSE business counts exclude household residential rentals (NIC
+              68108) to match published MoSPI tables.
+            </p>
+            <p>
+              <span className="font-semibold text-foreground">Coverage:</span> Anantnag, Bandipora,
+              Baramulla, Budgam, Ganderbal, Kulgam, Kupwara, Pulwama, Shopian, and Srinagar (Shopian
+              had no sampled blocks in HCES 2023–24). Wider J&K figures are labelled separately. No
+              population projection or Valley-only GDP estimate is implied.
+            </p>
+          </div>
         </div>
       </section>
     </SiteLayout>

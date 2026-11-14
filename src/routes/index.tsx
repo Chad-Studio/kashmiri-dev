@@ -71,7 +71,7 @@ const secondaryPaths = [
 function Home() {
   return (
     <SiteLayout>
-      <section className="mx-auto grid max-w-6xl gap-8 px-4 pb-10 pt-10 sm:grid-cols-[minmax(0,1fr)_13rem] sm:items-center md:gap-12 md:pb-14 md:pt-14 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <section className="mx-auto grid max-w-6xl gap-8 px-4 pb-10 pt-10 sm:grid-cols-[minmax(0,1fr)_13rem] sm:items-center sm:px-6 md:gap-12 md:pb-14 md:pt-14 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div className="flex max-w-3xl flex-col items-start gap-5">
           <p className="text-sm font-semibold text-primary">A digital reading room for Kashmir</p>
           <h1 className="text-balance font-serif text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
@@ -110,7 +110,7 @@ function Home() {
         </aside>
       </section>
 
-      <section aria-labelledby="learning-index" className="mx-auto max-w-6xl px-4 pb-12">
+      <section aria-labelledby="learning-index" className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
         <div className="flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
           <h2 id="learning-index" className="font-serif text-3xl text-foreground sm:text-4xl">
             Choose a place to begin
@@ -165,7 +165,7 @@ function Home() {
         </div>
       </section>
 
-      <aside className="mx-auto max-w-5xl px-4 pb-4">
+      <aside className="mx-auto max-w-6xl px-4 pb-4 sm:px-6">
         <p className="max-w-2xl border-s-2 border-border ps-5 text-sm leading-relaxed text-muted-foreground">
           Kashmiri.dev focuses on history, language, people, and useful learning resources rather
           than daily news or political commentary.

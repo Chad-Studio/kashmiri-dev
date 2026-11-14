@@ -130,7 +130,7 @@ export function DistrictMap({
     <section
       id="districts"
       aria-labelledby="district-map-heading"
-      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-6"
+      className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-6 sm:px-6"
     >
       <SectionHeading
         id="district-map-heading"

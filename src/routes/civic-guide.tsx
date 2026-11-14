@@ -58,15 +58,15 @@ function CivicGuidePage() {
         description="Plain-language information about a few rights and public services you may need in everyday life. It is a general guide, not legal advice."
       />
 
-      <section className="mx-auto flex max-w-3xl flex-col px-4 pb-16">
+      <section className="mx-auto flex max-w-6xl flex-col px-4 pb-16 sm:px-6">
         {civicExplainers.map((explainer) => (
           <article key={explainer.id} className="border-t border-border py-8 first:pt-6">
             <h2 className="font-serif text-2xl text-foreground sm:text-3xl">{explainer.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
               {explainer.summary}
             </p>
 
-            <ol className="mt-5 flex list-decimal flex-col gap-2 pl-5 text-sm text-foreground/90 sm:text-base">
+            <ol className="mt-5 flex max-w-3xl list-decimal flex-col gap-2 pl-5 text-sm text-foreground/90 sm:text-base">
               {explainer.steps.map((step) => (
                 <li key={step} className="leading-relaxed marker:font-semibold marker:text-primary">
                   {step}
@@ -74,7 +74,7 @@ function CivicGuidePage() {
               ))}
             </ol>
 
-            <div className="mt-6">
+            <div className="mt-6 max-w-3xl">
               <h3 className="font-serif text-lg text-foreground">Sources</h3>
               <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-muted-foreground">
                 {explainer.sources.map((source) => (
